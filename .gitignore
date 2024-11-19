@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+
+# Virtual Environment
+.venv/
+
+# Flask
+instance/
+
+# DataBase
+*.db
+*.sqlite
