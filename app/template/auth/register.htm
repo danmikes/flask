@@ -7,7 +7,7 @@
   <div class="container half-width mt-2">
     <h1 class="title">Register</h1>
 
-    <form method="POST" action="{{ url_for('main.register') }}">
+    <form method="POST" action="{{ url_for('auth.register') }}">
       {{ form.hidden_tag() }}
 
       <div class="field">

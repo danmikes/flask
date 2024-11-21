@@ -1,21 +1,17 @@
 from flask import Blueprint, current_app, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.urls import url_parse
-from .form import LoginForm, RegistrationForm
-from .model import User
-from .util import flash_errors
-from . import db
+from ..form.login import LoginForm, RegistrationForm
+from ..model.user import User
+from ..util.util import flash_errors
+from .. import db
 
-main = Blueprint('main', __name__)
+auth = Blueprint('auth', __name__)
 
-@main.route('/')
-def index():
-  return render_template('view/index.htm')
-
-@main.route('/login', methods=['GET', 'POST'])
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
   if current_user.is_authenticated:
-    return redirect(url_for('main.dashboard'))
+    return redirect(url_for('main.wishlist'))
 
   form = LoginForm()
   if form.validate_on_submit():
@@ -25,7 +21,7 @@ def login():
         login_user(user)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-          next_page = url_for('main.dashboard')
+          next_page = url_for('main.wishlist')
         return redirect(next_page)
       else:
         flash('Invalid credentials', 'danger')
@@ -34,12 +30,12 @@ def login():
       flash('Error during login; retry', 'danger')
 
   flash_errors(form)
-  return render_template('view/login.htm', form=form, page='login')
+  return render_template('auth/login.htm', form=form, page='login')
 
-@main.route('/register', methods=['GET', 'POST'])
+@auth.route('/register', methods=['GET', 'POST'])
 def register():
   if current_user.is_authenticated:
-    return redirect(url_for('main.dashboard'))
+    return redirect(url_for('main.wishlist'))
 
   form = RegistrationForm()
   if form.validate_on_submit():
@@ -52,23 +48,18 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         flash('Registration successful! You can log in.', 'success')
-        return redirect(url_for('main.login'))
+        return redirect(url_for('auth.login'))
       except Exception as e:
         db.session.rollback()
         current_app.logger.error(f'Error during registration: {e}')
         flash('Error during registration; retry', 'danger')
 
   flash_errors(form)
-  return render_template('view/register.htm', form=form)
+  return render_template('auth/register.htm', form=form)
 
-@main.route('/dashboard')
-@login_required
-def dashboard():
-  return render_template('view/dashboard.htm', username=current_user.username)
-
-@main.route('/logout')
+@auth.route('/logout')
 @login_required
 def logout():
   logout_user()
   flash('You have been logged out', 'success')
-  return redirect(url_for('main.login'))
+  return redirect(url_for('auth.login'))

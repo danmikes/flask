@@ -1,0 +1,68 @@
+{% extends 'base.htm' %}
+
+{% block body %}
+<h1 class="title">Your Wishlist</h1>
+
+<form method="POST" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+  <div class="field">
+    {{ form.description.label(class='label') }}
+    <div class="control">
+      {{ form.description(class='input') }}
+    </div>
+  </div>
+
+  <div class="field">
+    {{ form.url.label(class='label') }}
+    <div class="control">
+      {{ form.url(class='input') }}
+    </div>
+  </div>
+
+  <div class="field">
+    {{ form.img.label(class='label') }}
+    <div class="control">
+      {{ form.img(class='file-input', accept='image/*') }}
+      <button type="button" class="button is-info" onclick="this.previousElementSibling.click();">Upload Image</button>
+    </div>
+  </div>
+
+  <div class="field">
+    {{ form.submit(class='button is-link') }}
+  </div>
+</form>
+
+<h2 class="subtitle">My Wishes:</h2>
+<ul>
+{% for wish in wishes %}
+  <li>
+    {{ wish.description }} - 
+    {% if wish.url %}
+      <a href="{{ wish.url }}" target="_blank">Link</a> - 
+    {% endif %}
+    {% if wish.img %}
+      <img src="{{ url_for('static', filename='uploads/' + wish.img) }}">
+    {% endif %}
+{% endfor %}
+</ul>
+
+<h2 class="subtitle">Their Wishes:</h2>
+<ul>
+{% for wish in their_wishes %}
+  <li>
+    {{ wish.description }} - 
+    {% if wish.url %}
+      <a href="{{ wish.url }}" target="_blank">Link</a> - 
+    {% endif %}
+    {% if wish.img %}
+      <img src="{{ url_for('static', filename='uploads/' + wish.img) }}">
+    {% endif %}
+    {% if not wish_baught %}
+      <a href="{{ url_for('main.mark_as_baught', wish_id=wish.id) }}">Mark as Baught</a></li>
+    {% else %}
+      (Already baught)
+    {% endif %}
+{% endfor %}
+</ul>
+
+{% endblock %}

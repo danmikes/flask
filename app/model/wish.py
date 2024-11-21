@@ -1,0 +1,24 @@
+from flask_login import UserMixin
+from .. import db
+
+class Wish(db.Model):
+  __tablename__ = 'wish'
+
+  id = db.Column(db.Integer, primary_key=True)
+  description = db.Column(db.String(200), nullable=False)
+  url = db.Column(db.String(200), nullable=True)
+  img = db.Column(db.String(100), nullable=True)
+  bought = db.Column(db.Boolean, default=False)
+
+  buyer_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+  buyer = db.relationship('User', back_populates='bought_wishes', foreign_keys=[buyer_id])
+
+  owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+  owner = db.relationship('User', back_populates='wishes', foreign_keys=[owner_id])
+
+  def __init__(self, description, url, img, owner, buyer=None):
+    self.description = description
+    self.url = url
+    self.img = img
+    self.owner = owner
+    self.buyer_id = buyer.id if buyer else None

@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from . import db
+from .. import db
 
 class User(UserMixin, db.Model):
   __tablename__ = 'user'
@@ -10,6 +10,9 @@ class User(UserMixin, db.Model):
   username = db.Column(db.String(200), nullable=False, unique=True)
   password_hash = db.Column(db.String(200), nullable=False)
   timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+  wishes = db.relationship('Wish', back_populates='owner', foreign_keys='Wish.owner_id')
+  bought_wishes = db.relationship('Wish', back_populates='buyer', foreign_keys='Wish.buyer_id')
 
   def __repr__(self):
     return '<User {self.username}>'

@@ -1,7 +1,6 @@
 from flask import flash
 
 def flash_errors(form):
-  '''Utility-function to flash form errors'''
   for field, errors in form.errors.items():
     for error in errors:
       flash(f'{field.capitalize()}: {error}', 'error')

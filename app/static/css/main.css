@@ -1,6 +1,19 @@
+:root {
+  --background-color: beige;
+  --primay-color: #00d1b2;
+  --text-color: brown;
+}
+
 body {
+  background-color: var(--background-color);
+  color: var(--text-color);
   margin: 10px;
   font-family: sans-serif;
+}
+
+.button {
+  background-color: var(--primay-color);
+  color: var(--text-color);
 }
 
 .half-width {
