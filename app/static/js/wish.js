@@ -1,0 +1,30 @@
+function updatePreview() {
+  const description = document.getElementById('wishForm').description.value;
+  const url = document.getElementById('wishForm').url.value;
+
+  document.getElementById('previewDescription').innerText = description || 'Your Wish Description Here';
+  
+  const previewURL = document.getElementById('previewURL');
+  if (url) {
+      previewURL.innerHTML = `<a href="${url}" target="_blank">${url}</a>`;
+  } else {
+      previewURL.innerHTML = 'Your URL Here';
+  }
+}
+
+function updateImagePreview(input) {
+  const file = input.files[0];
+  const previewImage = document.getElementById('previewImage');
+  const previewImageContainer = document.getElementById('previewImageContainer');
+
+  if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+          previewImage.src = e.target.result;
+          previewImageContainer.style.display = 'block'; // Show image container
+      };
+      reader.readAsDataURL(file);
+  } else {
+      previewImageContainer.style.display = 'none'; // Hide image container if no file
+  }
+}

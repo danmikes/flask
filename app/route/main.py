@@ -47,11 +47,7 @@ def wishlist():
     return redirect(url_for('main.wishlist'))
   
   wishes = Wish.query.filter_by(owner=current_user).all()
-  their_wishes = Wish.query.filter(
-    or_(
-      Wish.owner != current_user, Wish.bought == False
-    )
-  ).all()
+  their_wishes = Wish.query.filter(Wish.owner != current_user).all()
 
   for wish in their_wishes:
     if wish.url:
