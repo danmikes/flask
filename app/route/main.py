@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, current_app, flash, redirect, render_template, url_for
+from flask import Blueprint, current_app, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 from sqlalchemy import or_
 from urllib.parse import urlparse
@@ -15,9 +15,9 @@ main = Blueprint('main', __name__)
 def index():
   return render_template('main/index.htm')
 
-@main.route('/wishlist', methods=['GET', 'POST'])
+@main.route('/wish', methods=['GET', 'POST'])
 @login_required
-def wishlist():
+def wish():
   form = WishForm()
 
   if form.validate_on_submit():
@@ -31,7 +31,7 @@ def wishlist():
         file.save(file_path)
       except Exception as e:
         flash(f'Error saving file: {e}')
-        return redirect(url_for('main.wishlist'))
+        return redirect(url_for('main.wish'))
 
     new_wish = Wish(
       description=form.description.data,
@@ -44,7 +44,7 @@ def wishlist():
     db.session.commit()
     flash('Wish added!')
 
-    return redirect(url_for('main.wishlist'))
+    return redirect(url_for('main.wish'))
   
   wishes = Wish.query.filter_by(owner=current_user).all()
   their_wishes = Wish.query.filter(Wish.owner != current_user).all()
@@ -56,7 +56,7 @@ def wishlist():
 
   flash_errors(form)
 
-  return render_template('main/wishlist.htm', form=form, wishes=wishes, their_wishes=their_wishes)
+  return render_template('main/wish.htm', form=form, wishes=wishes, their_wishes=their_wishes)
 
 @main.route('/wishes')
 @login_required
@@ -71,13 +71,13 @@ def mark_as_bought(wish_id):
   wish = Wish.query.get_or_404(wish_id)
   if wish.owner_id == current_user.id:
     flash('You cannot mark your own wish as bought')
-    return redirect(url_for('main.wishlist'))
+    return redirect(url_for('main.wish'))
   
   wish.bought = True
   wish.buyer_id = current_user.id
   db.session.commit()
   flash('Wish marked as bought')
-  return redirect(url_for('main.wishlist'))
+  return redirect(url_for('main.wish'))
 
 @main.route('/unmark_as_bought/<int:wish_id>')
 @login_required
@@ -88,4 +88,38 @@ def unmark_as_bought(wish_id):
   wish.buyer_id = None
   db.session.commit()
   flash('Wish unmarked as bought')
-  return redirect(url_for('main.wishlist'))
+  return redirect(url_for('main.wish'))
+
+@main.route('/edit_wish/<int:wish_id>', methods=['GET', 'POST'])
+def edit_wish(wish_id):
+  wish = Wish.query.get_or_404(wish_id)
+  form = WishForm()
+
+  if request.method == 'GET':
+    form.description.data = wish.description
+    form.url.data = wish.url
+
+  if request.method == 'POST':
+    if form.validate_on_submit():
+      wish.description = form.description.data
+      wish.url = form.url.data
+
+      file = request.files.get('img')
+      if file:
+        filename = secure_filename(file.filename)
+        file_path = os.path.joing(current_app.config['UPLOAD_FOLDER'], filename)
+        try:
+          file.save(file_path)
+          wish.img = filename
+        except Exception as e:
+          flash(f'Error saving file: {e}')
+          return redirect(url_for('main.wish'))
+
+      db.session.commit()
+      flash('Wish updated successfully!')
+      return redirect(url_for('main.wish'))
+  
+  form.description.data = wish.description
+  form.url.data = wish.url
+
+  return render_template('main/wish.htm', form=form, is_edit=True)

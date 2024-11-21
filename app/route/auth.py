@@ -11,7 +11,7 @@ auth = Blueprint('auth', __name__)
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
   if current_user.is_authenticated:
-    return redirect(url_for('main.wishlist'))
+    return redirect(url_for('main.wish'))
 
   form = LoginForm()
   if form.validate_on_submit():
@@ -21,7 +21,7 @@ def login():
         login_user(user)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-          next_page = url_for('main.wishlist')
+          next_page = url_for('main.wish')
         return redirect(next_page)
       else:
         flash('Invalid credentials', 'danger')
@@ -35,7 +35,7 @@ def login():
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
   if current_user.is_authenticated:
-    return redirect(url_for('main.wishlist'))
+    return redirect(url_for('main.wish'))
 
   form = RegistrationForm()
   if form.validate_on_submit():

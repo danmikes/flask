@@ -1,0 +1,135 @@
+  {% extends 'base.htm' %}
+
+  {% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/wish.css') }}">
+  {% endblock %}
+
+  {% block body %}
+  <h1 class="title">Wishlist</h1>
+
+  <hr>
+
+  <h2 class="title has-text-centered">New Wish</h2>
+  <div class="columns is-multiline is-centered">
+    <div class="column is-one-third">
+      <div class="card has-text-centered">
+        <div class="card-content">
+          <form method="POST" enctype="multipart/form-data" id="wishForm">
+            {{ form.hidden_tag() }}
+            <div class="field has-text-centered">
+              {{ form.description.label(class='label') }}
+              <div class="control">
+                {{ form.description(class='input', oninput='updatePreview()') }}
+              </div>
+            </div>
+
+            <div class="field has-text-centered">
+              {{ form.url.label(class='label') }}
+              <div class="control">
+                {{ form.url(class='input', oninput='updatePreview()') }}
+              </div>
+            </div>
+
+            <div class="field has-text-centered">
+              {{ form.img.label(class='label') }}
+              <div class="control">
+                {{ form.img(class='file-input', accept='image/*', onchange='updateImagePreview(this)') }}
+                <button type="button" class="button is-info" onclick="this.previousElementSibling.click();">Upload Image</button>
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="field has-text-centered">
+              {{ form.submit(class='button is-link') }}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="column is-one-third">
+      <div class="card has-text-centered" id="previewCard">
+        <div class="card-content">
+          <p class="title" id="previewDescription">Your Wish Description Here</p>
+          <hr>
+          <p id="previewURL"><a href="#" target="_blank">Your URL Here</a></p>
+          <hr>
+          <figure class="image" id="previewImageContainer" style="display: none;">
+            <img id="previewImage" src="#" alt="" />
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <h2 class="title has-text-centered">My Wishes</h2>
+  <div class="columns is-multiline">
+    {% for wish in wishes %}
+      <div class="column is-one-third">
+        <div class="card has-text-centered">
+          <div class="card-content">
+            <p class="title">{{ wish.description }}</p>
+            {% if wish.url %}
+              <hr>
+              <p><a href="{{ wish.url }}" target="_blank">Link</a></p>
+            {% endif %}
+            {% if wish.img %}
+            <hr>
+            <figure class="image">
+              <img src="{{ url_for('static', filename='upload/' + wish.img) }}">
+            </figure>
+            {% endif %}
+            <hr>
+            <div>
+              <a href="{{ url_for('main.edit_wish', wish_id=wish.id) }}" class="button is-warning">Edit Wish</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <hr>
+
+  <h2 class="title has-text-centered">Their Wishes</h2>
+  <div class="columns is-multiline">
+    {% for wish in their_wishes %}
+      <div class="column is-one-third">
+        <div class="card has-text-centered{% if wish.bought %}has-crossed{% endif %}">
+          <div class="card-content">
+            <p class="has-text-centered">{{ wish.owner.username }}</p>
+            <p class="title">{{ wish.description }}</p>
+            {% if wish.url %}
+              <p><a href="{{ wish.url }}" target="_blank">{{ wish.domain }}</a></p>
+            {% endif %}
+            {% if wish.img %}
+              <hr>
+              <figure class="image">
+                <img src="{{ url_for('static', filename='upload/' + wish.img) }}">
+              </figure>
+            {% endif %}
+            {% if not wish.bought %}
+              <hr>
+              <div>
+                <a href="{{ url_for('main.mark_as_bought', wish_id=wish.id) }}" class="button is-primary">Mark as Bought</a></li>
+              </div>
+            {% elif wish.buyer_id == current_user.id %}
+              <hr>
+              <div>
+                <a href="{{ url_for('main.unmark_as_bought', wish_id=wish.id) }}" class="button is-danger">Unmark as Bought</a></li>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% block js %}
+    <script src="{{ url_for('static', filename='js/wish.js') }}"></script>
+  {% endblock %}
+
+  {% endblock %}
