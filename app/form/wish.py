@@ -4,11 +4,12 @@ from wtforms import StringField, SubmitField, FileField
 from wtforms.validators import DataRequired, Optional, URL
 
 class WishForm(FlaskForm):
-  description = StringField('Description', validators=[DataRequired()])
-  # ToDo : url -> urlList
-  url = StringField('Link', validators=[Optional(), URL(message="Enter valid URL")])
+  description = StringField('Description', validators=[
+      DataRequired()])
+  url = StringField('Link', validators=[
+      Optional(),
+      URL(message="Enter valid URL")])
   img = FileField('Image', validators=[
     Optional(),
-    FileAllowed(['gif', 'jpg', 'jpeg', 'png'], 'Images only')
-  ])
+    FileAllowed(['gif', 'jpg', 'jpeg', 'png'], 'Images only')])
   submit = SubmitField('Add Wish')

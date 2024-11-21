@@ -1,5 +1,9 @@
 {% extends 'base.htm' %}
 
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/wish.css') }}">
+{% endblock %}
+
 {% block body %}
 <h1 class="title">Your Wishlist</h1>
 
@@ -33,36 +37,51 @@
 </form>
 
 <h2 class="subtitle">My Wishes:</h2>
-<ul>
-{% for wish in wishes %}
-  <li>
-    {{ wish.description }} - 
-    {% if wish.url %}
-      <a href="{{ wish.url }}" target="_blank">Link</a> - 
-    {% endif %}
-    {% if wish.img %}
-      <img src="{{ url_for('static', filename='uploads/' + wish.img) }}">
-    {% endif %}
-{% endfor %}
-</ul>
+<div class="colums is-multiline">
+  {% for wish in wishes %}
+    <div class="column is-one-third">
+      <div class="card">
+        <div class="card-content">
+          <p class="title">{{ wish.description }}</p>
+          {% if wish.url %}
+            <p><a href="{{ wish.url }}" target="_blank">Link</a></p>
+          {% endif %}
+          {% if wish.img %}
+          <figure class="image">
+            <img src="{{ url_for('static', filename='upload/' + wish.img) }}">
+          </figure>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
 
 <h2 class="subtitle">Their Wishes:</h2>
-<ul>
-{% for wish in their_wishes %}
-  <li>
-    {{ wish.description }} - 
-    {% if wish.url %}
-      <a href="{{ wish.url }}" target="_blank">Link</a> - 
-    {% endif %}
-    {% if wish.img %}
-      <img src="{{ url_for('static', filename='uploads/' + wish.img) }}">
-    {% endif %}
-    {% if not wish_baught %}
-      <a href="{{ url_for('main.mark_as_baught', wish_id=wish.id) }}">Mark as Baught</a></li>
-    {% else %}
-      (Already baught)
-    {% endif %}
-{% endfor %}
-</ul>
+<div class="columns is-multiline">
+  {% for wish in their_wishes %}
+    <div class="column is-one-third">
+      <div class="card {% if wish.bought %}has-crossed{% endif %}">
+        <div class="card-content">
+          <p>{{ wish.owner.username }}</p>
+          <p class="title">{{ wish.description }}</p>
+          {% if wish.url %}
+            <p><a href="{{ wish.url }}" target="_blank">{{ wish.domain }}</a></p>
+          {% endif %}
+          {% if wish.img %}
+            <figure class="image">
+              <img src="{{ url_for('static', filename='upload/' + wish.img) }}">
+            </figure>
+          {% endif %}
+          {% if not wish.bought %}
+            <a href="{{ url_for('main.mark_as_bought', wish_id=wish.id) }}" class="button is-primary">Mark as Bought</a></li>
+          {% elif wish.buyer_id == current_user.id %}
+            <a href="{{ url_for('main.unmark_as_bought', wish_id=wish.id) }}" class="button is-danger">Unmark as Bought</a></li>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
 
 {% endblock %}

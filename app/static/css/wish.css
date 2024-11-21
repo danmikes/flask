@@ -1,0 +1,28 @@
+
+.has-crossed {
+  position: relative;
+}
+
+.has-crossed::before,
+.has-crossed::after {
+  content: '';
+  position: absolute;
+  background-color: red;
+  z-index: 1;
+}
+
+.has-crossed::before {
+  height: 2px;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.has-crossed::after {
+  height: 2px;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%) rotate(-45deg);
+}
