@@ -1,28 +1,27 @@
-
-.has-crossed {
+.card.is-bought {
+  opacity: 0.7;
   position: relative;
 }
 
-.has-crossed::before,
-.has-crossed::after {
-  content: '';
+.button {
+  border: none;
+}
+
+.card.is-bought {
+  opacity: 0.7;
+}
+
+.button {
+  border: none;
+}
+
+.card.is-bought::after {
+  content: 'BAUGHT';
   position: absolute;
-  background-color: red;
-  z-index: 1;
-}
-
-.has-crossed::before {
-  height: 2px;
-  width: 100%;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%) rotate(45deg);
-}
-
-.has-crossed::after {
-  height: 2px;
-  width: 100%;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%) rotate(-45deg);
+  top: 40%;
+  left: 50%;
+  font-size: 4em;
+  color: red;
+  transform: translate(-50%, -50%) rotate(0deg);
+  z-index: 2;
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="has-background-dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,14 +12,15 @@
 </head>
 <body>
   {% include 'unit/header.htm' %}
+
   <div class="container mt-4">
     {% include 'unit/message.htm' %}
     {% block body %}{% endblock %}
   </div>
+
   {% include 'unit/footer.htm' %}
 
   <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
-
   {% block js %}{% endblock %}
 </body>
 </html>

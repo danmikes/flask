@@ -1,21 +1,3 @@
-:root {
-  --background-color: beige;
-  --primay-color: #00d1b2;
-  --text-color: brown;
-}
-
-body {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  margin: 10px;
-  font-family: sans-serif;
-}
-
-.button {
-  background-color: var(--primay-color);
-  color: var(--text-color);
-}
-
 .half-width {
   max-width: 50%;
   margin: 0 auto;
@@ -23,65 +5,4 @@ body {
 
 .footer {
   padding: 10px;
-}
-
-.navbar, .navbar-menu, .navbar-start, .navbar-mid, .navbar-end {
-  display: flex;
-}
-
-.navbar, .navbar-menu {
-  justify-content: space-between;
-}
-
-@media (max-width: 468px) {
-  .navbar-menu {
-    display: none;
-  }
-  .navbar-burger {
-    display: block;
-    margin-left: auto;
-  }
-  .navbar-menu.is-active {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 10;
-
-  }
-  .navbar-menu.is-active .navbar,
-  .navbar-menu.is-active .navbar-menu,
-  .navbar-menu.is-active .navbar-start,
-  .navbar-menu.is-active .navbar-mid,
-  .navbar-menu.is-active .navbar-end {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-@media (min-width: 469px) {
-  .navbar-burger {
-    display: none;
-  }
-}
-
-@media (min-width: 469px) and (max-width: 668px) {
-  .navbar, .navbar-menu, .navbar-start, .navbar-mid, .navbar-end {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-@media (min-width: 669px) {
-  .navbar, .navbar-menu, .navbar-start, .navbar-mid, .navbar-end {
-    flex-direction: row;
-    align-items: center;
-  }
-}
-
-@media (max-width: 1024px) {
-  .navbar-menu {
-    width: 100%;
-  }
 }
