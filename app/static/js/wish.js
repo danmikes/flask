@@ -21,10 +21,28 @@ function updateImagePreview(input) {
       const reader = new FileReader();
       reader.onload = function(e) {
           previewImage.src = e.target.result;
-          previewImageContainer.style.display = 'block'; // Show image container
+          previewImageContainer.style.display = 'block';
       };
       reader.readAsDataURL(file);
   } else {
-      previewImageContainer.style.display = 'none'; // Hide image container if no file
+      previewImageContainer.style.display = 'none';
   }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const tabLinks = document.querySelectorAll('.tab-link');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabLinks.forEach(link => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      tabLinks.forEach(link => link.parentElement.classList.remove('is-active'));
+      tabContents.forEach(content => content.classList.remove('is-active'));
+
+      link.parentElement.classList.add('is-active');
+      const targetContent = document.getElementById(link.getAttribute('href').substring(1));
+      targetContent.classList.add('is-active');
+    });
+  });
+});

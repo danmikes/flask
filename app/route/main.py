@@ -1,9 +1,9 @@
 import os
-from flask import Blueprint, current_app, flash, redirect, render_template, request, url_for
+from flask import Blueprint, current_app, flash, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
-from sqlalchemy import or_
 from urllib.parse import urlparse
 from werkzeug.utils import secure_filename
+from ..model.user import User
 from ..form.wish import WishForm
 from ..model.wish import Wish
 from ..util.util import flash_errors
@@ -45,18 +45,23 @@ def wish():
     flash('Wish added!')
 
     return redirect(url_for('main.wish'))
-  
-  wishes = Wish.query.filter_by(owner=current_user).all()
-  their_wishes = Wish.query.filter(Wish.owner != current_user).all()
 
-  for wish in their_wishes:
+  users = User.query.all()
+  wishes = Wish.query.all()
+  wishes_by_user = {}
+  for wish in wishes:
     if wish.url:
       parsed_url = urlparse(wish.url)
       wish.domain = parsed_url.hostname
 
+    if wish.owner_id not in wishes_by_user:
+      wishes_by_user[wish.owner_id] = []
+    
+    wishes_by_user[wish.owner_id].append(wish)
+
   flash_errors(form)
 
-  return render_template('main/wish.htm', form=form, wishes=wishes, their_wishes=their_wishes)
+  return render_template('main/wish.htm', form=form, users=users, wishes_by_user=wishes_by_user)
 
 @main.route('/wishes')
 @login_required
@@ -123,3 +128,10 @@ def edit_wish(wish_id):
   form.url.data = wish.url
 
   return render_template('main/wish.htm', form=form, is_edit=True)
+
+@main.route('/wishlist', methods=['GET'])
+@login_required
+def wishlist():
+  wishes = Wish.query.all()
+  wish_list = [wish.to_dict() for wish in wishes]
+  return jsonify(wish_list)

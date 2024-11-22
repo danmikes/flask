@@ -1,132 +1,171 @@
-  {% extends 'base.htm' %}
+{% extends 'base.htm' %}
 
-  {% block css %}
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/wish.css') }}">
-  {% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/wish.css') }}">
+{% endblock %}
 
-  {% block body %}
-  <h1 class="title">Wishlist</h1>
+{% block body %}
+<h1 class="title">Wishlist</h1>
 
-  <hr>
+<div class="tabs is-centered">
+  <ul>
+    {% for user in users %}
+      <li class="{% if loop.index == 1 %}is-active{% endif %}">
+        <a href="#tab-{{ user.id }}" data-user-id="{{ user.id }}" class="tab-link">{{ user.username }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
 
-  <h2 class="title">New Wish</h2>
-  <div class="columns is-multiline is-centered">
-    <div class="column is-one-third">
-      <div class="card">
-        <div class="card-content">
-          <form method="POST" enctype="multipart/form-data" id="wishForm">
-            {{ form.hidden_tag() }}
-            <div class="field">
-              {{ form.description.label(class='label') }}
-              <div class="control">
-                {{ form.description(class='input', oninput='updatePreview()') }}
-              </div>
-            </div>
-
-            <div class="field">
-              {{ form.url.label(class='label') }}
-              <div class="control">
-                {{ form.url(class='input', oninput='updatePreview()') }}
-              </div>
-            </div>
-
-            <div class="field">
-              {{ form.img.label(class='label') }}
-              <div class="control">
-                {{ form.img(class='file-input', accept='image/*', onchange='updateImagePreview(this)') }}
-                <button type="button" class="button is-info" onclick="this.previousElementSibling.click();">Upload Image</button>
-              </div>
-            </div>
-
-            <hr>
-
-            <div class="field">
-              {{ form.submit(class='button is-link') }}
-            </div>
-          </form>
-        </div>
-      </div>
+<div class="columns mt-6">
+  {% for user in users %}
+    <div id="tab-{{ user.id }}" class="tab-content {% if loop.index == 1 %}is-active{% endif %}">
+      {% set user_wishes = wishes_by_user[user.id] %}
+      {% if user_wishes %}
+        {% for wish in user_wishes %}
+          <div class="column is-one-third">
+            {% set prop = {
+              'id': wish.id,
+              'description': wish.description,
+              'url': wish.url,
+              'domain': wish.domain,
+              'img': wish.img,
+              'bought': wish.bought,
+              'owner': wish.owner,
+              'owner_id': wish.owner_id,
+              'is_owner': wish.owner_id == current_user.id,
+              'buyer': wish.buyer,
+              'buyer_id': wish.buyer_id,
+              'is_buyer': wish.buyer_id == current_user.id,
+            } %}
+            {% include 'unit/card.htm' %}
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No wishes for this user</p>
+      {% endif %}
     </div>
+  {% endfor %}
+</div>
 
-    <div class="column is-one-third">
-      <div class="card" id="previewCard">
-        <div class="card-content">
-          <p class="title" id="previewDescription">Description</p>
+<!-- <h2 class="title">New Wish</h2>
+<div class="columns is-multiline is-centered">
+  <div class="column is-one-third">
+    <div class="card">
+      <div class="card-content">
+        <form method="POST" enctype="multipart/form-data" id="wishForm">
+          {{ form.hidden_tag() }}
+          <div class="field">
+            {{ form.description.label(class='label') }}
+            <div class="control">
+              {{ form.description(class='input', oninput='updatePreview()') }}
+            </div>
+          </div>
+
+          <div class="field">
+            {{ form.url.label(class='label') }}
+            <div class="control">
+              {{ form.url(class='input', oninput='updatePreview()') }}
+            </div>
+          </div>
+
+          <div class="field">
+            {{ form.img.label(class='label') }}
+            <div class="control">
+              {{ form.img(class='file-input', accept='image/*', onchange='updateImagePreview(this)') }}
+              <button type="button" class="button is-info" onclick="this.previousElementSibling.click();">Upload Image</button>
+            </div>
+          </div>
+
           <hr>
-          <p id="previewURL"><a href="#" target="_blank">URL</a></p>
-          <hr>
-          <figure class="image" id="previewImageContainer" style="display: none;">
-            <img id="previewImage" src="#" alt="" />
-          </figure>
-        </div>
+
+          <div class="field">
+            {{ form.submit(class='button is-link') }}
+          </div>
+        </form>
       </div>
     </div>
   </div>
 
-  <hr>
+  <div class="column is-one-third">
+    <div class="card" id="previewCard">
+      <div class="card-content">
+        <p class="title" id="previewDescription">Description</p>
+        <hr>
+        <p id="previewURL"><a href="#" target="_blank">URL</a></p>
+        <hr>
+        <figure class="image" id="previewImageContainer" style="display: none;">
+          <img id="previewImage" src="#" alt="" />
+        </figure>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <h2 class="title">My Wishes</h2>
-  <div class="columns is-multiline">
-    {% for wish in wishes %}
-      <div class="column is-one-third">
-        <div class="card">
-          <div class="card-content">
-            <p class="title">{{ wish.description }}</p>
-            {% if wish.url %}
-              <hr>
-              <p><a href="{{ wish.url }}" target="_blank">Link</a></p>
-            {% endif %}
-            {% if wish.img %}
+<hr>
+
+<h2 class="title">My Wishes</h2>
+<div class="columns is-multiline">
+  {% for wish in wishes %}
+    <div class="column is-one-third">
+      <div class="card">
+        <div class="card-content">
+          <p class="title">{{ wish.description }}</p>
+          {% if wish.url %}
+            <hr>
+            <p><a href="{{ wish.url }}" target="_blank">Link</a></p>
+          {% endif %}
+          {% if wish.img %}
+          <hr>
+          <figure class="image">
+            <img src="{{ url_for('static', filename='upload/' + wish.img) }}">
+          </figure>
+          {% endif %}
+          <hr>
+          <div>
+            <a href="{{ url_for('main.edit_wish', wish_id=wish.id) }}" class="button is-warning">Edit Wish</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<hr>
+
+<h2 class="title">Their Wishes</h2>
+<div class="columns is-multiline">
+  {% for wish in their_wishes %}
+    <div class="column is-one-third">
+      <div class="card {% if wish.bought %}is-bought{% endif %}">
+        <div class="card-content">
+          <p>{{ wish.owner.username }}</p>
+          <p class="title">{{ wish.description }}</p>
+          {% if wish.url %}
+            <p><a href="{{ wish.url }}" target="_blank">{{ wish.domain }}</a></p>
+          {% endif %}
+          {% if wish.img %}
             <hr>
             <figure class="image">
               <img src="{{ url_for('static', filename='upload/' + wish.img) }}">
             </figure>
+          {% endif %}
+          <hr>
+          <div>
+            {% if not wish.bought %}
+              <a href="{{ url_for('main.mark_as_bought', wish_id=wish.id) }}" class="button is-primary">Mark as Bought</a></li>
+            {% else %}
+              <a href="{{ url_for('main.unmark_as_bought', wish_id=wish.id) }}" class="button is-danger {% if wish.buyer_id != current_user.id %}is-static{% endif %}">Unmark as Bought</a></li>
             {% endif %}
-            <hr>
-            <div>
-              <a href="{{ url_for('main.edit_wish', wish_id=wish.id) }}" class="button is-warning">Edit Wish</a>
-            </div>
           </div>
         </div>
       </div>
-    {% endfor %}
-  </div>
+    </div>
+  {% endfor %}
+</div> -->
 
-  <hr>
+{% block js %}
+  <script src="{{ url_for('static', filename='js/wish.js') }}"></script>
+{% endblock %}
 
-  <h2 class="title">Their Wishes</h2>
-  <div class="columns is-multiline">
-    {% for wish in their_wishes %}
-      <div class="column is-one-third">
-        <div class="card {% if wish.bought %}is-bought{% endif %}">
-          <div class="card-content">
-            <p>{{ wish.owner.username }}</p>
-            <p class="title">{{ wish.description }}</p>
-            {% if wish.url %}
-              <p><a href="{{ wish.url }}" target="_blank">{{ wish.domain }}</a></p>
-            {% endif %}
-            {% if wish.img %}
-              <hr>
-              <figure class="image">
-                <img src="{{ url_for('static', filename='upload/' + wish.img) }}">
-              </figure>
-            {% endif %}
-            <hr>
-            <div>
-              {% if not wish.bought %}
-                <a href="{{ url_for('main.mark_as_bought', wish_id=wish.id) }}" class="button is-primary">Mark as Bought</a></li>
-              {% else %}
-                <a href="{{ url_for('main.unmark_as_bought', wish_id=wish.id) }}" class="button is-danger {% if wish.buyer_id != current_user.id %}is-static{% endif %}">Unmark as Bought</a></li>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-      </div>
-    {% endfor %}
-  </div>
-
-  {% block js %}
-    <script src="{{ url_for('static', filename='js/wish.js') }}"></script>
-  {% endblock %}
-
-  {% endblock %}
+{% endblock %}

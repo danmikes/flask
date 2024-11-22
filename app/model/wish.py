@@ -22,3 +22,16 @@ class Wish(db.Model):
     self.img = img
     self.owner = owner
     self.buyer_id = buyer.id if buyer else None
+
+  def to_dict(self):
+    return {
+      'id': self.id,
+      'description': self.description,
+      'url': self.url,
+      'img': self.img,
+      'bought': self.bought,
+      'buyer_id': self.buyer_id,
+      # 'buyer': self.buyer.to_dict(),
+      'owner_id': self.owner_id,
+      'owner': self.owner.to_dict(),
+    }
