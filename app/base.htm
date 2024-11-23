@@ -22,7 +22,7 @@
 
   {% include 'unit/footer.htm' %}
 
-  <script>const currentUserId = "{{ current_user.id }}"</script>
+  <script>const currentUserId = "{{ current_user.id }}";</script>
   <script src="{{ url_for('base.static', filename='base.js') }}"></script>
   {% block js %}{% endblock %}
 </body>
