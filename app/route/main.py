@@ -63,13 +63,6 @@ def wish():
 
   return render_template('main/wish.htm', form=form, users=users, wishes_by_user=wishes_by_user)
 
-@main.route('/wishes')
-@login_required
-def wishes():
-  wishes = Wish.query.all()
-
-  return render_template('main/wishes.htm', wishes=wishes)
-
 @main.route('/mark_as_bought/<int:wish_id>')
 @login_required
 def mark_as_bought(wish_id):
@@ -129,9 +122,10 @@ def edit_wish(wish_id):
 
   return render_template('main/wish.htm', form=form, is_edit=True)
 
-@main.route('/wishlist', methods=['GET'])
+@main.route('/wishes', methods=['GET'])
 @login_required
 def wishlist():
   wishes = Wish.query.all()
   wish_list = [wish.to_dict() for wish in wishes]
+  # return render_template('main/wishes.htm', wishes=wishes)
   return jsonify(wish_list)

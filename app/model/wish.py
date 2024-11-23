@@ -22,6 +22,10 @@ class Wish(db.Model):
     self.img = img
     self.owner = owner
     self.buyer_id = buyer.id if buyer else None
+    self.buyer = buyer if buyer else None
+
+  def __repr__(self):
+    return '<Wish {self.id}: {self.description[:20]}... - {self.img}>'    
 
   def to_dict(self):
     return {
@@ -31,7 +35,7 @@ class Wish(db.Model):
       'img': self.img,
       'bought': self.bought,
       'buyer_id': self.buyer_id,
-      # 'buyer': self.buyer.to_dict(),
+      'buyer': self.buyer.to_dict() if self.buyer else None,
       'owner_id': self.owner_id,
       'owner': self.owner.to_dict(),
     }
