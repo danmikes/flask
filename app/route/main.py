@@ -18,10 +18,24 @@ def index():
 @main.route('/wish', methods=['GET', 'POST'])
 @login_required
 def wish():
-  form = WishForm()
+  wish_id = request.args.get('wish_id', type=int)
+  if wish_id:
+    wish = Wish.query.get_or_404(wish_id)
+    if wish.owner != current_user:
+      flash('You can only edit your wishes', 'error')
+      return redirect(url_for('main.wishes'))
+  else:
+    wish = Wish(description='', url='', image='', owner=current_user)
+
+  form = WishForm(obj=wish)
 
   if form.validate_on_submit():
-    file = form.img.data
+    if not wish_id:
+      wish = Wish(owner=current_user)
+
+    form.populate_obj(wish)
+
+    file = form.image.data
 
     if file:
       filename = secure_filename(file.filename)
@@ -29,26 +43,27 @@ def wish():
 
       try:
         file.save(file_path)
+        wish.image = filename
       except Exception as e:
-        flash(f'Error saving file: {e}')
+        flash(f'Error saving file: {e}', 'error')
         return redirect(url_for('main.wish'))
 
-    new_wish = Wish(
-      description=form.description.data,
-      url=form.url.data,
-      img=filename if file else None,
-      owner=current_user
-    )
+    if not wish.id:
+      db.session.add(wish)
 
-    db.session.add(new_wish)
     db.session.commit()
-    flash('Wish added!')
+    flash('Wish saved', 'success')
+    return redirect(url_for('main.wishes'))
 
-    return redirect(url_for('main.wish'))
+  return render_template('unit/form.htm', form=form)
 
+@main.route('/wishes', methods=['GET'])
+@login_required
+def wishes():
   users = User.query.all()
   wishes = Wish.query.all()
   wishes_by_user = {}
+
   for wish in wishes:
     if wish.url:
       parsed_url = urlparse(wish.url)
@@ -59,23 +74,21 @@ def wish():
     
     wishes_by_user[wish.owner_id].append(wish)
 
-  flash_errors(form)
-
-  return render_template('main/wish.htm', form=form, users=users, wishes_by_user=wishes_by_user)
+  return render_template('main/wishes.htm', users=users, wishes_by_user=wishes_by_user)
 
 @main.route('/buy/<int:wish_id>')
 @login_required
 def buy(wish_id):
   wish = Wish.query.get_or_404(wish_id)
   if wish.owner_id == current_user.id:
-    flash('You cannot buy your own wish')
-    return redirect(url_for('main.wish'))
+    flash('You cannot buy your own wish', 'error')
+    return redirect(url_for('main.wishes'))
   
   wish.bought = True
   wish.buyer_id = current_user.id
   db.session.commit()
-  flash('Wish marked as bought')
-  return redirect(url_for('main.wish'))
+  flash('Wish marked as bought', 'success')
+  return redirect(url_for('main.wishes'))
 
 @main.route('/cancel/<int:wish_id>')
 @login_required
@@ -85,47 +98,12 @@ def cancel(wish_id):
   wish.bought = False
   wish.buyer_id = None
   db.session.commit()
-  flash('Wish canceled')
-  return redirect(url_for('main.wish'))
+  flash('Wish canceled', 'success')
+  return redirect(url_for('main.wishes'))
 
-@main.route('/edit/<int:wish_id>', methods=['GET', 'POST'])
-def edit(wish_id):
-  wish = Wish.query.get_or_404(wish_id)
-  form = WishForm()
-
-  if request.method == 'GET':
-    form.description.data = wish.description
-    form.url.data = wish.url
-
-  if request.method == 'POST':
-    if form.validate_on_submit():
-      wish.description = form.description.data
-      wish.url = form.url.data
-
-      file = request.files.get('img')
-      if file:
-        filename = secure_filename(file.filename)
-        file_path = os.path.joing(current_app.config['UPLOAD_FOLDER'], filename)
-        try:
-          file.save(file_path)
-          wish.img = filename
-        except Exception as e:
-          flash(f'Error saving file: {e}')
-          return redirect(url_for('main.wish'))
-
-      db.session.commit()
-      flash('Wish updated successfully!')
-      return redirect(url_for('main.wish'))
-  
-  form.description.data = wish.description
-  form.url.data = wish.url
-
-  return render_template('main/wish.htm', form=form, is_edit=True)
-
-@main.route('/wishes', methods=['GET'])
+@main.route('/wishes/json', methods=['GET'])
 @login_required
-def wishes():
+def wishes_json():
   wishes = Wish.query.all()
   wish_list = [wish.to_dict() for wish in wishes]
-  # return render_template('main/wishes.htm', wishes=wishes)
   return jsonify(wish_list)

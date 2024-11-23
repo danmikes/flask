@@ -65,10 +65,9 @@ def logout():
   flash('You have been logged out', 'success')
   return redirect(url_for('auth.login'))
 
-@auth.route('/users', methods=['GET'])
+@auth.route('/users/json', methods=['GET'])
 @login_required
-def users():
+def users_json():
   users = User.query.all()
   user_list = [user.to_dict() for user in users]
-  # return render_template('auth/users.htm', users=users)
   return jsonify(user_list)

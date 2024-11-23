@@ -16,7 +16,7 @@
       <div class="navbar-mid">
         <a class="navbar-item" href="{{ url_for('main.index') }}">Home</a>
         {% if current_user.is_authenticated %}
-          <a class="navbar-item" href="{{ url_for('main.wish') }}">WishList</a>
+          <a class="navbar-item" href="{{ url_for('main.wishes') }}">WishList</a>
         {% endif %}
       </div>
 

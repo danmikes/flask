@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-<h1 class="title">Wishlist</h1>
+<h1 class="title">Wishes</h1>
 
 <div class="tabs is-centered">
   <ul>
@@ -29,7 +29,7 @@
               'description': wish.description,
               'url': wish.url,
               'domain': wish.domain,
-              'img': wish.img,
+              'image': wish.image,
               'bought': wish.bought,
               'owner': wish.owner,
               'owner_id': wish.owner_id,
@@ -47,122 +47,6 @@
     {% endif %}
   </div>
 {% endfor %}
-
-<!-- <h2 class="title">New Wish</h2>
-<div class="columns is-multiline is-centered">
-  <div class="column is-one-third">
-    <div class="card">
-      <div class="card-content">
-        <form method="POST" enctype="multipart/form-data" id="wishForm">
-          {{ form.hidden_tag() }}
-          <div class="field">
-            {{ form.description.label(class='label') }}
-            <div class="control">
-              {{ form.description(class='input', oninput='updatePreview()') }}
-            </div>
-          </div>
-
-          <div class="field">
-            {{ form.url.label(class='label') }}
-            <div class="control">
-              {{ form.url(class='input', oninput='updatePreview()') }}
-            </div>
-          </div>
-
-          <div class="field">
-            {{ form.img.label(class='label') }}
-            <div class="control">
-              {{ form.img(class='file-input', accept='image/*', onchange='updateImagePreview(this)') }}
-              <button type="button" class="button is-info" onclick="this.previousElementSibling.click();">Upload Image</button>
-            </div>
-          </div>
-
-          <hr>
-
-          <div class="field">
-            {{ form.submit(class='button is-link') }}
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div class="column is-one-third">
-    <div class="card" id="previewCard">
-      <div class="card-content">
-        <p class="title" id="previewDescription">Description</p>
-        <hr>
-        <p id="previewURL"><a href="#" target="_blank">URL</a></p>
-        <hr>
-        <figure class="image" id="previewImageContainer" style="display: none;">
-          <img id="previewImage" src="#" alt="" />
-        </figure>
-      </div>
-    </div>
-  </div>
-</div>
-
-<hr>
-
-<h2 class="title">My Wishes</h2>
-<div class="columns is-multiline">
-  {% for wish in wishes %}
-    <div class="column is-one-third">
-      <div class="card">
-        <div class="card-content">
-          <p class="title">{{ wish.description }}</p>
-          {% if wish.url %}
-            <hr>
-            <p><a href="{{ wish.url }}" target="_blank">Link</a></p>
-          {% endif %}
-          {% if wish.img %}
-          <hr>
-          <figure class="image">
-            <img src="{{ url_for('static', filename='upload/' + wish.img) }}">
-          </figure>
-          {% endif %}
-          <hr>
-          <div>
-            <a href="{{ url_for('main.edit', wish_id=wish.id) }}" class="button is-warning">Edit</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  {% endfor %}
-</div>
-
-<hr>
-
-<h2 class="title">Their Wishes</h2>
-<div class="columns is-multiline">
-  {% for wish in their_wishes %}
-    <div class="column is-one-third">
-      <div class="card {% if wish.bought %}is-bought{% endif %}">
-        <div class="card-content">
-          <p>{{ wish.owner.username }}</p>
-          <p class="title">{{ wish.description }}</p>
-          {% if wish.url %}
-            <p><a href="{{ wish.url }}" target="_blank">{{ wish.domain }}</a></p>
-          {% endif %}
-          {% if wish.img %}
-            <hr>
-            <figure class="image">
-              <img src="{{ url_for('static', filename='upload/' + wish.img) }}">
-            </figure>
-          {% endif %}
-          <hr>
-          <div>
-            {% if not wish.bought %}
-              <a href="{{ url_for('main.buy', wish_id=wish.id) }}" class="button is-primary">Buy</a></li>
-            {% else %}
-              <a href="{{ url_for('main.cancel', wish_id=wish.id) }}" class="button is-danger {% if wish.buyer_id != current_user.id %}is-static{% endif %}">Cancel</a></li>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
-  {% endfor %}
-</div> -->
 
 {% block js %}
   <script src="{{ url_for('static', filename='js/wish.js') }}"></script>
