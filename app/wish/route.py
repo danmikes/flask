@@ -9,7 +9,7 @@ from .model import Wish
 from ..util.flash import flash_errors
 from .. import db
 
-wish = Blueprint('wish', __name__, template_folder='wish')
+wish = Blueprint('wish', __name__, static_folder='', template_folder='')
 
 @wish.route('/wish/edit', methods=['GET', 'POST'])
 @login_required

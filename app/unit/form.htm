@@ -4,8 +4,8 @@
 <h1 class="title">{% if form.id.data %}Edit{% else %}New{% endif %} Wish</h1>
 
 <form method="POST" enctype="multipart/form-data">
-  {{ form.hidden_tag() }}
-  
+  {{ form.hidden_tag() }}  
+
   <div class="field">
     {{ form.description.label(class="label") }}
     <div class="control">

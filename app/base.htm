@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('base.static', filename='favicon.ico') }}">
   <title>Flask App | {% block title %}Index{% endblock %}</title>
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='base.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('base.static', filename='base.css') }}">
   {% block head %}{% endblock %}
   {% block css %}{% endblock %}
 </head>
@@ -22,7 +22,8 @@
 
   {% include 'unit/footer.htm' %}
 
-  <script src="{{ url_for('static', filename='base.js') }}"></script>
+  <script>const currentUserId = "{{ current_user.id }}"</script>
+  <script src="{{ url_for('base.static', filename='base.js') }}"></script>
   {% block js %}{% endblock %}
 </body>
 </html>

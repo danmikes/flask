@@ -1,4 +1,4 @@
-<header>
+<header class="header">
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <a class="navbar-item" href="{{ url_for('base.index') }}">{{ current_user.username }}</a>
@@ -16,15 +16,15 @@
       <div class="navbar-mid">
         <a class="navbar-item" href="{{ url_for('base.index') }}">Home</a>
         {% if current_user.is_authenticated %}
-          <a class="navbar-item" href="{{ url_for('wish.wishes') }}">WishList</a>
+          <a class="navbar-item" href="{{ url_for('wish.wishes') }}">Wishes</a>
         {% endif %}
       </div>
 
       <div class="navbar-end">
         {% if current_user.is_authenticated %}
-          <a class="navbar-item" href="{{ url_for('user.logout') }}">Log Out</a>
+          <a class="navbar-item" href="{{ url_for('user.user_logout') }}">Log Out</a>
         {% else %}
-          <a class="navbar-item" href="{{ url_for('user.register' if page == 'login' else 'user.user_login') }}">
+          <a class="navbar-item" href="{{ url_for('user.user_register' if page == 'login' else 'user.user_login') }}">
             {{ 'Register' if page == 'login' else 'Log In' }}
           </a>
         {% endif %}

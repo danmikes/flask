@@ -6,12 +6,12 @@ from .model import User
 from ..util.flash import flash_errors
 from .. import db
 
-user = Blueprint('user', __name__, template_folder='user')
+user = Blueprint('user', __name__, static_folder='', template_folder='')
 
 @user.route('/user/login', methods=['GET', 'POST'])
 def user_login():
   if current_user.is_authenticated:
-    return redirect(url_for('wish.wishes_view'))
+    return redirect(url_for('wish.wishes'))
 
   form = LoginForm()
   if form.validate_on_submit():
@@ -21,7 +21,7 @@ def user_login():
         login_user(user)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-          next_page = url_for('wish.wishes_view')
+          next_page = url_for('wish.wishes')
         return redirect(next_page)
       else:
         flash('Invalid credentials', 'danger')
@@ -35,11 +35,10 @@ def user_login():
 @user.route('/user/register', methods=['GET', 'POST'])
 def user_register():
   if current_user.is_authenticated:
-    return redirect(url_for('wish.wishes_view'))
+    return redirect(url_for('wish.wishes'))
 
   form = RegistrationForm()
   if form.validate_on_submit():
-    # ToDo : check email
     if User.query.filter_by(username=form.username.data).first():
       flash('Username already exists; choose different username.', 'warning')
     else:
@@ -71,3 +70,23 @@ def users_json():
   users = User.query.all()
   user_list = [user.to_dict() for user in users]
   return jsonify(user_list)
+
+@user.route('/drop_all_tables', methods=['POST'])
+def drop_all_tables():
+  try:
+    db.session.execute('SET FOREIGN_KEY_CHECKS = 0;')
+    
+    tables = db.session.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'your_database_name';")
+    
+    for table in tables:
+      db.session.execute(f'DROP TABLE IF EXISTS `{table[0]}`;')
+    
+    db.session.commit()
+    
+    db.session.execute('SET FOREIGN_KEY_CHECKS = 1;')
+    
+    return jsonify({"message": "All tables dropped!"}), 200
+
+  except Exception as e:
+    db.session.rollback()
+    return jsonify({"error": str(e)}), 500

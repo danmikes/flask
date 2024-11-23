@@ -7,7 +7,6 @@ class User(UserMixin, db.Model):
   __tablename__ = 'user'
 
   id = db.Column(db.Integer, primary_key=True)
-  # email = db.Column(db.String(30), nullable=False, unique=True)
   username = db.Column(db.String(20), nullable=False, unique=True)
   password_hash = db.Column(db.String(20), nullable=False)
   timestamp = db.Column(db.DateTime, default=datetime.utcnow)
@@ -16,7 +15,7 @@ class User(UserMixin, db.Model):
   bought_wishes = db.relationship('Wish', back_populates='buyer', foreign_keys='Wish.buyer_id')
 
   def __repr__(self):
-    return '<User {self.id}: {self.username} - {self.email}>'
+    return '<User {self.id}: {self.username}>'
   
   def set_password(self, password):
     self.password_hash = generate_password_hash(password)
@@ -28,5 +27,4 @@ class User(UserMixin, db.Model):
     return {
       'id': self.id,
       'username': self.username,
-      # 'email': self.email,
     }

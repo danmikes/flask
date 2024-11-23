@@ -1,7 +1,7 @@
 {% extends 'base.htm' %}
 
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='wish/wish.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('wish.static', filename='wish/wish.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -18,10 +18,10 @@
 </div>
 
 {% for user in users %}
-  <div id="tab-{{ user.id }}" class="tab-content {% if loop.index == 1 %}is-active{% endif %}">
+  <div id="tab-{{ user.id }}" class="tab-content {% if user.id == current_user.id %}is-active{% endif %}">
     {% set user_wishes = wishes_by_user[user.id] %}
     {% if user_wishes %}
-      <div class="columns is-multiline mt-6">
+      <div class="columns is-multiline mt-6 is-centered">
         {% for wish in user_wishes %}
           <div class="column is-one-fifth-desktop is-one-third-tablet">
             {% set prop = {
@@ -49,7 +49,7 @@
 {% endfor %}
 
 {% block js %}
-  <script src="{{ url_for('static', filename='wish/wish.js') }}"></script>
+  <script src="{{ url_for('wish.static', filename='wish/wish.js') }}"></script>
 {% endblock %}
 
 {% endblock %}

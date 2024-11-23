@@ -29,7 +29,6 @@ def create_app():
     from .user.model import User
     from .wish.model import Wish
     try:
-      # db.drop_all()
       db.create_all()
     except Exception as e:
       app.logger.error(f'Error creating database tables: {e}')
@@ -39,7 +38,7 @@ def create_app():
   return app
 
 def register_blueprint(app):
-  from .route import register_route
+  from .blueprint import register_route
   try:
     register_route(app)
   except ImportError as e:
