@@ -18,14 +18,14 @@
   </div>
 
   <div class="card-footer">
-    {% if not is_owner %}
-      {% if not prop.bought %}
-        <a href="{{ url_for('main.mark_as_bought', wish_id=prop.id) }}" class="button is-primary">Mark as Bought</a>
+    {% if prop.is_owner %}
+      <a href="{{ url_for('main.edit_wish', wish_id=prop.id) }}" class="button is-warning">Edit Wish</a>
+    {% else %}
+      {% if prop.bought %}
+        <a href="{{ url_for('main.unmark_as_bought', wish_id=prop.id) }}" class="button is-danger {% if not is_buyer %}is-static{% endif %}">Unmark as Bought</a>
       {% else %}
-        <a href="{{ url_for('main.unmark_as_bought', wish_id=prop.id) }}" class="button is-danger {% if not is_owner %}is-static{% endif %}">Unmark as Bought</a>
+        <a href="{{ url_for('main.mark_as_bought', wish_id=prop.id) }}" class="button is-primary">Mark as Bought</a>
       {% endif %}
-
-      <a href="{{ url_for('main.edit_wish', wish_id=prop.id) }}" class="button is-warning {% if not is_buyer %}is-static{% endif %}">Edit Wish</a>
     {% endif %}
   </div>
 </div>

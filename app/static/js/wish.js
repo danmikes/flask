@@ -1,3 +1,21 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const tabLinks = document.querySelectorAll('.tab-link');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabLinks.forEach(link => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      tabLinks.forEach(link => link.parentElement.classList.remove('is-active'));
+      tabContents.forEach(content => content.classList.remove('is-active'));
+
+      link.parentElement.classList.add('is-active');
+      const targetContent = document.getElementById(link.getAttribute('href').substring(1));
+      targetContent.classList.add('is-active');
+    });
+  });
+});
+
 function updatePreview() {
   const description = document.getElementById('wishForm').description.value;
   const url = document.getElementById('wishForm').url.value;
@@ -28,21 +46,3 @@ function updateImagePreview(input) {
       previewImageContainer.style.display = 'none';
   }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  const tabLinks = document.querySelectorAll('.tab-link');
-  const tabContents = document.querySelectorAll('.tab-content');
-
-  tabLinks.forEach(link => {
-    link.addEventListener('click', (event) => {
-      event.preventDefault();
-
-      tabLinks.forEach(link => link.parentElement.classList.remove('is-active'));
-      tabContents.forEach(content => content.classList.remove('is-active'));
-
-      link.parentElement.classList.add('is-active');
-      const targetContent = document.getElementById(link.getAttribute('href').substring(1));
-      targetContent.classList.add('is-active');
-    });
-  });
-});
