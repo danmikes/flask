@@ -6,12 +6,12 @@ from .model import User
 from ..util.flash import flash_errors
 from .. import db
 
-user = Blueprint('user', __name__)
+user = Blueprint('user', __name__, template_folder='user')
 
-@user.route('/login', methods=['GET', 'POST'])
-def login():
+@user.route('/user/login', methods=['GET', 'POST'])
+def user_login():
   if current_user.is_authenticated:
-    return redirect(url_for('wish.wish'))
+    return redirect(url_for('wish.wishes_view'))
 
   form = LoginForm()
   if form.validate_on_submit():
@@ -21,7 +21,7 @@ def login():
         login_user(user)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-          next_page = url_for('wish.wish')
+          next_page = url_for('wish.wishes_view')
         return redirect(next_page)
       else:
         flash('Invalid credentials', 'danger')
@@ -32,10 +32,10 @@ def login():
   flash_errors(form)
   return render_template('user/login.htm', form=form, page='login')
 
-@user.route('/register', methods=['GET', 'POST'])
-def register():
+@user.route('/user/register', methods=['GET', 'POST'])
+def user_register():
   if current_user.is_authenticated:
-    return redirect(url_for('wish.wish'))
+    return redirect(url_for('wish.wishes_view'))
 
   form = RegistrationForm()
   if form.validate_on_submit():
@@ -49,7 +49,7 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         flash('Registration successful! You can log in.', 'success')
-        return redirect(url_for('user.login'))
+        return redirect(url_for('user.user_login'))
       except Exception as e:
         db.session.rollback()
         current_app.logger.error(f'Error during registration: {e}')
@@ -58,12 +58,12 @@ def register():
   flash_errors(form)
   return render_template('user/register.htm', form=form)
 
-@user.route('/logout')
+@user.route('/user/logout')
 @login_required
-def logout():
+def user_logout():
   logout_user()
   flash('You have been logged out', 'success')
-  return redirect(url_for('user.login'))
+  return redirect(url_for('user.user_login'))
 
 @user.route('/users/json', methods=['GET'])
 @login_required

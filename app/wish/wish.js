@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Check if there's a saved active tab
   const savedTab = localStorage.getItem('activeTab');
   if (savedTab) {
     setActiveTab(savedTab);

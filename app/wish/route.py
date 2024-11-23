@@ -9,11 +9,11 @@ from .model import Wish
 from ..util.flash import flash_errors
 from .. import db
 
-wish = Blueprint('wish', __name__)
+wish = Blueprint('wish', __name__, template_folder='wish')
 
-@wish.route('/wish', methods=['GET', 'POST'])
+@wish.route('/wish/edit', methods=['GET', 'POST'])
 @login_required
-def wish():
+def wish_edit():
   wish_id = request.args.get('wish_id', type=int)
   if wish_id:
     wish = Wish.query.get_or_404(wish_id)
@@ -42,7 +42,7 @@ def wish():
         wish.image = filename
       except Exception as e:
         flash(f'Error saving file: {e}', 'error')
-        return redirect(url_for('wish.wish'))
+        return redirect(url_for('wish.edit'))
 
     if not wish.id:
       db.session.add(wish)
@@ -70,11 +70,11 @@ def wishes():
     
     wishes_by_user[wish.owner_id].append(wish)
 
-  return render_template('wish/wishes.htm', users=users, wishes_by_user=wishes_by_user)
+  return render_template('wish/wish.htm', users=users, wishes_by_user=wishes_by_user)
 
-@wish.route('/buy/<int:wish_id>')
+@wish.route('/wish/buy/<int:wish_id>')
 @login_required
-def buy(wish_id):
+def wish_buy(wish_id):
   wish = Wish.query.get_or_404(wish_id)
   if wish.owner_id == current_user.id:
     flash('You cannot buy your own wish', 'error')
@@ -86,7 +86,7 @@ def buy(wish_id):
   flash('Wish marked as bought', 'success')
   return redirect(url_for('wish.wishes'))
 
-@wish.route('/cancel/<int:wish_id>')
+@wish.route('/wish/cancel/<int:wish_id>')
 @login_required
 def cancel(wish_id):
   wish = Wish.query.get_or_404(wish_id)

@@ -1,13 +1,13 @@
 from flask import Blueprint
 
-from .index import index as index_blueprint
-from .user.route import login as login_blueprint
+from .base import base as base_blueprint
+from .user.route import user as user_blueprint
 from .wish.route import wish as wish_blueprint
 
 def register_route(app):
   blueprints = [
-    index_blueprint,
-    login_blueprint,
+    base_blueprint,
+    user_blueprint,
     wish_blueprint,
   ]
 

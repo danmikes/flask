@@ -10,10 +10,10 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 
 def create_app():
-  app = Flask(__name__, template_folder='template')
-  app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static', 'upload')
-
   logging.basicConfig(level=logging.DEBUG)
+
+  app = Flask(__name__)
+  app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static', 'upload')
 
   app.config.from_mapping(
     SQLALCHEMY_DATABASE_URI='sqlite:///test.db',
@@ -29,7 +29,7 @@ def create_app():
     from .user.model import User
     from .wish.model import Wish
     try:
-      db.drop_all()
+      # db.drop_all()
       db.create_all()
     except Exception as e:
       app.logger.error(f'Error creating database tables: {e}')
