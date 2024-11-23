@@ -1,9 +1,9 @@
 import os
+import logging
 from flask import Flask, current_app
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
-import logging
 
 csrf = CSRFProtect()
 db = SQLAlchemy()
@@ -14,7 +14,6 @@ def create_app():
   app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static', 'upload')
 
   logging.basicConfig(level=logging.DEBUG)
-  app.logger.setLevel(logging.DEBUG)
 
   app.config.from_mapping(
     SQLALCHEMY_DATABASE_URI='sqlite:///test.db',
@@ -27,10 +26,10 @@ def create_app():
   login_manager.init_app(app)
 
   with app.app_context():
-    from .model.user import User
-    from .model.wish import Wish
+    from .user.model import User
+    from .wish.model import Wish
     try:
-      # db.drop_all()
+      db.drop_all()
       db.create_all()
     except Exception as e:
       app.logger.error(f'Error creating database tables: {e}')
@@ -40,17 +39,15 @@ def create_app():
   return app
 
 def register_blueprint(app):
+  from .route import register_route
   try:
-    from .route import register_route
     register_route(app)
   except ImportError as e:
     app.logger.error(f'Error importing blueprint: {e}')
-  except Exception as e:
-    app.logger.error(f'Error registering blueprint: {e}')
 
 @login_manager.user_loader
 def load_user(user_id):
-  from .model.user import User
+  from .user.model import User
   try:
     return User.query.get(int(user_id))
   except Exception as e:

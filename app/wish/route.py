@@ -3,19 +3,15 @@ from flask import Blueprint, current_app, flash, jsonify, redirect, render_templ
 from flask_login import current_user, login_required
 from urllib.parse import urlparse
 from werkzeug.utils import secure_filename
-from ..model.user import User
-from ..form.wish import WishForm
-from ..model.wish import Wish
-from ..util.util import flash_errors
+from ..user.model import User
+from .form import WishForm
+from .model import Wish
+from ..util.flash import flash_errors
 from .. import db
 
-main = Blueprint('main', __name__)
+wish = Blueprint('wish', __name__)
 
-@main.route('/')
-def index():
-  return render_template('main/index.htm')
-
-@main.route('/wish', methods=['GET', 'POST'])
+@wish.route('/wish', methods=['GET', 'POST'])
 @login_required
 def wish():
   wish_id = request.args.get('wish_id', type=int)
@@ -23,7 +19,7 @@ def wish():
     wish = Wish.query.get_or_404(wish_id)
     if wish.owner != current_user:
       flash('You can only edit your wishes', 'error')
-      return redirect(url_for('main.wishes'))
+      return redirect(url_for('wish.wishes'))
   else:
     wish = Wish(description='', url='', image='', owner=current_user)
 
@@ -46,18 +42,18 @@ def wish():
         wish.image = filename
       except Exception as e:
         flash(f'Error saving file: {e}', 'error')
-        return redirect(url_for('main.wish'))
+        return redirect(url_for('wish.wish'))
 
     if not wish.id:
       db.session.add(wish)
 
     db.session.commit()
     flash('Wish saved', 'success')
-    return redirect(url_for('main.wishes'))
+    return redirect(url_for('wish.wishes'))
 
   return render_template('unit/form.htm', form=form)
 
-@main.route('/wishes', methods=['GET'])
+@wish.route('/wishes', methods=['GET'])
 @login_required
 def wishes():
   users = User.query.all()
@@ -74,23 +70,23 @@ def wishes():
     
     wishes_by_user[wish.owner_id].append(wish)
 
-  return render_template('main/wishes.htm', users=users, wishes_by_user=wishes_by_user)
+  return render_template('wish/wishes.htm', users=users, wishes_by_user=wishes_by_user)
 
-@main.route('/buy/<int:wish_id>')
+@wish.route('/buy/<int:wish_id>')
 @login_required
 def buy(wish_id):
   wish = Wish.query.get_or_404(wish_id)
   if wish.owner_id == current_user.id:
     flash('You cannot buy your own wish', 'error')
-    return redirect(url_for('main.wishes'))
+    return redirect(url_for('wish.wishes'))
   
   wish.bought = True
   wish.buyer_id = current_user.id
   db.session.commit()
   flash('Wish marked as bought', 'success')
-  return redirect(url_for('main.wishes'))
+  return redirect(url_for('wish.wishes'))
 
-@main.route('/cancel/<int:wish_id>')
+@wish.route('/cancel/<int:wish_id>')
 @login_required
 def cancel(wish_id):
   wish = Wish.query.get_or_404(wish_id)
@@ -99,9 +95,9 @@ def cancel(wish_id):
   wish.buyer_id = None
   db.session.commit()
   flash('Wish canceled', 'success')
-  return redirect(url_for('main.wishes'))
+  return redirect(url_for('wish.wishes'))
 
-@main.route('/wishes/json', methods=['GET'])
+@wish.route('/wishes/json', methods=['GET'])
 @login_required
 def wishes_json():
   wishes = Wish.query.all()

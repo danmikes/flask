@@ -1,17 +1,17 @@
 from flask import Blueprint, current_app, flash, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.urls import url_parse
-from ..form.login import LoginForm, RegistrationForm
-from ..model.user import User
-from ..util.util import flash_errors
+from .form import LoginForm, RegistrationForm
+from .model import User
+from ..util.flash import flash_errors
 from .. import db
 
-auth = Blueprint('auth', __name__)
+user = Blueprint('user', __name__)
 
-@auth.route('/login', methods=['GET', 'POST'])
+@user.route('/login', methods=['GET', 'POST'])
 def login():
   if current_user.is_authenticated:
-    return redirect(url_for('main.wish'))
+    return redirect(url_for('wish.wish'))
 
   form = LoginForm()
   if form.validate_on_submit():
@@ -21,7 +21,7 @@ def login():
         login_user(user)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-          next_page = url_for('main.wish')
+          next_page = url_for('wish.wish')
         return redirect(next_page)
       else:
         flash('Invalid credentials', 'danger')
@@ -30,12 +30,12 @@ def login():
       flash('Error during login; retry', 'danger')
 
   flash_errors(form)
-  return render_template('auth/login.htm', form=form, page='login')
+  return render_template('user/login.htm', form=form, page='login')
 
-@auth.route('/register', methods=['GET', 'POST'])
+@user.route('/register', methods=['GET', 'POST'])
 def register():
   if current_user.is_authenticated:
-    return redirect(url_for('main.wish'))
+    return redirect(url_for('wish.wish'))
 
   form = RegistrationForm()
   if form.validate_on_submit():
@@ -49,23 +49,23 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         flash('Registration successful! You can log in.', 'success')
-        return redirect(url_for('auth.login'))
+        return redirect(url_for('user.login'))
       except Exception as e:
         db.session.rollback()
         current_app.logger.error(f'Error during registration: {e}')
         flash('Error during registration; retry', 'danger')
 
   flash_errors(form)
-  return render_template('auth/register.htm', form=form)
+  return render_template('user/register.htm', form=form)
 
-@auth.route('/logout')
+@user.route('/logout')
 @login_required
 def logout():
   logout_user()
   flash('You have been logged out', 'success')
-  return redirect(url_for('auth.login'))
+  return redirect(url_for('user.login'))
 
-@auth.route('/users/json', methods=['GET'])
+@user.route('/users/json', methods=['GET'])
 @login_required
 def users_json():
   users = User.query.all()

@@ -7,7 +7,7 @@
   <div class="container half-width mt-2">
     <h1 class="title">Log-In</h1>
 
-    <form method="POST" action="{{ url_for('auth.login') }}">
+    <form method="POST" action="{{ url_for('user.login') }}">
       {{ form.hidden_tag() }}
 
       <div class="field">

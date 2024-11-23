@@ -19,12 +19,12 @@
 
   <div class="card-footer">
     {% if prop.is_owner %}
-      <a href="{{ url_for('main.edit', wish_id=prop.id) }}" class="button is-warning">Edit</a>
+      <a href="{{ url_for('wish.edit', wish_id=prop.id) }}" class="button is-warning">Edit</a>
     {% else %}
       {% if prop.bought %}
-        <a href="{{ url_for('main.cancel', wish_id=prop.id) }}" class="button is-danger {% if not prop.is_buyer %}is-static{% endif %}">Cancel</a>
+        <a href="{{ url_for('wish.cancel', wish_id=prop.id) }}" class="button is-danger {% if not prop.is_buyer %}is-static{% endif %}">Cancel</a>
       {% else %}
-        <a href="{{ url_for('main.buy', wish_id=prop.id) }}" class="button is-primary">Buy</a>
+        <a href="{{ url_for('wish.buy', wish_id=prop.id) }}" class="button is-primary">Buy</a>
       {% endif %}
     {% endif %}
   </div>
