@@ -2,16 +2,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabLinks = document.querySelectorAll('.tab-link');
   const tabContents = document.querySelectorAll('.tab-content');
 
+  function setActiveTab(tabId) {
+    tabLinks.forEach(link => link.parentElement.classList.remove('is-active'));
+    tabContents.forEach(content => content.classList.remove('is-active'));
+
+    const activeLink = document.querySelector(`[href="#${tabId}"]`);
+    const activeContent = document.getElementById(tabId);
+
+    if (activeLink && activeContent) {
+      activeLink.parentElement.classList.add('is-active');
+      activeContent.classList.add('is-active');
+      localStorage.setItem('activeTab', tabId);
+    }
+  }
+
+  // Check if there's a saved active tab
+  const savedTab = localStorage.getItem('activeTab');
+  if (savedTab) {
+    setActiveTab(savedTab);
+  }
+
   tabLinks.forEach(link => {
     link.addEventListener('click', (event) => {
       event.preventDefault();
-
-      tabLinks.forEach(link => link.parentElement.classList.remove('is-active'));
-      tabContents.forEach(content => content.classList.remove('is-active'));
-
-      link.parentElement.classList.add('is-active');
-      const targetContent = document.getElementById(link.getAttribute('href').substring(1));
-      targetContent.classList.add('is-active');
+      const tabId = link.getAttribute('href').substring(1);
+      setActiveTab(tabId);
     });
   });
 });

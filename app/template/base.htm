@@ -13,9 +13,11 @@
 <body>
   {% include 'unit/header.htm' %}
 
-  <div class="container mt-4">
-    {% include 'unit/message.htm' %}
-    {% block body %}{% endblock %}
+  <div class="container is-max-desktop">
+    <div class="content has-text-centered">
+      {% include 'unit/message.htm' %}
+      {% block body %}{% endblock %}
+    </div>
   </div>
 
   {% include 'unit/footer.htm' %}

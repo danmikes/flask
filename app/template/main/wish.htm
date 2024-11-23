@@ -17,13 +17,13 @@
   </ul>
 </div>
 
-<div class="columns mt-6">
-  {% for user in users %}
-    <div id="tab-{{ user.id }}" class="tab-content {% if loop.index == 1 %}is-active{% endif %}">
-      {% set user_wishes = wishes_by_user[user.id] %}
-      {% if user_wishes %}
+{% for user in users %}
+  <div id="tab-{{ user.id }}" class="tab-content {% if loop.index == 1 %}is-active{% endif %}">
+    {% set user_wishes = wishes_by_user[user.id] %}
+    {% if user_wishes %}
+      <div class="columns is-multiline mt-6">
         {% for wish in user_wishes %}
-          <div class="column is-one-third">
+          <div class="column is-one-third-desktop is-half-tablet">
             {% set prop = {
               'id': wish.id,
               'description': wish.description,
@@ -41,12 +41,12 @@
             {% include 'unit/card.htm' %}
           </div>
         {% endfor %}
-      {% else %}
-        <p>No wishes for this user</p>
-      {% endif %}
-    </div>
-  {% endfor %}
-</div>
+      </div>
+    {% else %}
+      <p>No wishes for this user</p>
+    {% endif %}
+  </div>
+{% endfor %}
 
 <!-- <h2 class="title">New Wish</h2>
 <div class="columns is-multiline is-centered">
@@ -123,7 +123,7 @@
           {% endif %}
           <hr>
           <div>
-            <a href="{{ url_for('main.edit_wish', wish_id=wish.id) }}" class="button is-warning">Edit Wish</a>
+            <a href="{{ url_for('main.edit', wish_id=wish.id) }}" class="button is-warning">Edit</a>
           </div>
         </div>
       </div>
@@ -153,9 +153,9 @@
           <hr>
           <div>
             {% if not wish.bought %}
-              <a href="{{ url_for('main.mark_as_bought', wish_id=wish.id) }}" class="button is-primary">Mark as Bought</a></li>
+              <a href="{{ url_for('main.buy', wish_id=wish.id) }}" class="button is-primary">Buy</a></li>
             {% else %}
-              <a href="{{ url_for('main.unmark_as_bought', wish_id=wish.id) }}" class="button is-danger {% if wish.buyer_id != current_user.id %}is-static{% endif %}">Unmark as Bought</a></li>
+              <a href="{{ url_for('main.cancel', wish_id=wish.id) }}" class="button is-danger {% if wish.buyer_id != current_user.id %}is-static{% endif %}">Cancel</a></li>
             {% endif %}
           </div>
         </div>

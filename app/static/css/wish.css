@@ -4,7 +4,6 @@
 
 .tab-content.is-active {
   display: flex;
-  flex-direction: row;
 }
 
 .card {

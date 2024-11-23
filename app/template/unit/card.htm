@@ -1,4 +1,4 @@
-<div class="card {% if prop.bought %}is-bought{% endif %}">
+<div class="card {% if prop.bought and not prop.is_owner%}is-bought{% endif %}">
   <div class="card-header">
     {% if prop.description %}
       <p>{{ prop.description }}</p>
@@ -19,12 +19,12 @@
 
   <div class="card-footer">
     {% if prop.is_owner %}
-      <a href="{{ url_for('main.edit_wish', wish_id=prop.id) }}" class="button is-warning">Edit Wish</a>
+      <a href="{{ url_for('main.edit', wish_id=prop.id) }}" class="button is-warning">Edit</a>
     {% else %}
       {% if prop.bought %}
-        <a href="{{ url_for('main.unmark_as_bought', wish_id=prop.id) }}" class="button is-danger {% if not is_buyer %}is-static{% endif %}">Unmark as Bought</a>
+        <a href="{{ url_for('main.cancel', wish_id=prop.id) }}" class="button is-danger {% if not prop.is_buyer %}is-static{% endif %}">Cancel</a>
       {% else %}
-        <a href="{{ url_for('main.mark_as_bought', wish_id=prop.id) }}" class="button is-primary">Mark as Bought</a>
+        <a href="{{ url_for('main.buy', wish_id=prop.id) }}" class="button is-primary">Buy</a>
       {% endif %}
     {% endif %}
   </div>

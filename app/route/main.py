@@ -63,12 +63,12 @@ def wish():
 
   return render_template('main/wish.htm', form=form, users=users, wishes_by_user=wishes_by_user)
 
-@main.route('/mark_as_bought/<int:wish_id>')
+@main.route('/buy/<int:wish_id>')
 @login_required
-def mark_as_bought(wish_id):
+def buy(wish_id):
   wish = Wish.query.get_or_404(wish_id)
   if wish.owner_id == current_user.id:
-    flash('You cannot mark your own wish as bought')
+    flash('You cannot buy your own wish')
     return redirect(url_for('main.wish'))
   
   wish.bought = True
@@ -77,19 +77,19 @@ def mark_as_bought(wish_id):
   flash('Wish marked as bought')
   return redirect(url_for('main.wish'))
 
-@main.route('/unmark_as_bought/<int:wish_id>')
+@main.route('/cancel/<int:wish_id>')
 @login_required
-def unmark_as_bought(wish_id):
+def cancel(wish_id):
   wish = Wish.query.get_or_404(wish_id)
   
   wish.bought = False
   wish.buyer_id = None
   db.session.commit()
-  flash('Wish unmarked as bought')
+  flash('Wish canceled')
   return redirect(url_for('main.wish'))
 
-@main.route('/edit_wish/<int:wish_id>', methods=['GET', 'POST'])
-def edit_wish(wish_id):
+@main.route('/edit/<int:wish_id>', methods=['GET', 'POST'])
+def edit(wish_id):
   wish = Wish.query.get_or_404(wish_id)
   form = WishForm()
 
@@ -124,7 +124,7 @@ def edit_wish(wish_id):
 
 @main.route('/wishes', methods=['GET'])
 @login_required
-def wishlist():
+def wishes():
   wishes = Wish.query.all()
   wish_list = [wish.to_dict() for wish in wishes]
   # return render_template('main/wishes.htm', wishes=wishes)

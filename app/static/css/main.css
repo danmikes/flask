@@ -6,3 +6,9 @@
 .footer {
   padding: 10px;
 }
+
+.button.is-big {
+  color: yellow;
+  font-size: 2rem;
+  font-weight: bold;
+}

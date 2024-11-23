@@ -4,10 +4,7 @@
 
 {% block body %}
 <section class="section">
-  <div class="container">
-    <h1 class="title">Home</h1>
-    <h2 class="subtitle">Wish App</h2>
-    <p>Make your wishes come true</p>
-  </div>
+  <h1 class="title">Wish App</h1>
+  <p><a href="{{ url_for('main.wish') }}" class="button is-big">Make a Wish</a></p>
 </section>
 {% endblock %}
