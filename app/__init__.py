@@ -55,4 +55,4 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-  return 'Log In to access this page', 403
+  return 'Log-In to access this page', 403

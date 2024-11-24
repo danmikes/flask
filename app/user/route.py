@@ -47,7 +47,7 @@ def user_register():
       try:
         db.session.add(new_user)
         db.session.commit()
-        flash('Registration successful! You can log in.', 'success')
+        flash('Registration successful! You can log-in.', 'success')
         return redirect(url_for('user.user_login'))
       except Exception as e:
         db.session.rollback()

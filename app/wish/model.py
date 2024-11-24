@@ -8,7 +8,7 @@ class Wish(db.Model):
   description = db.Column(db.String(200), nullable=False)
   url = db.Column(db.String(200), nullable=True)
   image = db.Column(db.String(100), nullable=True)
-  bought = db.Column(db.Boolean, default=False)
+  is_bought = db.Column(db.Boolean, default=False)
 
   buyer_id = db.Column(db.Integer, db.ForeignKey('user.id'))
   buyer = db.relationship('User', back_populates='bought_wishes', foreign_keys=[buyer_id])
@@ -21,11 +21,10 @@ class Wish(db.Model):
     self.url = url
     self.image = image
     self.owner = owner
-    self.buyer_id = buyer.id if buyer else None
     self.buyer = buyer if buyer else None
 
   def __repr__(self):
-    return '<Wish {self.id}: {self.description[:20]}... - {self.image}>'    
+    return '<Wish {self.id}: {self.description[:20]}... - {self.image} - {self.is_bought}>'    
 
   def to_dict(self):
     return {
@@ -33,9 +32,7 @@ class Wish(db.Model):
       'description': self.description,
       'url': self.url,
       'image': self.image,
-      'bought': self.bought,
-      'buyer_id': self.buyer_id,
-      'buyer': self.buyer.to_dict() if self.buyer else None,
-      'owner_id': self.owner_id,
+      'is_bought': self.is_bought,
+      'buyer': self.buyer.to_dict(),
       'owner': self.owner.to_dict(),
     }

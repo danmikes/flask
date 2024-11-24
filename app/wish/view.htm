@@ -1,8 +1,10 @@
 {% extends 'base.htm' %}
 
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('wish.static', filename='wish/wish.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('wish.static', filename='wish/style.css') }}">
 {% endblock %}
+
+{% block title %}Wishes{% endblock %}
 
 {% block body %}
 <h1 class="title">Wishes</h1>
@@ -30,13 +32,11 @@
               'url': wish.url,
               'domain': wish.domain,
               'image': wish.image,
-              'bought': wish.bought,
+              'is_bought': wish.is_bought,
               'owner': wish.owner,
-              'owner_id': wish.owner_id,
-              'is_owner': wish.owner_id == current_user.id,
               'buyer': wish.buyer,
-              'buyer_id': wish.buyer_id,
-              'is_buyer': wish.buyer_id == current_user.id,
+              'is_owner': wish.owner.id == current_user.id,
+              'is_buyer': wish.buyer.id == current_user.id,
             } %}
             {% include 'unit/card.htm' %}
           </div>
@@ -48,7 +48,6 @@
   </div>
 {% endfor %}
 
-<script>const currentUserId = "{{ current_user.id }}";</script>
-<script src="{{ url_for('wish.static', filename='wish/wish.js') }}"></script>
+<script src="{{ url_for('wish.static', filename='wish/script.js') }}"></script>
 
 {% endblock %}

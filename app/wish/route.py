@@ -65,12 +65,12 @@ def wishes():
       parsed_url = urlparse(wish.url)
       wish.domain = parsed_url.hostname
 
-    if wish.owner_id not in wishes_by_user:
+    if wish.owner.id not in wishes_by_user:
       wishes_by_user[wish.owner_id] = []
     
     wishes_by_user[wish.owner_id].append(wish)
 
-  return render_template('wish/wish.htm', users=users, wishes_by_user=wishes_by_user)
+  return render_template('wish/view.htm', users=users, wishes_by_user=wishes_by_user)
 
 @wish.route('/wish/buy/<int:wish_id>')
 @login_required
@@ -80,8 +80,8 @@ def wish_buy(wish_id):
     flash('You cannot buy your own wish', 'error')
     return redirect(url_for('wish.wishes'))
   
-  wish.bought = True
-  wish.buyer_id = current_user.id
+  wish.is_bought = True
+  wish.buyer.id = current_user.id
   db.session.commit()
   flash('Wish marked as bought', 'success')
   return redirect(url_for('wish.wishes'))
@@ -91,8 +91,8 @@ def wish_buy(wish_id):
 def cancel(wish_id):
   wish = Wish.query.get_or_404(wish_id)
   
-  wish.bought = False
-  wish.buyer_id = None
+  wish.is_bought = False
+  wish.buyer.id = None
   db.session.commit()
   flash('Wish canceled', 'success')
   return redirect(url_for('wish.wishes'))

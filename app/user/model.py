@@ -29,5 +29,5 @@ class User(UserMixin, db.Model):
       'username': self.username,
       'timestamp': self.timestamp,
       'wishes': self.wishes,
-      'check': check_password_hash(self.password_hash, self.username)
+      'match': check_password_hash(self.password_hash, self.username)
     }
