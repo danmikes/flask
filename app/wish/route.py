@@ -32,9 +32,6 @@ def wish_edit(wish_id=None):
     form.populate_obj(wish)
 
     file = form.image.data
-
-    print('FileName', secure_filename(file.filename)) # DEBUG
-
     if file:
       filename = secure_filename(file.filename)
       file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
@@ -49,7 +46,10 @@ def wish_edit(wish_id=None):
     if not wish.id:
       db.session.add(wish)
 
+    print(f'\n\n\nWish before commit: {wish.__dict__}\n\n\n') # DEBUG
     db.session.commit()
+    wish = Wish.query.get_or_404(wish.id) # DEBUG
+    print(f'\n\n\nWish after commit: {wish.__dict__}\n\n\n') # DEBUG
     flash('Wish saved', 'success')
     return redirect(url_for('wish.wishes'))
 

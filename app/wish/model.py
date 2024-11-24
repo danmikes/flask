@@ -4,17 +4,17 @@ from .. import db
 class Wish(db.Model):
   __tablename__ = 'wish'
 
-  id = db.Column(db.Integer, primary_key=True)
+  id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   description = db.Column(db.String(200), nullable=False)
   url = db.Column(db.String(200), nullable=True)
   image = db.Column(db.String(100), nullable=True)
   is_bought = db.Column(db.Boolean, default=False)
 
   owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
-  owner = db.relationship('User', back_populates='wishes')
+  owner = db.relationship('User', back_populates='wishes', foreign_keys=[owner_id])
 
   buyer_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True, nullable=True)
-  buyer = db.relationship('User', back_populates='bought_wishes')
+  buyer = db.relationship('User', back_populates='bought_wishes', foreign_keys=[buyer_id])
 
   def __init__(self, description, owner, url=None, image=None, buyer=None):
     self.description = description

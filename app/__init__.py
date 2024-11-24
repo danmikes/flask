@@ -29,6 +29,7 @@ def create_app():
     from .user.model import User
     from .wish.model import Wish
     try:
+      db.drop_all()
       db.create_all()
     except Exception as e:
       app.logger.error(f'Error creating database tables: {e}')

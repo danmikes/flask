@@ -6,6 +6,10 @@
 <form method="POST" enctype="multipart/form-data">
   {{ form.hidden_tag() }}  
 
+  {% if form.id.data %}
+    {{ form.id() }}
+  {% endif %}
+
   <div class="field">
     {{ form.description.label(class="label") }}
     <div class="control">
