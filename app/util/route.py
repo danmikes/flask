@@ -1,11 +1,11 @@
-from flask import Blueprint, jsonify
-from flask_wtf.csrf import generate_csrf
-import requests
-from sqlalchemy import text
-from .. import db
+import os
+from flask import Blueprint, current_app
 
 util = Blueprint('util', __name__)
 
 @util.route('/test')
 def test():
+  file_path = os.path.join(current_app.config['UPLOAD_FOLDER'])
+  print(f'File path: {file_path}')
+
   return 'TEST'

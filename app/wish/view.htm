@@ -9,6 +9,10 @@
 {% block body %}
 <h1 class="title">Wishes</h1>
 
+<div class="has-text-centered mt-4">
+  <a href="{{ url_for('wish.wish_edit') }}" class="button is-primary">New Wish</a>
+</div>
+
 <div class="tabs is-centered">
   <ul>
     {% for user in users %}

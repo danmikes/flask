@@ -13,7 +13,7 @@ def create_app():
   logging.basicConfig(level=logging.DEBUG)
 
   app = Flask(__name__)
-  app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static', 'upload')
+  app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'upload')
 
   app.config.from_mapping(
     SQLALCHEMY_DATABASE_URI='sqlite:///test.db',

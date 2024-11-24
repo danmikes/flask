@@ -5,7 +5,7 @@
 
 {% if current_user.is_authenticated %}
   <script>
-    window.location.href = "{{ url_for('wish.view') }}"
+    window.location.href = "{{ url_for('wish.wishes') }}"
   </script>
 {% else %}
   <script>

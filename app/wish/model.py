@@ -10,10 +10,10 @@ class Wish(db.Model):
   image = db.Column(db.String(100), nullable=True)
   is_bought = db.Column(db.Boolean, default=False)
 
-  buyer_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+  buyer_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
   buyer = db.relationship('User', back_populates='bought_wishes', foreign_keys=[buyer_id])
 
-  owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+  owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
   owner = db.relationship('User', back_populates='wishes', foreign_keys=[owner_id])
 
   def __init__(self, description, url, image, owner, buyer=None):
