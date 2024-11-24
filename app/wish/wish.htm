@@ -48,8 +48,7 @@
   </div>
 {% endfor %}
 
-{% block js %}
-  <script src="{{ url_for('wish.static', filename='wish/wish.js') }}"></script>
-{% endblock %}
+<script>const currentUserId = "{{ current_user.id }}";</script>
+<script src="{{ url_for('wish.static', filename='wish/wish.js') }}"></script>
 
 {% endblock %}

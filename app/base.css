@@ -13,21 +13,19 @@ body {
   padding: 10px;
   text-align: center;
 }
+.navbar-menu {
+  flex-grow: 1;
+  justify-content: center;
+}
 .footer {
   padding: 10px;
   text-align: center;
 }
-
 .mobile-width {
   max-width: 468px;
   width: 100%;
   margin: 0 auto;
 }
-
-.footer {
-  padding: 10px;
-}
-
 .button.is-big {
   color: yellow;
   background-color: maroon;

@@ -7,7 +7,6 @@
   <title>Flask App | {% block title %}Index{% endblock %}</title>
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <link rel="stylesheet" type="text/css" href="{{ url_for('base.static', filename='base.css') }}">
-  {% block head %}{% endblock %}
   {% block css %}{% endblock %}
 </head>
 <body>
@@ -22,8 +21,6 @@
 
   {% include 'unit/footer.htm' %}
 
-  <script>const currentUserId = "{{ current_user.id }}";</script>
   <script src="{{ url_for('base.static', filename='base.js') }}"></script>
-  {% block js %}{% endblock %}
 </body>
 </html>

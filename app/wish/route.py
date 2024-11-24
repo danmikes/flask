@@ -98,7 +98,7 @@ def cancel(wish_id):
   return redirect(url_for('wish.wishes'))
 
 @wish.route('/wishes/json', methods=['GET'])
-@login_required
+# @login_required
 def wishes_json():
   wishes = Wish.query.all()
   wish_list = [wish.to_dict() for wish in wishes]
