@@ -10,21 +10,20 @@ class Wish(db.Model):
   image = db.Column(db.String(100), nullable=True)
   is_bought = db.Column(db.Boolean, default=False)
 
-  buyer_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
-  buyer = db.relationship('User', back_populates='bought_wishes', foreign_keys=[buyer_id])
-
   owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
-  owner = db.relationship('User', back_populates='wishes', foreign_keys=[owner_id])
+  owner = db.relationship('User', back_populates='wishes')
 
-  def __init__(self, description, url, image, owner, buyer=None):
+  buyer_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True, nullable=True)
+  buyer = db.relationship('User', back_populates='bought_wishes')
+
+  def __init__(self, description, owner, url=None, image=None, buyer=None):
     self.description = description
     self.url = url
     self.image = image
     self.owner = owner
-    self.buyer = buyer if buyer else None
 
   def __repr__(self):
-    return '<Wish {self.id}: {self.description[:20]}... - {self.image} - {self.is_bought}>'    
+    return f'<Wish {self.id}: {self.description[:20]}... - {self.image} - {self.is_bought}>'
 
   def to_dict(self):
     return {
@@ -33,6 +32,6 @@ class Wish(db.Model):
       'url': self.url,
       'image': self.image,
       'is_bought': self.is_bought,
-      'buyer': self.buyer.to_dict(),
+      'buyer': self.buyer.to_dict() if self.buyer else None,
       'owner': self.owner.to_dict(),
     }

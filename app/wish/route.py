@@ -14,7 +14,7 @@ wish = Blueprint('wish', __name__, static_folder='', template_folder='')
 @wish.route('/wish/edit', methods=['GET', 'POST'])
 @wish.route('/wish/edit/<int:wish_id>', methods=['GET', 'POST'])
 @login_required
-def wish_edit():
+def wish_edit(wish_id=None):
   wish_id = request.args.get('wish_id', type=int)
 
   if wish_id:
@@ -23,26 +23,28 @@ def wish_edit():
       flash('You can only edit your wishes', 'error')
       return redirect(url_for('wish.wishes'))
   else:
-    wish = Wish(description='', url='', image='', owner=current_user)
+    wish = Wish(description='', owner=current_user)
 
   form = WishForm(obj=wish)
 
   if form.validate_on_submit():
+
     form.populate_obj(wish)
 
     file = form.image.data
 
+    print('FileName', secure_filename(file.filename)) # DEBUG
+
     if file:
       filename = secure_filename(file.filename)
       file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
-      print(f'File name: {filename}') # DEBUG
 
       try:
         file.save(file_path)
         wish.image = filename
       except Exception as e:
         flash(f'Error saving file: {e}', 'error')
-        return redirect(url_for('wish.wish_edit'), wish_id=wish.id if wish.id else None)
+        return redirect(url_for('wish.wish_edit'), wish_id=wish_id)
 
     if not wish.id:
       db.session.add(wish)
