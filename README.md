@@ -29,7 +29,7 @@ deactivate
 # flask
 ## install
 ```
-python -m pip install flask flask-login flask-sqlalchemy
+python -m pip install flask flask-login flask-sqlalchemy sas Werkzeug==2.2.2
 ```
 or
 ```
