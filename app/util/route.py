@@ -1,5 +1,4 @@
 import os
-import time
 from flask import Blueprint, current_app
 
 util = Blueprint('util', __name__)

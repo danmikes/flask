@@ -1,58 +1,26 @@
-import os
-from flask import Blueprint, current_app, flash, jsonify, redirect, render_template, request, url_for
+from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
-from sqlalchemy.exc import SQLAlchemyError
-from urllib.parse import urlparse
-from werkzeug.utils import secure_filename
 from ..user.model import User
 from .form import WishForm
 from .model import Wish
+from .function import handle_wish, fill_wish, save_file, save_wish
 from ..util.flash import flash_errors
 from .. import db
 
 wish = Blueprint('wish', __name__, static_folder='', template_folder='')
 
-def form_validate(form, wish=None):
-  if form.validate_on_submit():
-    form.populate_obj(wish)
-
-    file = form.image.data
-    if file:
-      filename = secure_filename(file.filename)
-      file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
-
-      try:
-        file.save(file_path)
-        wish.image = filename
-      except Exception as e:
-        flash(f'Error saving file: {e}', 'error')
-        if wish and wish.id:
-          return redirect(url_for('wish.wish_edit', wish_id=wish.id))
-        else:
-          return redirect(url_for('wish.wish_new'))
-    return True
-  return False
-
 @wish.route('/wish/new', methods=['GET', 'POST'])
 @login_required
 def wish_new():
-  wish = Wish()
   form = WishForm()
 
-  if form_validate(form, wish):
-    try:
-      db.session.add(wish)
-      db.session.commit()
-      flash('Wish saved', 'success')
+  if request.method == 'POST':
+    success, _ = handle_wish(form)
+    if success:
       return redirect(url_for('wish.wishes'))
-    except SQLAlchemyError as e:
-      db.session.rollback()
-      flash('Error while saving wish', 'error')
-      print(f'Database error: {e}')
-  else:
-    flash_errors(form)
-  
-  return render_template('wish/form.htm', form=form, wish=wish)
+
+  flash_errors(form)
+  return render_template('wish/form.htm', form=form, is_edit=False)
 
 @wish.route('/wish/edit/<int:wish_id>', methods=['GET', 'POST'])
 @login_required
@@ -60,18 +28,13 @@ def wish_edit(wish_id):
   wish = Wish.query.get_or_404(wish_id)
   form = WishForm(obj=wish)
 
-  if form_validate(form, wish):
-    try:
-      db.session.commit()
-      flash('Wish saved', 'success')
+  if request.method == 'POST':
+    success, _ = handle_wish(form, wish)
+    if success:
       return redirect(url_for('wish.wishes'))
-    except SQLAlchemyError as e:
-      flash('Error while saving wish', 'error')
-      print(f'Database error: {e}')
-  else:
-    flash_errors(form)
   
-  return render_template('wish/form.htm', form=form, wish=wish)
+  flash_errors(form)
+  return render_template('wish/form.htm', form=form, is_edit=True)
 
 @wish.route('/wish/buy/<int:wish_id>')
 @login_required
@@ -104,10 +67,6 @@ def wishes():
   wishes_by_user = {}
 
   for wish in wishes:
-    if wish.url:
-      parsed_url = urlparse(wish.url)
-      wish.domain = parsed_url.hostname
-
     if wish.owner.id not in wishes_by_user:
       wishes_by_user[wish.owner_id] = []
     

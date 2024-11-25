@@ -1,4 +1,5 @@
 from sqlalchemy import event
+from urllib.parse import urlparse
 from .. import db
 
 class Wish(db.Model):
@@ -25,6 +26,10 @@ class Wish(db.Model):
   def is_bought(self):
     return self.buyer is not None
 
+  @property
+  def domain(self):
+    return urlparse(self.url).hostname if self.url else None
+
   def __repr__(self):
     return f'<Wish {self.id}: {self.description[:20]}... - {self.image} - {self.is_bought}>'
 
@@ -37,6 +42,7 @@ class Wish(db.Model):
       'buyer': self.buyer.to_dict() if self.buyer else None,
       'owner': self.owner.to_dict(),
       'is_bought': self.is_bought,
+      'domain': self.domain,
     }
 
 @event.listens_for(Wish.buyer, 'set')
