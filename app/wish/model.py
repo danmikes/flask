@@ -16,7 +16,7 @@ class Wish(db.Model):
   buyer_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True, nullable=True)
   buyer = db.relationship('User', back_populates='wishes_bought', foreign_keys=[buyer_id])
 
-  def __init__(self, description=None, owner=None, url=None, image=None, buyer=None):
+  def __init__(self, description=None, url=None, image=None, owner=None):
     self.description = description
     self.url = url
     self.image = image

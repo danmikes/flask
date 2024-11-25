@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from ..user.model import User
 from .form import WishForm
 from .model import Wish
-from .function import handle_wish, fill_wish, save_file, save_wish
+from .function import handle_wish, fill_wish, save_file, save_wish, toggle_wish
 from ..util.flash import flash_errors
 from .. import db
 
@@ -34,26 +34,16 @@ def wish_edit(wish_id):
   flash_errors(form)
   return render_template('wish/form.htm', form=form, is_edit=True)
 
-@wish.route('/wish/buy/<int:wish_id>')
+@wish.route('/wish/toggle/<int:wish_id>')
 @login_required
-def wish_buy(wish_id):
+def wish_toggle(wish_id):
   wish = Wish.query.get_or_404(wish_id)
+  success = toggle_wish(wish)
 
-  wish.buyer = current_user
-
-  db.session.commit()
-  flash('Wish bought', 'success')
-
-  return redirect(url_for('wish.wishes'))
-
-@wish.route('/wish/cancel/<int:wish_id>')
-@login_required
-def cancel(wish_id):
-  wish = Wish.query.get_or_404(wish_id)
-
-  wish.buyer = None
-  db.session.commit()
-  flash('Wish canceled', 'success')
+  if success:
+    flash('Wish toggled', 'success')
+  else:
+    flash('Wish not toggles', 'danger')
 
   return redirect(url_for('wish.wishes'))
 

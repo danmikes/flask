@@ -21,11 +21,7 @@
     {% if prop.is_owner %}
       <a href="{{ url_for('wish.edit', wish_id=prop.id) }}" class="button is-warning">Edit</a>
     {% else %}
-      {% if prop.is_bought %}
-        <a href="{{ url_for('wish.cancel', wish_id=prop.id) }}" class="button is-danger {% if not prop.is_buyer %}is-static{% endif %}">Cancel</a>
-      {% else %}
-        <a href="{{ url_for('wish.buy', wish_id=prop.id) }}" class="button is-primary">Buy</a>
-      {% endif %}
+      <a href="{{ url_for('wish.toggle', wish_id=prop.id) }}" class="button is-danger {% if prop.is_bought and not prop.is_buyer %}is-static{% endif %}">{% if prop.is_bought %}Cancel{% else %}Buy</a>
     {% endif %}
   </div>
 </div>

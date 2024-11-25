@@ -43,3 +43,18 @@ def handle_wish(form, wish=None):
     return save_wish(wish)
 
   return False
+
+def toggle_wish(wish):
+  try:
+    if wish.is_buyer:
+      wish.buyer = None
+      flash('wish cancelled', 'success')
+    else:
+      wish.buyer = None
+      flash('Wish bought', 'success')
+    db.session.commit()
+    return True
+  except SQLAlchemyError as e:
+    db.session.rollback()
+    flash('Error updating wish', 'danger')
+    return False
