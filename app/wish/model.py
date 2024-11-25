@@ -1,4 +1,4 @@
-from flask_login import UserMixin
+from sqlalchemy import event
 from .. import db
 
 class Wish(db.Model):
@@ -8,7 +8,6 @@ class Wish(db.Model):
   description = db.Column(db.String(200), nullable=False)
   url = db.Column(db.String(200), nullable=True)
   image = db.Column(db.String(100), nullable=True)
-  is_bought = db.Column(db.Boolean, default=False)
 
   owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
   owner = db.relationship('User', back_populates='wishes', foreign_keys=[owner_id])
@@ -21,6 +20,10 @@ class Wish(db.Model):
     self.url = url
     self.image = image
     self.owner = owner
+  
+  @property
+  def is_bought(self):
+    return self.buyer is not None
 
   def __repr__(self):
     return f'<Wish {self.id}: {self.description[:20]}... - {self.image} - {self.is_bought}>'
@@ -31,7 +34,11 @@ class Wish(db.Model):
       'description': self.description,
       'url': self.url,
       'image': self.image,
-      'is_bought': self.is_bought,
       'buyer': self.buyer.to_dict() if self.buyer else None,
       'owner': self.owner.to_dict(),
+      'is_bought': self.is_bought,
     }
+
+@event.listens_for(Wish.buyer, 'set')
+def set_is_bought(target, value, *_):
+  target.is_bought = value is not None

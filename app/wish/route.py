@@ -11,22 +11,7 @@ from .. import db
 
 wish = Blueprint('wish', __name__, static_folder='', template_folder='')
 
-@wish.route('/wish/edit', methods=['GET', 'POST'])
-@wish.route('/wish/edit/<int:wish_id>', methods=['GET', 'POST'])
-@login_required
-def wish_edit(wish_id=None):
-  wish_id = request.args.get('wish_id', type=int)
-
-  if wish_id:
-    wish = Wish.query.get_or_404(wish_id)
-    if wish.owner != current_user:
-      flash('You can only edit your wishes', 'error')
-      return redirect(url_for('wish.wishes'))
-  else:
-    wish = Wish(description='', owner=current_user)
-
-  form = WishForm(obj=wish)
-
+def form_validate(form, wish=None):
   if form.validate_on_submit():
 
     form.populate_obj(wish)
@@ -41,19 +26,55 @@ def wish_edit(wish_id=None):
         wish.image = filename
       except Exception as e:
         flash(f'Error saving file: {e}', 'error')
-        return redirect(url_for('wish.wish_edit'), wish_id=wish_id)
+        return redirect(url_for('wish.wish_edit'), wish_id=wish.id)
 
-    if not wish.id:
-      db.session.add(wish)
-
-    print(f'\n\n\nWish before commit: {wish.__dict__}\n\n\n') # DEBUG
+@wish.route('/wish/new', methods=['GET', 'POST'])
+@login_required
+def wish_new():
+  form = WishForm()
+  if form_validate(form):
+    db.session.add(wish)
     db.session.commit()
-    wish = Wish.query.get_or_404(wish.id) # DEBUG
-    print(f'\n\n\nWish after commit: {wish.__dict__}\n\n\n') # DEBUG
     flash('Wish saved', 'success')
     return redirect(url_for('wish.wishes'))
+  
+  return render_template('/wish/form.htm', form=form)
 
-  return render_template('wish/form.htm', form=form)
+@wish.route('/wish/edit/<int:wish_id', methods=['GET', 'POST'])
+@login_required
+def wish_edit(wish_id):
+  wish = Wish.query.get_or_404(wish_id)
+
+  form = WishForm(obj=wish)
+  if form_validate(form, wish):
+    db.session.commit()
+    flash('Wish saved', 'success')
+    return redirect(url_for('wish.wishes'))
+  
+  return render_template('/wish/form.htm', form=form, wish=wish)
+
+@wish.route('/wish/buy/<int:wish_id>')
+@login_required
+def wish_buy(wish_id):
+  wish = Wish.query.get_or_404(wish_id)
+  
+  wish.buyer = current_user
+
+  db.session.commit()
+  flash('Wish bought', 'success')
+
+  return redirect(url_for('wish.wishes'))
+
+@wish.route('/wish/cancel/<int:wish_id>')
+@login_required
+def cancel(wish_id):
+  wish = Wish.query.get_or_404(wish_id)
+  
+  wish.buyer = None
+  db.session.commit()
+  flash('Wish canceled', 'success')
+
+  return redirect(url_for('wish.wishes'))
 
 @wish.route('/wishes', methods=['GET'])
 @login_required
@@ -73,31 +94,6 @@ def wishes():
     wishes_by_user[wish.owner_id].append(wish)
 
   return render_template('wish/view.htm', users=users, wishes_by_user=wishes_by_user)
-
-@wish.route('/wish/buy/<int:wish_id>')
-@login_required
-def wish_buy(wish_id):
-  wish = Wish.query.get_or_404(wish_id)
-  if wish.owner_id == current_user.id:
-    flash('You cannot buy your own wish', 'error')
-    return redirect(url_for('wish.wishes'))
-  
-  wish.is_bought = True
-  wish.buyer.id = current_user.id
-  db.session.commit()
-  flash('Wish marked as bought', 'success')
-  return redirect(url_for('wish.wishes'))
-
-@wish.route('/wish/cancel/<int:wish_id>')
-@login_required
-def cancel(wish_id):
-  wish = Wish.query.get_or_404(wish_id)
-  
-  wish.is_bought = False
-  wish.buyer.id = None
-  db.session.commit()
-  flash('Wish canceled', 'success')
-  return redirect(url_for('wish.wishes'))
 
 @wish.route('/wishes/json', methods=['GET'])
 # @login_required

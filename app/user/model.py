@@ -8,11 +8,15 @@ class User(UserMixin, db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
   username = db.Column(db.String(20), nullable=False, unique=True)
-  password_hash = db.Column(db.String(20), nullable=False)
+  password_hash = db.Column(db.String(128), nullable=False)
   timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
-  wishes = db.relationship('Wish', back_populates='owner', foreign_keys='Wish.owner_id')
-  bought_wishes = db.relationship('Wish', back_populates='buyer', foreign_keys='Wish.buyer_id')
+  wishes = db.relationship('Wish', back_populates='owner')
+  wishes_bought = db.relationship('Wish', back_populates='buyer')
+
+  def __init__(self, username, password):
+    self.username = username
+    self.set_password(password)
 
   def __repr__(self):
     return '<User {self.id}: {self.username}>'
@@ -29,5 +33,6 @@ class User(UserMixin, db.Model):
       'username': self.username,
       'timestamp': self.timestamp,
       'wishes': self.wishes,
-      'match': check_password_hash(self.password_hash, self.username)
+      'wishes_bought': self.wishes_bought,
+      'is_match': self.check_password(self.username)
     }
