@@ -6,10 +6,10 @@ from wtforms.validators import DataRequired, Optional, URL
 class WishForm(FlaskForm):
   id = HiddenField('ID')
   description = StringField('Description', validators=[
-      DataRequired()])
+    DataRequired()])
   url = StringField('Link', validators=[
-      Optional(),
-      URL(message="Enter valid URL")])
+    Optional(),
+    URL(message="Enter valid URL")])
   image = FileField('Image', validators=[
     Optional(),
     FileAllowed(['gif', 'jpg', 'jpeg', 'png'], 'Images only')])

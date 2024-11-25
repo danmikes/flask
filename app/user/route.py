@@ -42,8 +42,7 @@ def user_register():
     if User.query.filter_by(username=form.username.data).first():
       flash('Username already exists; choose different username.', 'warning')
     else:
-      new_user = User(username=form.username.data)
-      new_user.set_password(form.password.data)
+      new_user = User(username=form.username.data, password=form.password.data)
       try:
         db.session.add(new_user)
         db.session.commit()
