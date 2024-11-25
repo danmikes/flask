@@ -41,7 +41,7 @@ function updatePreview() {
   const url = document.getElementById('wishForm').url.value;
 
   document.getElementById('previewDescription').innerText = description || 'Your Wish Description Here';
-  
+
   const previewURL = document.getElementById('previewURL');
   if (url) {
     previewURL.innerHTML = `<a href="${url}" target="_blank">${url}</a>`;

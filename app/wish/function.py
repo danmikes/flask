@@ -7,21 +7,18 @@ from .model import Wish
 from .. import db
 
 def save_file(file):
-  if file:
-    filename = secure_filename(file.filename)
-    file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+  filename = secure_filename(file.filename)
+  file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
 
-    try:
-      file.save(file_path)
-    except Exception as e:
-      flash(f'Error saving file: {e}', 'error')
-      return False
-  return False
+  try:
+    file.save(file_path)
+    return filename
+  except Exception as e:
+    flash(f'Error saving file: {e}', 'error')
+    return None
 
 def fill_wish(form, wish=None):
-  if wish is None:
-    wish = Wish(owner=current_user)
-
+  wish = wish or Wish(owner=current_user)
   form.populate_obj(wish)
   return wish
 
@@ -31,20 +28,18 @@ def save_wish(wish):
       db.session.add(wish)
     db.session.commit()
     flash('Wish saved', 'success')
-    return True, None
+    return True
   except SQLAlchemyError as e:
     db.session.rollback()
     flash(f'Wish not saved: {str(e)}', 'error')
-    return False, wish
+    return False
 
 def handle_wish(form, wish=None):
   if form.validate_on_submit():
-    file = form.image.data if 'image' in form else None
-    filename = save_file(file)
-
+    filename = save_file(form.image.data) if form.image.data else None
     wish = fill_wish(form, wish)
-    wish.image = filename if filename else wish.image
+    wish.image = filename or wish.image
 
-    save_wish(wish)
+    return save_wish(wish)
 
-  return False, None
+  return False

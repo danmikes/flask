@@ -21,7 +21,7 @@ class Wish(db.Model):
     self.url = url
     self.image = image
     self.owner = owner
-  
+
   @property
   def is_bought(self):
     return self.buyer is not None

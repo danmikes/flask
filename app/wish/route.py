@@ -15,8 +15,7 @@ def wish_new():
   form = WishForm()
 
   if request.method == 'POST':
-    success, _ = handle_wish(form)
-    if success:
+    if handle_wish(form):
       return redirect(url_for('wish.wishes'))
 
   flash_errors(form)
@@ -29,10 +28,9 @@ def wish_edit(wish_id):
   form = WishForm(obj=wish)
 
   if request.method == 'POST':
-    success, _ = handle_wish(form, wish)
-    if success:
+    if handle_wish(form, wish):
       return redirect(url_for('wish.wishes'))
-  
+
   flash_errors(form)
   return render_template('wish/form.htm', form=form, is_edit=True)
 
@@ -40,7 +38,7 @@ def wish_edit(wish_id):
 @login_required
 def wish_buy(wish_id):
   wish = Wish.query.get_or_404(wish_id)
-  
+
   wish.buyer = current_user
 
   db.session.commit()
@@ -52,7 +50,7 @@ def wish_buy(wish_id):
 @login_required
 def cancel(wish_id):
   wish = Wish.query.get_or_404(wish_id)
-  
+
   wish.buyer = None
   db.session.commit()
   flash('Wish canceled', 'success')
@@ -69,7 +67,7 @@ def wishes():
   for wish in wishes:
     if wish.owner.id not in wishes_by_user:
       wishes_by_user[wish.owner_id] = []
-    
+
     wishes_by_user[wish.owner_id].append(wish)
 
   return render_template('wish/view.htm', users=users, wishes_by_user=wishes_by_user)

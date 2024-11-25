@@ -13,4 +13,4 @@ class WishForm(FlaskForm):
   image = FileField('Image', validators=[
     Optional(),
     FileAllowed(['gif', 'jpg', 'jpeg', 'png'], 'Images only')])
-  submit = SubmitField('Add Wish')
+  submit = SubmitField('Save Wish')
