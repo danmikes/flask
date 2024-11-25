@@ -53,3 +53,19 @@ python
 >>> from app import app, db
 >>> app.app_context().push()
 >>> app.create_all()
+```
+or
+```
+python create_table.py
+```
+## drop
+```
+python
+>>> from app import app, db
+>>> app.app_context().push()
+>>> app.drop_all()
+```
+or
+```
+python drop_table.py
+```
