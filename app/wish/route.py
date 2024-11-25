@@ -40,7 +40,7 @@ def wish_new():
   
   return render_template('/wish/form.htm', form=form)
 
-@wish.route('/wish/edit/<int:wish_id', methods=['GET', 'POST'])
+@wish.route('/wish/edit/<int:wish_id>', methods=['GET', 'POST'])
 @login_required
 def wish_edit(wish_id):
   wish = Wish.query.get_or_404(wish_id)
