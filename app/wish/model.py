@@ -18,11 +18,12 @@ class Wish(db.Model):
   buyer_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
   buyer = db.relationship('User', back_populates='wishes_bought', foreign_keys=[buyer_id])
 
-  def __init__(self, description, owner, url=None, image=None):
+  def __init__(self, description, url=None, image=None, owner=None):
     self.description = description
     self.url = url
     self.image = image
-    self.owner = owner
+    if owner is not None:
+      self.owner = owner
 
   @property
   def is_bought(self):

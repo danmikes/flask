@@ -4,6 +4,7 @@ from flask_login import current_user
 from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.utils import secure_filename
 from .model import Wish
+from ..util.logger import log
 from .. import db
 
 def save_file(file):
@@ -18,7 +19,7 @@ def save_file(file):
     return None
 
 def fill_wish(form, wish=None):
-  wish = wish or Wish(owner=current_user)
+  wish = wish or Wish(description='test4', owner=current_user)
   form.populate_obj(wish)
   return wish
 
@@ -35,13 +36,12 @@ def save_wish(wish):
     return False
 
 def handle_wish(form, wish=None):
+  log.debug(wish)
   if form.validate_on_submit():
     filename = save_file(form.image.data) if form.image.data else None
     wish = fill_wish(form, wish)
     wish.image = filename or wish.image
-
     return save_wish(wish)
-
   return False
 
 def toggle_wish(wish):

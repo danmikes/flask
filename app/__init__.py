@@ -10,7 +10,7 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 
 def create_app():
-  app = Flask(__name__)
+  app = Flask(__name__, static_folder='', template_folder='')
   app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'upload')
 
   app.config.from_mapping(

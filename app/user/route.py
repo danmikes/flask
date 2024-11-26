@@ -7,7 +7,7 @@ from ..util.flash import flash_errors
 from ..util.logger import log
 from .. import db
 
-user = Blueprint('user', __name__)
+user = Blueprint('user', __name__, static_folder='', template_folder='')
 
 @user.route('/user/login', methods=['GET', 'POST'])
 def user_login():
