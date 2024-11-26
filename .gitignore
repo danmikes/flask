@@ -10,3 +10,6 @@ instance/
 # DataBase
 *.db
 *.sqlite
+
+# Logger
+*.log
