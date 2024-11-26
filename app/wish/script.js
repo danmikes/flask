@@ -16,17 +16,15 @@ function setActiveTab(tabId) {
 }
 
 function initializeTabs(defaultTab) {
-  const tabLinks = document.querySelectorAll('.tab-link');
   const savedTab = localStorage.getItem('activeTab');
 
-  if (currentUserId && document.getElementById(defaultTab)) {
-    setActiveTab(defaultTab);
-  } else if (savedTab && document.getElementById(savedTab)) {
+  if (savedTab && document.getElementById(savedTab)) {
     setActiveTab(savedTab);
   } else {
     setActiveTab(defaultTab);
   }
 
+  const tabLinks = document.querySelectorAll('.tab-link');
   tabLinks.forEach(link => {
     link.addEventListener('click', (event) => {
       event.preventDefault();
