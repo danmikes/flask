@@ -1,9 +1,9 @@
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
-from flask_login import current_user, login_required
+from flask_login import login_required
 from ..user.model import User
 from .form import WishForm
 from .model import Wish
-from .function import handle_wish, fill_wish, save_file, save_wish, toggle_wish
+from .function import handle_wish, toggle_wish
 from ..util.flash import flash_errors
 from .. import db
 

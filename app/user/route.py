@@ -1,12 +1,13 @@
-from flask import Blueprint, current_app, flash, jsonify, redirect, render_template, request, url_for
+from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.urls import url_parse
 from .form import LoginForm, RegistrationForm
 from .model import User
 from ..util.flash import flash_errors
+from ..util.logger import log
 from .. import db
 
-user = Blueprint('user', __name__, static_folder='', template_folder='')
+user = Blueprint('user', __name__)
 
 @user.route('/user/login', methods=['GET', 'POST'])
 def user_login():
@@ -26,7 +27,7 @@ def user_login():
       else:
         flash('Invalid credentials', 'danger')
     except Exception as e:
-      current_app.logger.error(f'Error during login: {e}')
+      log.error(f'Error during login: {e}')
       flash('Error during login; retry', 'danger')
 
   flash_errors(form)
@@ -50,7 +51,7 @@ def user_register():
         return redirect(url_for('user.user_login'))
       except Exception as e:
         db.session.rollback()
-        current_app.logger.error(f'Error during registration: {e}')
+        log.error(f'Error during registration: {e}')
         flash('Error during registration; retry', 'danger')
 
   flash_errors(form)

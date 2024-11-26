@@ -1,5 +1,5 @@
 import os
-from flask import current_app, flash
+from flask import current_app as app, flash
 from flask_login import current_user
 from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.utils import secure_filename
@@ -8,7 +8,7 @@ from .. import db
 
 def save_file(file):
   filename = secure_filename(file.filename)
-  file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+  file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
   try:
     file.save(file_path)

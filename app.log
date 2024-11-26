@@ -1,0 +1,86 @@
+2024-11-26 07:25:32,103 - app - INFO - This is an info message
+2024-11-26 07:25:32,104 - app - WARNING - This is a warning message
+2024-11-26 07:25:32,105 - app - ERROR - This is an error message
+2024-11-26 07:25:32,105 - app - CRITICAL - This is a critical message
+INFO - This is an info message
+WARNING - This is a warning message
+ERROR - This is an error message
+CRITICAL - This is a critical message
+app [INFO] : This is an info message
+app [WARNING] : This is a warning message
+app [ERROR] : This is an error message
+app [CRITICAL] : This is a critical message
+[INFO] : This is an info message
+[WARNING] : This is a warning message
+[ERROR] : This is an error message
+[CRITICAL] : This is a critical message
+[INFO] : app - route.py:17 - This is an info message
+[WARNING] : app - route.py:18 - This is a warning message
+[ERROR] : app - route.py:19 - This is an error message
+[CRITICAL] : app - route.py:20 - This is a critical message
+[33m[INFO] : app - route.py:17 - This is an info message[0m
+[33m[WARNING] : app - route.py:18 - This is a warning message[0m
+[33m[ERROR] : app - route.py:19 - This is an error message[0m
+[33m[CRITICAL] : app - route.py:20 - This is a critical message[0m
+[32m[INFO] : app - route.py:17 - This is an info message[0m
+[33m[WARNING] : app - route.py:18 - This is a warning message[0m
+[31m[ERROR] : app - route.py:19 - This is an error message[0m
+[41m[CRITICAL] : app - route.py:20 - This is a critical message[0m
+[32m[INFO] : app - route.py:17 - Info message[0m
+[33m[WARNING] : app - route.py:18 - Warning message[0m
+[31m[ERROR] : app - route.py:19 - Error message[0m
+[41m[CRITICAL] : app - route.py:20 - Critical message[0m
+[32m[INFO] : app - /Users/dan/Documents/code/flask/app/util/route.py:17 - Info message[0m
+[33m[WARNING] : app - /Users/dan/Documents/code/flask/app/util/route.py:18 - Warning message[0m
+[31m[ERROR] : app - /Users/dan/Documents/code/flask/app/util/route.py:19 - Error message[0m
+[41m[CRITICAL] : app - /Users/dan/Documents/code/flask/app/util/route.py:20 - Critical message[0m
+[32m[INFO] : app - /Users/dan/Documents/code/flask/app/util/route.py:17 - Info message[0m
+[33m[WARNING] : app - /Users/dan/Documents/code/flask/app/util/route.py:18 - Warning message[0m
+[31m[ERROR] : app - /Users/dan/Documents/code/flask/app/util/route.py:19 - Error message[0m
+[41m[CRITICAL] : app - /Users/dan/Documents/code/flask/app/util/route.py:20 - Critical message[0m
+[32m[INFO] : app - /Users/dan/Documents/code/flask/app/util/route.py:17 - Info message[0m
+[33m[WARNING] : app - /Users/dan/Documents/code/flask/app/util/route.py:18 - Warning message[0m
+[31m[ERROR] : app - /Users/dan/Documents/code/flask/app/util/route.py:19 - Error message[0m
+[41m[CRITICAL] : app - /Users/dan/Documents/code/flask/app/util/route.py:20 - Critical message[0m
+[32m[INFO] : app - /Users/dan/Documents/code/flask/app/util/route.py:17 - Info message[0m
+[33m[WARNING] : app - /Users/dan/Documents/code/flask/app/util/route.py:18 - Warning message[0m
+[31m[ERROR] : app - /Users/dan/Documents/code/flask/app/util/route.py:19 - Error message[0m
+[41m[CRITICAL] : app - /Users/dan/Documents/code/flask/app/util/route.py:20 - Critical message[0m
+[32m[INFO] : app - ../../route.py:17 - Info message[0m
+[33m[WARNING] : app - ../../route.py:18 - Warning message[0m
+[31m[ERROR] : app - ../../route.py:19 - Error message[0m
+[41m[CRITICAL] : app - ../../route.py:20 - Critical message[0m
+[32m[INFO] : app - route.py:17 - Info message[0m
+[33m[WARNING] : app - route.py:18 - Warning message[0m
+[31m[ERROR] : app - route.py:19 - Error message[0m
+[41m[CRITICAL] : app - route.py:20 - Critical message[0m
+[32m[INFO] : app - util/route.py:17 - Info message[0m
+[33m[WARNING] : app - util/route.py:18 - Warning message[0m
+[31m[ERROR] : app - util/route.py:19 - Error message[0m
+[41m[CRITICAL] : app - util/route.py:20 - Critical message[0m
+[32m[INFO] : app - util/route.py:17 - Info message[0m
+[33m[WARNING] : app - util/route.py:18 - Warning message[0m
+[31m[ERROR] : app - util/route.py:19 - Error message[0m
+[41m[CRITICAL] : app - util/route.py:20 - Critical message[0m
+[32m[INFO] : app/util/route.py:17 - Info message[0m
+[33m[WARNING] : app/util/route.py:18 - Warning message[0m
+[31m[ERROR] : app/util/route.py:19 - Error message[0m
+[41m[CRITICAL] : app/util/route.py:20 - Critical message[0m
+[32m[INFO] : app/../test.py:13 - DataBase Tables: ['user', 'wish'][0m
+[32m[INFO] : app/../test.py:18 - Created Wish: <Wish 2: Test-2... - None - False>[0m
+[32m[INFO] : app/../test.py:13 - DataBase Tables: ['user', 'wish'][0m
+[32m[INFO] : app/../test.py:18 - Created Wish: <Wish 3: Test-3... - brew.png - False>[0m
+[32m[INFO] : app/../test.py:14 - DataBase Tables: ['user', 'wish'][0m
+[32m[INFO] : app/../test.py:14 - DataBase Tables: ['user', 'wish'][0m
+[32m[INFO] : app/../test.py:31 - Created Wish: user1[0m
+[32m[INFO] : app/../test.py:31 - Created Wish: user2[0m
+[32m[INFO] : app/../test.py:31 - Created Wish: user3[0m
+[32m[INFO] : app/../test.py:14 - DataBase Tables: ['user', 'wish'][0m
+[32m[INFO] : app/../test.py:15 - DataBase Tables: ['user', 'wish'][0m
+[32m[INFO] : app/../test.py:15 - DataBase Tables: ['user', 'wish'][0m
+[32m[INFO] : app/../test.py:32 - Created Wish: user1[0m
+[32m[INFO] : app/../test.py:32 - Created Wish: user2[0m
+[32m[INFO] : app/../test.py:32 - Created Wish: user3[0m
+[32m[INFO] : app/../test.py:37 - Created Wish: Test-1[0m
+[32m[INFO] : app/../test.py:37 - Created Wish: Test-2[0m
+[32m[INFO] : app/../test.py:37 - Created Wish: Test-3[0m

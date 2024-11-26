@@ -1,17 +1,15 @@
 import os
-import logging
-from flask import Flask, current_app
+from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
+from .util.logger import log
 
 csrf = CSRFProtect()
 db = SQLAlchemy()
 login_manager = LoginManager()
 
 def create_app():
-  logging.basicConfig(level=logging.DEBUG)
-
   app = Flask(__name__)
   app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'upload')
 
@@ -31,7 +29,7 @@ def create_app():
     try:
       db.create_all()
     except Exception as e:
-      app.logger.error(f'Error creating database tables: {e}')
+      log.error(f'Error creating database tables: {e}')
 
   register_blueprint(app)
 
@@ -42,7 +40,7 @@ def register_blueprint(app):
   try:
     register_route(app)
   except ImportError as e:
-    app.logger.error(f'Error importing blueprint: {e}')
+    log.error(f'Error importing blueprint: {e}')
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -50,7 +48,7 @@ def load_user(user_id):
   try:
     return User.query.get(int(user_id))
   except Exception as e:
-     current_app.logger.error(f'Error loading user: {e}')
+     log.error(f'Error loading user: {e}')
      return None
 
 @login_manager.unauthorized_handler
