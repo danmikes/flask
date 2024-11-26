@@ -30,7 +30,6 @@ class User(UserMixin, db.Model):
 
   def to_dict(self):
     return {
-      'id': self.id,
       'username': self.username,
       'wishes': [wish.description for wish in self.wishes],
       'wishes_bought': [wish.description for wish in self.wishes_bought],

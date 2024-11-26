@@ -41,7 +41,6 @@ class Wish(db.Model):
 
   def to_dict(self):
     return {
-      'id': self.id,
       'description': self.description,
       'url': self.url,
       'domain': self.domain,

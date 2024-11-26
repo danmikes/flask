@@ -11,11 +11,11 @@ def test():
 
   return 'TEST'
 
-@util.route('/log')
+@util.route('/util/log')
 def logger():
   log.debug('Debug message')
   log.info('Info message')
   log.warning('Warning message')
   log.error('Error message')
   log.critical('Critical message')
-  return 'Hello!'
+  return 'Logger works!'

@@ -24,7 +24,7 @@ with app.app_context():
   for data in user_data:
     user = User(
       username=data['username'],
-      password=generate_password_hash(data['password'])
+      password=data['password'],
     )
     users.append(user)
     log.info(f'Prepared user: {user.username}')
