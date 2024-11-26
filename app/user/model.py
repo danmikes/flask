@@ -8,8 +8,8 @@ class User(UserMixin, db.Model):
   __tablename__ = 'user'
 
   id = db.Column(db.Integer, primary_key=True)
-  username = db.Column(db.String(20), unique=True)
-  password_hash = db.Column(db.String(128))
+  username = db.Column(db.String(20), unique=True, nullable=False)
+  password_hash = db.Column(db.String(128), nullable=False)
   timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
   wishes = db.relationship('Wish', back_populates='owner', foreign_keys=[Wish.owner_id])
@@ -32,8 +32,7 @@ class User(UserMixin, db.Model):
     return {
       'id': self.id,
       'username': self.username,
-      'timestamp': self.timestamp,
-      'wishes': self.wishes,
-      'wishes_bought': self.wishes_bought,
+      'wishes': [wish.description for wish in self.wishes],
+      'wishes_bought': [wish.description for wish in self.wishes_bought],
       'is_match': self.check_password(self.username)
     }

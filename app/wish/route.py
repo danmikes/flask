@@ -38,12 +38,7 @@ def wish_edit(wish_id):
 @login_required
 def wish_toggle(wish_id):
   wish = Wish.query.get_or_404(wish_id)
-  success = toggle_wish(wish)
-
-  if success:
-    flash('Wish toggled', 'success')
-  else:
-    flash('Wish not toggles', 'danger')
+  toggle_wish(wish)
 
   return redirect(url_for('wish.wishes'))
 
