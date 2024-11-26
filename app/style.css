@@ -1,30 +1,27 @@
 html, body {
   height: 100%;
   margin: 0;
-}
-body {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  margin: 0;
+}
+body {
+  font-size: clamp(32px, 4vw + 1rem, 24px);
 }
 .content {
   flex: 1;
 }
-.header {
-  padding: 10px;
-  text-align: center;
-}
-.navbar-menu {
-  flex-grow: 1;
-  justify-content: center;
-}
+.header,
 .footer {
   padding: 10px;
   text-align: center;
 }
-.mobile-width {
-  max-width: 468px;
-  width: 100%;
-  margin: 0 auto;
+.navbar-menu {
+  display: none;
+}
+p {
+  text-align: center;
 }
 .button.is-big {
   color: yellow;

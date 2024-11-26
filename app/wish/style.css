@@ -1,3 +1,24 @@
+h1,
+.tab-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0;
+}
+
+h1.title,
+.columns,
+.tabs {
+  margin: 0 !important;
+}
+
+ul {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0 3rem 0 3rem !important;
+}
+
 .tab-content {
   display: none;
 }
@@ -6,13 +27,24 @@
   display: flex;
 }
 
+.columns {
+  display: flex;
+  flex-grow: 1;
+}
+
 .card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 100%;
+  max-height: 300px;
   padding: 10px;
+}
+
+.card-new {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card-header,
@@ -27,11 +59,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.button {
-  border: none;
-  margin: 5px;
+  flex-grow: 1;
 }
 
 .card.is-bought {
