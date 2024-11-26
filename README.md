@@ -69,3 +69,9 @@ or
 ```
 python drop_table.py
 ```
+
+# test
+## create
+```
+python test.py
+```

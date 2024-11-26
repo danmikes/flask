@@ -84,3 +84,33 @@ app [CRITICAL] : This is a critical message
 [32m[INFO] : app/../test.py:37 - Created Wish: Test-1[0m
 [32m[INFO] : app/../test.py:37 - Created Wish: Test-2[0m
 [32m[INFO] : app/../test.py:37 - Created Wish: Test-3[0m
+[32m[INFO] : app/../test.py:15 - DataBase Tables: ['user', 'wish'][0m
+[32m[INFO] : app/../test.py:30 - Prepared user: user1[0m
+[32m[INFO] : app/../test.py:30 - Prepared user: user3[0m
+[32m[INFO] : app/../test.py:30 - Prepared user: user3[0m
+[32m[INFO] : app/../test.py:48 - Prepared wish: Test-1[0m
+[32m[INFO] : app/../test.py:48 - Prepared wish: Test-3[0m
+[32m[INFO] : app/../test.py:48 - Prepared wish: Test-3[0m
+[32m[INFO] : app/../test.py:15 - DataBase Tables: ['user', 'wish'][0m
+[32m[INFO] : app/../test.py:30 - Prepared user: user1[0m
+[32m[INFO] : app/../test.py:30 - Prepared user: user3[0m
+[32m[INFO] : app/../test.py:30 - Prepared user: user3[0m
+[32m[INFO] : app/../test.py:48 - Prepared wish: Test-1[0m
+[32m[INFO] : app/../test.py:48 - Prepared wish: Test-3[0m
+[32m[INFO] : app/../test.py:48 - Prepared wish: Test-3[0m
+[32m[INFO] : app/../test.py:15 - DataBase Tables: ['user', 'wish'][0m
+[32m[INFO] : app/../test.py:30 - Prepared user: user1[0m
+[32m[INFO] : app/../test.py:30 - Prepared user: user2[0m
+[32m[INFO] : app/../test.py:30 - Prepared user: user3[0m
+[32m[INFO] : app/../test.py:48 - Prepared wish: Test-1[0m
+[32m[INFO] : app/../test.py:48 - Prepared wish: Test-3[0m
+[32m[INFO] : app/../test.py:48 - Prepared wish: Test-3[0m
+[32m[INFO] : app/../test.py:55 - All users and wishes created[0m
+[32m[INFO] : app/../test.py:15 - DataBase Tables: ['user', 'wish'][0m
+[32m[INFO] : app/../test.py:30 - Prepared user: user1[0m
+[32m[INFO] : app/../test.py:30 - Prepared user: user2[0m
+[32m[INFO] : app/../test.py:30 - Prepared user: user3[0m
+[32m[INFO] : app/../test.py:48 - Prepared wish: Test-1[0m
+[32m[INFO] : app/../test.py:48 - Prepared wish: Test-2[0m
+[32m[INFO] : app/../test.py:48 - Prepared wish: Test-3[0m
+[32m[INFO] : app/../test.py:55 - All users and wishes created[0m
