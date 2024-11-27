@@ -22,6 +22,8 @@
 {% for user in users %}
   <div id="tab-{{ user.id }}" class="tab-content {% if user.id == current_user.id %}is-active{% endif %}">
     {% set user_wishes = wishes_by_user[user.id] %}
+    {% set is_owner = (user.id == current_user.id) %}
+
     {% if user_wishes %}
       <div class="columns is-centered is-multiline">
         {% for wish in user_wishes %}
