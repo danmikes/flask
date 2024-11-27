@@ -1,3 +1,7 @@
+* {
+  color: orange !important;
+}
+
 html, body {
   height: 100%;
   margin: 0;
@@ -6,7 +10,7 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
-  font-size: clamp(32px, 4vw + 1rem, 24px);
+  font-size: clamp(20px, 4vw + 1rem, 24px);
 }
 
 .page-container {

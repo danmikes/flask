@@ -44,14 +44,9 @@ h1.title,
 
 .card {
   width: 300px;
+  height: 400px;
   margin: 10px auto;
-}
-
-@media only screen and (min-width: 769px) and (max-width: 1024px) {
-  .column.is-one-third-tablet {
-    flex: 0 0 auto;
-    width: calc(33.33% - 20px);
-  }
+  padding: 0;
 }
 
 #wish-new-button {
