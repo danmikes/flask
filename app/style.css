@@ -53,6 +53,10 @@ body {
   width: 300px;
 }
 
+.navbar-burger {
+  display: flex;
+}
+
 .navbar-menu {
   display: none;
   position: absolute;
