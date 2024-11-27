@@ -1,15 +1,13 @@
 {% with messages = get_flashed_messages(with_categories=true) %}
-<div class="columns">
   {% if messages %}
-  <div class="column is-one-third-tablet">
-    <div class="notifications">
-      {% for category, message in messages %}
-        <div class="notification is-{{ category }}">
-          {{ message }}
-        </div>
-      {% endfor %}
+    <div class="notifications-container">
+      <div class="notifications">
+        {% for category, message in messages %}
+          <div class="notification is-{{ category }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
     </div>
-  </div>
   {% endif %}
-</div>
 {% endwith %}
