@@ -29,23 +29,24 @@ h1.title,
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
   width: 300px;
-  height: 400px;
+  height: 300px;
   margin: 10px auto;
   padding: 0;
 }
 
-#wish-new-button {
-  margin: 0;
-  padding: 0;
+.card-header,
+.card-content,
+.card-image,
+.card-footer {
+  display: flex;
+  flex-direction: column;
 }
 
 .card-new {
   display: block;
   margin-top: 5px !important;
-  align-items: center;
-  justify-content: center;
 }
 
 .card.is-bought {
@@ -62,8 +63,4 @@ h1.title,
   color: red;
   transform: translate(-50%, -35%) rotate(-45deg);
   z-index: 2;
-}
-
-.card-footer .button {
-  width: 100%;
 }

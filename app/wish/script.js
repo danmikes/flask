@@ -1,5 +1,3 @@
-let wishNewButton = document.getElementById('wish-new-button');
-
 function setActiveTab(tabId) {
   const tabLinks = document.querySelectorAll('.tab-link');
   const tabContents = document.querySelectorAll('.tab-content');
@@ -15,8 +13,6 @@ function setActiveTab(tabId) {
     activeContent.classList.add('is-active');
     localStorage.setItem('activeTab', tabId);
   }
-
-  updateWishNewButtonVisibility();
 }
 
 function initializeTabs(defaultTab) {
@@ -36,17 +32,6 @@ function initializeTabs(defaultTab) {
       setActiveTab(tabId);
     });
   });
-}
-
-function updateWishNewButtonVisibility() {
-  const activeTab = document.querySelector('.tabs li.is-active a');
-  const activeTabUserId = activeTab.getAttribute('data-user-id');
-
-  if (activeTabUserId === currentUserId) {
-    wishNewButton.style.display = 'block';
-  } else {
-    wishNewButton.style.display = 'none';
-  }
 }
 
 function updatePreview() {
