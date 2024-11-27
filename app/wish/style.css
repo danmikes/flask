@@ -64,6 +64,11 @@ h1.title,
   justify-content: center;
 }
 
+.card-footer {
+  margin: 0;
+  padding: 0;
+}
+
 .card.is-bought {
   opacity: 0.5;
 }
@@ -81,4 +86,5 @@ h1.title,
 
 .card-footer .button {
   width: 100%;
+  margin: 0;
 }

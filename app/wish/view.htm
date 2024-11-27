@@ -30,7 +30,7 @@
     {% set user_wishes = wishes_by_user[user.id] %}
 
     {% if user_wishes %}
-      <div class="columns is-multiline mt-6">
+      <div class="columns">
         {% for wish in user_wishes %}
           <div class="column is-one-third-tablet">
             {% set prop = {
