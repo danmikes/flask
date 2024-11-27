@@ -6,13 +6,15 @@
       {% endif %}
     </div>
 
-    {% if prop.image %}
-      <img src="{{ url_for('static', filename='upload/' + prop.image) }}" class="card-image" alt="Image for {{ prop.image }}">
-    {% endif %}
-
     <div class="card-content">
       {% if prop.url and prop.domain %}
         <a href="{{ prop.url }}" target="_blank">{{ prop.domain }}</a>
+      {% endif %}
+    </div>
+
+    <div class="card-image">
+      {% if prop.image %}
+        <img src="{{ url_for('static', filename='upload/' + prop.image) }}" alt="Image for {{ prop.image }}">
       {% endif %}
     </div>
 
