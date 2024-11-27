@@ -1,6 +1,17 @@
 <header class="header">
   <div class="header-container">
-    {% include 'unit/message.htm' %}
+    <div class="notifications">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="notification is-{{ category }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </div>
+
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
         <span aria-hidden="true"></span>

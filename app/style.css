@@ -37,16 +37,9 @@ body {
 .header-container {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   position: relative;
   width: 100%;
-}
-
-.notifications-container {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
 }
 
 .notifications {
