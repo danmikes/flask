@@ -41,6 +41,19 @@ h1.title,
   max-height: 300px;
 }
 
+
+.card {
+  width: 300px;
+  margin: 10px auto;
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  .column.is-one-third-tablet {
+    flex: 0 0 auto;
+    width: calc(33.33% - 20px);
+  }
+}
+
 #wish-new-button {
   margin: 0;
   padding: 0;
@@ -78,9 +91,10 @@ h1.title,
   position: absolute;
   top: 40%;
   left: 50%;
-  font-size: 2em;
+  font-size: 1.5em;
+  font-weight: bold;
   color: red;
-  transform: translate(-50%, -25%) rotate(-45deg);
+  transform: translate(-50%, -35%) rotate(-45deg);
   z-index: 2;
 }
 
