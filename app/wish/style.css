@@ -22,7 +22,7 @@ h1.title,
 }
 
 .tab-content.is-active {
-  display: flex;
+  display: block;
 }
 
 .card {
@@ -45,8 +45,9 @@ h1.title,
 }
 
 .card-new {
-  display: block;
-  margin-top: 5px !important;
+  margin-top: 5px;
+  width: 100%;
+  clear: both;
 }
 
 .card.is-bought {

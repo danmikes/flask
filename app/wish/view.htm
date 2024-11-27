@@ -22,13 +22,6 @@
 {% for user in users %}
   <div id="tab-{{ user.id }}" class="tab-content {% if user.id == current_user.id %}is-active{% endif %}">
     {% set user_wishes = wishes_by_user[user.id] %}
-
-    {% if current_user and user.id == current_user.id %}
-    <div class="card-new">
-      <a href="{{ url_for('wish.wish_new') }}" class="button is-link">New Wish</a>
-    </div>
-    {% endif %}  
-
     {% if user_wishes %}
       <div class="columns is-centered is-multiline">
         {% for wish in user_wishes %}
@@ -51,6 +44,12 @@
       </div>
     {% else %}
       <p>No wishes for this user</p>
+    {% endif %}
+
+    {% if is_owner %}
+      <div class="card-new">
+        <a href="{{ url_for('wish.wish_new') }}" class="button is-link">New Wish</a>
+      </div>
     {% endif %}
   </div>
 {% endfor %}
