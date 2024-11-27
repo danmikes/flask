@@ -1,5 +1,5 @@
-<div class="columns">
-  <div class="card {% if prop.is_bought and not prop.is_owner%}is-bought{% endif %}">
+<div class="columns is-centered is-multiline">
+  <div class="card {% if prop.is_bought and not prop.is_owner%}is-bought{% endif %}" style="width: 300px;">
     <div class="card-header">
       {% if prop.description %}
         <p>{{ prop.description }}</p>

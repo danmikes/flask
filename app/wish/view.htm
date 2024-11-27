@@ -7,7 +7,7 @@
 {% block title %}Wishes{% endblock %}
 
 {% block content %}
-<h1 class="title">Wishes</h1>
+<h1 class="title has-text-centered">Wishes</h1>
 
 {% if current_user %}
 <div id="wish-new-button" class="card-new">
@@ -30,9 +30,9 @@
     {% set user_wishes = wishes_by_user[user.id] %}
 
     {% if user_wishes %}
-      <div class="columns">
+      <div class="columns is-centered is-multiline">
         {% for wish in user_wishes %}
-          <div class="column is-one-third-tablet">
+          <div class="column is-narrow">
             {% set prop = {
               'id': wish.id,
               'description': wish.description,

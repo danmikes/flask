@@ -2,8 +2,6 @@ h1,
 .tab-content {
   display: flex;
   justify-content: center;
-  align-items: center;
-  text-align: center;
   margin: 0;
 }
 
@@ -25,12 +23,6 @@ h1.title,
 
 .tab-content.is-active {
   display: flex;
-}
-
-.columns {
-  display: flex;
-  flex-grow: 1;
-  justify-content: center;
 }
 
 .card {
@@ -56,22 +48,6 @@ h1.title,
   justify-content: center;
 }
 
-.card-header,
-.card-content,
-.card-footer,
-.card-image {
-  display: flex;
-  width: 100%;
-  padding: 10px;
-  align-items: center;
-  justify-content: center;
-}
-
-.card-footer {
-  margin: 0;
-  padding: 0;
-}
-
 .card.is-bought {
   opacity: 0.5;
 }
@@ -90,5 +66,4 @@ h1.title,
 
 .card-footer .button {
   width: 100%;
-  margin: 0;
 }
