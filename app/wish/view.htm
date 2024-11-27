@@ -6,10 +6,16 @@
 
 {% block title %}Wishes{% endblock %}
 
-{% block body %}
-<div class="tabs">
-  <h1 class="title">Wishes</h1>
+{% block content %}
+<h1 class="title">Wishes</h1>
 
+{% if current_user %}
+<div id="wish-new-button" class="card-new">
+  <a href="{{ url_for('wish.wish_new') }}" class="button is-link">New Wish</a>
+</div>
+{% endif %}
+
+<div class="tabs">
   <ul>
     {% for user in users %}
       <li class="{% if loop.index == 1 %}is-active{% endif %}">
@@ -17,12 +23,6 @@
       </li>
     {% endfor %}
   </ul>
-
-  {% if current_user %}
-  <div class="card-new">
-    <a href="{{ url_for('wish.wish_new') }}" class="button is-primary">New Wish</a>
-  </div>
-  {% endif %}
 </div>
 
 {% for user in users %}
@@ -32,7 +32,7 @@
     {% if user_wishes %}
       <div class="columns is-multiline mt-6">
         {% for wish in user_wishes %}
-          <div class="column is-full-mobile is-one-third-tablet is-one-fifth-desktop">
+          <div class="column is-one-third-tablet">
             {% set prop = {
               'id': wish.id,
               'description': wish.description,

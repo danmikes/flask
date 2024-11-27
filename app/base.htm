@@ -10,16 +10,18 @@
   {% block css %}{% endblock %}
 </head>
 <body>
+  <div class="page-container">
   {% include 'unit/header.htm' %}
 
   <div class="container is-max-desktop">
-    <div class="content has-text-centered">
+    <div class="content">
       {% include 'unit/message.htm' %}
-      {% block body %}{% endblock %}
+      {% block content %}{% endblock %}
     </div>
   </div>
 
   {% include 'unit/footer.htm' %}
+  </div>
 
   <script>const currentUserId = "{{ current_user.id }}";</script>
   <script src="{{ url_for('base.static', filename='script.js') }}"></script>

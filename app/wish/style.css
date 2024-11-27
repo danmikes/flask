@@ -13,10 +13,10 @@ h1.title,
   margin: 0 !important;
 }
 
-ul {
+.tabs ul {
   display: flex;
-  justify-content: flex-start;
-  margin: 0 3rem 0 3rem !important;
+  justify-content: center;
+  margin: 10px;
 }
 
 .tab-content {
@@ -30,6 +30,7 @@ ul {
 .columns {
   display: flex;
   flex-grow: 1;
+  justify-content: center;
 }
 
 .card {
@@ -38,28 +39,29 @@ ul {
   justify-content: space-between;
   align-items: center;
   max-height: 300px;
-  padding: 10px;
+}
+
+#wish-new-button {
+  margin: 0;
+  padding: 0;
 }
 
 .card-new {
-  display: flex;
+  display: block;
+  margin-top: 5px !important;
   align-items: center;
   justify-content: center;
 }
 
 .card-header,
 .card-content,
-.card-footer {
-  text-align: center;
-}
-
+.card-footer,
 .card-image {
-  padding: 10px;
-  flex-grow: 1;
   display: flex;
-  justify-content: center;
+  width: 100%;
+  padding: 10px;
   align-items: center;
-  flex-grow: 1;
+  justify-content: center;
 }
 
 .card.is-bought {
@@ -71,8 +73,12 @@ ul {
   position: absolute;
   top: 40%;
   left: 50%;
-  font-size: 4em;
+  font-size: 2em;
   color: red;
-  transform: translate(-50%, -50%) rotate(0deg);
+  transform: translate(-50%, -25%) rotate(-45deg);
   z-index: 2;
+}
+
+.card-footer .button {
+  width: 100%;
 }
