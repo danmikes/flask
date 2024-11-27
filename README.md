@@ -81,3 +81,10 @@ python test.py
 ```
 sudo kill -9 $(lsof -t -i:5000 -sTCP:LISTEN)
 ```
+
+```
+python drop_all.py
+python create_all.py
+. clean_cache.sh
+. fill_all.sh
+```
