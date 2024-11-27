@@ -48,10 +48,10 @@ def toggle_wish(wish):
   try:
     if wish.is_buyer:
       wish.buyer = None
-      flash('wish cancelled', 'success')
+      flash('Wish cancelled', 'danger')
     else:
       wish.buyer = current_user
-      flash('Wish bought', 'success')
+      flash('Wish bought', 'info')
     db.session.commit()
     return True
   except SQLAlchemyError as e:
