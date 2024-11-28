@@ -18,8 +18,25 @@ h1.title,
   display: block;
 }
 
+.tabs ul li a {
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 8px !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.tabs ul li.is-active a {
+  border-bottom-color: transparent !important;
+}
+
 .tabs li.is-active {
-  font-weight: bold;
+  background-color: yellow;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.tabs li.is-active {
+  background-color: yellow;
 }
 
 .card {
