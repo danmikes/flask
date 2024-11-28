@@ -21,22 +21,30 @@ h1.title,
 .tabs ul li a {
   border-top-left-radius: 8px !important;
   border-top-right-radius: 8px !important;
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
+  border-bottom-color: transparent;
+  background-color: lightgrey;
+}
+
+.tabs ul li.current-user-tab a {
+  background-color: yellow;
 }
 
 .tabs ul li.is-active a {
-  border-bottom-color: transparent !important;
+  border: 2px solid yellow;
 }
 
-.tabs li.is-active {
+.tabs li.current-user-tab {
   background-color: yellow;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
 
-.tabs li.is-active {
+.tabs li.current-user-tab {
   background-color: yellow;
+}
+
+.tabs ul li:not(:last-child) {
+  margin-right: 5px;
 }
 
 .card {

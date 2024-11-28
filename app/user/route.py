@@ -42,18 +42,18 @@ def user_register():
   form = RegistrationForm()
   if form.validate_on_submit():
     if User.query.filter_by(username=form.username.data).first():
-      flash('Username already exists; choose different username.', 'warning')
+      flash('Username exists; choose another.', 'warning')
     else:
       new_user = User(username=form.username.data, password=form.password.data)
       try:
         db.session.add(new_user)
         db.session.commit()
-        flash('Registration successful! You can log-in.', 'success')
+        flash('You registered', 'success')
         return redirect(url_for('user.user_login'))
       except Exception as e:
         db.session.rollback()
-        log.error(f'Error during registration: {e}')
-        flash('Error during registration; retry', 'danger')
+        log.error(f'Registration failed: {e}')
+        flash('Registration failed', 'danger')
 
   flash_errors(form)
   return render_template('user/register.htm', form=form, page='register')
