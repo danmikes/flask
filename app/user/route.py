@@ -20,6 +20,7 @@ def user_login():
       user = User.query.filter_by(username=form.username.data).first()
       if user and user.check_password(form.password.data):
         login_user(user)
+        flash('You logged-in', 'success')
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
           next_page = url_for('wish.wishes')
@@ -61,7 +62,7 @@ def user_register():
 @login_required
 def user_logout():
   logout_user()
-  flash('You have been logged out', 'success')
+  flash('You logged-out', 'success')
   return redirect(url_for('user.user_login'))
 
 @user.route('/users/json', methods=['GET'])

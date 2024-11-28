@@ -18,6 +18,10 @@ h1.title,
   display: block;
 }
 
+.tabs li.is-active {
+  font-weight: bold;
+}
+
 .card {
   display: flex;
   flex-direction: column;

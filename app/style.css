@@ -38,12 +38,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   width: 100%;
 }
 
 .notifications {
   width: 300px;
+}
+
+.burger-mirror {
+  width: 3.25rem;
+  visibility: hidden;
 }
 
 .navbar-burger {
@@ -78,4 +82,8 @@ p {
   margin: 0;
   width: 300px;
   text-align: center;
+}
+
+#flash-messages {
+  transition: opacity 0.5s ease-out;
 }
