@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('base.static', filename='favicon.ico') }}">
+  <title>Flask App | {% block title %}Index{% endblock %}</title>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('base.static', filename='style.css') }}">
+  {% block css %}{% endblock %}
+</head>
+<body>
+  <div class="page-container">
+    {% include 'base/header.htm' %}
+
+    <div class="container is-max-desktop flex-grow-1">
+      <div class="content">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+
+    {% include 'base/footer.htm' %}
+  </div>
+
+  <script src="{{ url_for('util.static', filename='burger.js') }}"></script>
+  <script src="{{ url_for('util.static', filename='info.js') }}"></script>
+  <script src="{{ url_for('util.static', filename='flash.js') }}"></script>
+
+  {% block js %}{% endblock %}
+</body>
+</html>

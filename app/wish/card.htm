@@ -1,0 +1,28 @@
+<div class="card {% if prop.is_bought and not prop.is_owner%}is-bought{% endif %} {% if prop.is_bought and not prop.is_buyer %}is-not-buyer{% endif %}">
+  <div class="card-header">
+    <p>{{ prop.description }}</p>
+  </div>
+
+  <div class="card-content">
+    {% if prop.url and prop.domain %}
+      <a href="{{ prop.url }}" target="_blank">{{ prop.domain }}</a>
+    {% endif %}
+  </div>
+
+  <div class="card-image">
+    {% if prop.image %}
+      <img src="{{ url_for('util.upload_file', filename=prop.image) }}" alt="Image for {{ prop.image }}">
+    {% endif %}
+  </div>
+
+  <div class="card-footer">
+    {% if prop.is_owner %}
+    <div class="buttons has-addons">
+      <a href="{{ url_for('wish.wish_edit', wish_id=prop.id) }}" class="button is-warning is-flex-grow-1">Edit</a>
+      <a href="{{ url_for('wish.wish_delete', wish_id=prop.id) }}" class="button is-danger is-flex-grow-1" onclick="return confirm('Are you sure you want to delete this wish?');">Delete</a>
+    </div>
+    {% else %}
+      <a href="{{ url_for('wish.wish_toggle', wish_id=prop.id) }}" class="button is-warning {% if prop.is_bought and not prop.is_buyer %}is-static{% endif %}">{% if prop.is_bought %}Cancel{%else %}Buy{% endif %}</a>
+    {% endif %}
+  </div>
+</div>
