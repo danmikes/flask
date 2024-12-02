@@ -1,0 +1,112 @@
+.tabs ul {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.is-active {
+  display: block;
+}
+
+.tabs ul li a {
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 8px !important;
+  border-bottom-color: transparent;
+  background-color: lightgrey;
+}
+
+.tabs ul li#tab-current-user {
+  margin-right: 15px;
+}
+
+.tabs ul li#tab-current-user a {
+  background-color: yellow !important;
+}
+
+.tabs ul li.is-active a {
+  border: 2px solid yellow;
+}
+
+.tabs ul li#tab-current-user {
+  background-color: yellow;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.tabs li #tab-current-user {
+  background-color: yellow;
+}
+
+.tabs ul li:not(:last-child) {
+  margin-right: 5px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 400px !important;
+  height: 400px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.card-header,
+.card-content,
+.card-image,
+.card-footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  padding: 0;
+  margin: 0;
+}
+
+.card-image {
+  width: 100%;
+  max-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.card.is-bought {
+  position: relative;
+  opacity: 0.5;
+}
+
+.card.is-bought::after {
+  content: 'BOUGHT';
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  font-size: 2.5em;
+  font-weight: bold;
+  font-family: 'Lino Stamp';
+  color: darkcyan;
+  transform: translate(-50%, -35%) rotate(-45deg);
+  z-index: 2;
+}
+
+.card.is-not-buyer {
+  opacity: 0.1;
+}
+
+.card-footer .button {
+  width: 100%;
+}
+
+.card-add {
+  position: relative;
+}
