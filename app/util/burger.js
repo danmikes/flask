@@ -27,7 +27,8 @@ document.addEventListener('keydown', function(event) {
       const navbarBurger = document.querySelector('.navbar-burger');
       const navbarMenu = document.getElementById(navbarBurger.dataset.target);
       if (navbarMenu.classList.contains('is-active')) {
-          toggleNavbar(navbarBurger); // Close the menu
+        window.history.back();
+          toggleNavbar(navbarBurger);
       }
   }
 });

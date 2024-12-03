@@ -7,6 +7,17 @@
   {{ form.hidden_tag() }}
 
   <div class="field">
+    <div style="display: flex; justify-content: space-between;">
+        <div style="flex: 1; margin-right: 5px;">
+            {{ form.submit(class="button is-primary is-fullwidth") }}
+        </div>
+        <div style="flex: 1; margin-left: 5px;">
+            <button type="button" class="button is-light is-fullwidth" onclick="window.location=`{{ url_for('wish.wishes') }}`">Cancel</button>
+        </div>
+    </div>
+  </div>
+
+  <div class="field">
     {{ form.description.label(class="label") }}
     <div class="control">
       {{ form.description(class="input") }}
@@ -24,12 +35,10 @@
     {{ form.image.label(class="label") }}
     <div class="control">
       {{ form.image(class="input") }}
-    </div>
-  </div>
-
-  <div class="field">
-    <div class="control">
-      {{ form.submit(class="button is-primary") }}
+      {% if wish and wish.image %}
+        <p>Current Image:</p>
+        <img src="{{ url_for('util.upload_file', filename=wish.image) }}" alt="Current image" style="max-width: 200px;">
+      {% endif %}
     </div>
   </div>
 </form>

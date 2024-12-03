@@ -13,6 +13,10 @@ or
 ```
 CMD-SHT-P > Create Environment > PythonX > .venv
 ```
+or
+```
+python -m venv .venv
+```
 ## activate
 ```
 CMD-SHT-P > Select Environment > PythonX
@@ -33,11 +37,15 @@ python -m pip install flask flask-login flask-sqlalchemy sas Werkzeug==2.2.2
 ```
 or
 ```
-python -m pip install -r pack.cfg
+python -m pip install -r pack3.1x.cfg
 ```
 ## run
 ```
 flask run --debug
+```
+or
+```
+. run
 ```
 ## map
 ```
@@ -81,6 +89,16 @@ python test.py
 ```
 sudo kill -9 $(lsof -t -i:5000 -sTCP:LISTEN)
 ```
+or
+```
+source kill_port.sh
+```
+
+# cache
+## clean
+```
+source clean_cache.sh
+```
 
 ```
 python drop_all.py
@@ -107,7 +125,7 @@ flask run --host=0.0.0.0
 http://<MY_IP_ADDRESS>:5000
 ```
 
-# deploy-regional
+# deploy-regional - pyngrok
 ## self
 ```
 pip install pyngrok
@@ -120,9 +138,72 @@ ngrok http 5000
 e.g. http://abcd1234.ngrok.io
 ```
 
-# deploy-global
+# deploy-global - python-anywhere
+## venv replace
 ```
-python-anywhere
-heroku
-github
+deactivate
+rm -rf .venv
+python3.10 -m venv .venv
+source .venv/bin/activate
 ```
+## upload
+```
+upload app
+python3 -m venv /home/dmikes/mysite/venv
+source /home/dmikes/mysite/venv
+pip install flask
+pip install -r pack.cfg
+```
+## wsgi.py
+```
+import sys
+path = '/home/dmikes/mysite'
+if path not in sys.path:
+    sys.path.insert(0, path)
+
+from app import create_app
+application = create_app()
+```
+or?
+```
+import sys
+
+project_home = '/home/dmikes/mysite'
+if project_home not in sys.path:
+    sys.path = [project_home] + sys.path
+
+from run import app as application
+```
+or?
+```
+import sys
+import os
+
+project_home = '/home/dmikes/mysite'
+if project_home not in sys.path:
+    sys.path.insert(0, project_home)
+
+mysite_path = os.path.abspath('/home/dmikes/mysite')
+if mysite_path not in sys.path:
+    sys.path.insert(0, mysite_path)
+
+import mysite
+print(mysite.__file__)
+
+try:
+    from mysite.app import create_app
+    application = create_app()
+except Exception as e:
+    print(f'ImportError: {e}')
+```
+or?
+```
+import sys
+
+project_home = '/home/dmikes/mysite/app'
+if project_home not in sys.path:
+    sys.path = [project_home] + sys.path
+
+from __init__ import app as application  # noqa
+```
+

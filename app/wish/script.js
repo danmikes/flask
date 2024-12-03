@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const tabContents = document.querySelectorAll('.tab-content');
 
   function setActiveTab(tabId) {
-    console.log(`Setting active tab: ${tabId}`);
 
     tabs.forEach(tab => tab.classList.remove('is-active'));
     tabContents.forEach(content => content.classList.remove('is-active'));
@@ -28,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Set initial active tab
   const savedTab = localStorage.getItem('activeTab');
   if (savedTab && document.getElementById(savedTab)) {
     setActiveTab(savedTab);

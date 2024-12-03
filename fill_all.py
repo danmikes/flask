@@ -105,5 +105,5 @@ def main():
 
     initialise_database(app, user_data, wish_data)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
   main()

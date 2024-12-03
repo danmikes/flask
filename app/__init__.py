@@ -2,6 +2,7 @@ from flask import Flask, current_app
 from .function import config_app, initialise_extensions, initialise_database, register_blueprints
 from .function import db
 
+
 def create_app():
   app = Flask(__name__, static_folder='/', template_folder='/')
 
