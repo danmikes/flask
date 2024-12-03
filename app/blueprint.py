@@ -1,6 +1,7 @@
 from flask import Blueprint
 
 from .route import base
+from .test.route import tst
 from .user.route import user
 from .util.route import util
 from .wish.route import wish
@@ -8,6 +9,7 @@ from .wish.route import wish
 def register_route(app):
   blueprints = [
     base,
+    tst,
     user,
     util,
     wish,

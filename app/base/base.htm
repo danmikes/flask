@@ -25,7 +25,17 @@
   <script src="{{ url_for('util.static', filename='burger.js') }}"></script>
   <script src="{{ url_for('util.static', filename='info.js') }}"></script>
   <script src="{{ url_for('util.static', filename='flash.js') }}"></script>
+  <script>
+    function applyCustomTheme() {
+      document.documentElement.style.setProperty('color-scheme', 'normal');
+    }
+    window.addEventListener('load', applyCustomTheme);
+  </script>
 
-  {% block js %}{% endblock %}
+<script>
+  document.documentElement.style.setProperty('color-scheme', 'normal');
+</script>
+
+{% block js %}{% endblock %}
 </body>
 </html>

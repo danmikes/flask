@@ -30,7 +30,7 @@ def user_register():
 @login_required
 def user_logout():
   logout_user()
-  flash('You logged-out', 'success')
+  flash('You logged-out', 'info')
   return redirect(url_for('user.user_login'))
 
 # ADMIN ONLY

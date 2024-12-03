@@ -15,7 +15,7 @@ def config_app(app):
   os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
   app.config.from_mapping(
-    SQLALCHEMY_DATABASE_URI='sqlite:///test.db',
+    SQLALCHEMY_DATABASE_URI='sqlite:///data.db',
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
     SECRET_KEY='top_secret',
   )

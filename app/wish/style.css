@@ -1,7 +1,9 @@
 .tabs ul {
   display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 1;
   justify-content: center;
-  margin: 10px;
+  list-style-type: none;
 }
 
 .tab-content {
@@ -12,11 +14,16 @@
   display: block;
 }
 
+.tabs {
+  overflow-x: hidden;
+}
+
 .tabs ul li a {
   border-top-left-radius: 8px !important;
   border-top-right-radius: 8px !important;
   border-bottom-color: transparent;
-  background-color: lightgrey;
+  background-color: var(--dark-grey);
+  margin: 1px;
 }
 
 .tabs ul li#tab-current-user {
@@ -56,6 +63,14 @@
   overflow: hidden;
 }
 
+.card-wrapper {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
 .card-header,
 .card-content,
 .card-image,
@@ -65,6 +80,15 @@
   justify-content: stretch;
   padding: 0;
   margin: 0;
+}
+
+.card-header p {
+  padding: 5px;
+  color: darkorange !important;
+}
+
+.card-content a {
+  color: darkcyan !important;
 }
 
 .card-image {
@@ -94,7 +118,7 @@
   font-size: 2.5em;
   font-weight: bold;
   font-family: 'Lino Stamp';
-  color: darkcyan;
+  color: red;
   transform: translate(-50%, -35%) rotate(-45deg);
   z-index: 2;
 }
@@ -103,10 +127,24 @@
   opacity: 0.1;
 }
 
-.card-footer .button {
-  width: 100%;
-}
-
 .card-add {
   position: relative;
+}
+
+.columns.is-centered {
+  margin: 0px !important;
+  justify-content: center;
+}
+
+.column.is-narrow {
+  flex: 0 0 auto;
+  width: auto;
+  max-width: 400px;
+}
+
+@media screen and (max-width: 768px) {
+  .column.is-narrow {
+    width: 100%;
+    margin: 0 auto;
+  }
 }
