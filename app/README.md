@@ -139,6 +139,10 @@ e.g. http://abcd1234.ngrok.io
 ```
 
 # deploy-global - python-anywhere
+##
+```
+https://eu.pythonanywhere.com/user/dmikes
+```
 ## venv replace
 ```
 deactivate
@@ -166,4 +170,8 @@ if path not in sys.path:
 from app import create_app
 
 application = create_app()
+```
+## url
+```
+https://dmikes.eu.pythonanywhere.com
 ```
