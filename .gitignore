@@ -20,3 +20,6 @@ __pycache__/
 
 # Upload
 app/upload/
+
+# Test
+app/test/
