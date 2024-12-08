@@ -23,3 +23,8 @@ app/upload/
 
 # Test
 app/test/
+
+# Script
+*.sh
+*.py
+run
