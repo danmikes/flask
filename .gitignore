@@ -1,6 +1,7 @@
 # DataBase
 *.db
 *.sqlite
+fill_all.py
 
 # Flask
 instance/

@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function getDomain(url) {
     try {
       const urlParts = new URL(url);
-      return urlParts.hostname.replace(/^www\./, '');
+      return urlParts.hostname.replace('www.', '');
     } catch (e) {
       return '';
     }
