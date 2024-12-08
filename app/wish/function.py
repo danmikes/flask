@@ -1,12 +1,15 @@
 import os
 from flask import current_app, flash
 from flask_login import current_user
+from PIL import Image
 from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.utils import secure_filename
 from .model import Wish
 from ..util.logger import log
 from ..util.route import remove_unused_files
 from .. import db
+
+DIMENSION_MAX = 400
 
 def get_upload_folder():
   return current_app.config['UPLOAD_FOLDER']
@@ -18,6 +21,18 @@ def file_exists(file_name):
   file_path = os.path.join(get_upload_folder(), file_name)
   return os.path.exists(file_path)
 
+def resize_image(image, dimension_max=DIMENSION_MAX):
+  width, height = image.size
+
+  if width > height:
+    new_width = dimension_max
+    new_height = int((height / width) * new_width)
+  else:
+    new_height = dimension_max
+    new_width = int((width / height) * new_height)
+
+  return image.resize((new_width, new_height), Image.Resampling.LANCZOS)
+
 def save_file(file):
   file_name = secure_filename(file.filename)
   file_path = os.path.join(get_upload_folder(), file_name)
@@ -25,8 +40,10 @@ def save_file(file):
   os.makedirs(get_upload_folder(), exist_ok=True)
 
   try:
-    file.save(file_path)
-    return file_name
+    with Image.open(file) as image:
+      image_resized = resize_image(image)
+      image_resized.save(file_path, dpi=(72, 72), quality=85)
+      return file_name
   except Exception as e:
     flash(f'Error saving file: {e}', 'warning')
     return None
