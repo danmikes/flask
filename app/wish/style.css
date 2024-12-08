@@ -27,7 +27,7 @@
 }
 
 .tabs ul li#tab-current-user {
-  margin-right: 15px;
+  margin-right: 5px;
 }
 
 .tabs ul li#tab-current-user a {
@@ -35,7 +35,8 @@
 }
 
 .tabs ul li.is-active a {
-  border: 2px solid yellow;
+  border: 2px solid darkorange;
+  background-color: var(--light-black);
 }
 
 .tabs ul li#tab-current-user {
@@ -46,10 +47,6 @@
 
 .tabs li #tab-current-user {
   background-color: yellow;
-}
-
-.tabs ul li:not(:last-child) {
-  margin-right: 5px;
 }
 
 .card {

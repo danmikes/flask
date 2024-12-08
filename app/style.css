@@ -1,8 +1,11 @@
 
 :root {
   --black: black;
+  --light-black: #111;
   --dark-grey: #222;
-  --grey: #444;
+  --grey: #333;
+  --off-grey: #444;
+  --light-grey: #444;
   --dark-cyan: darkcyan;
   --dark-magenta: darkmagenta;
   --dark-orange: darkorange;
