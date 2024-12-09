@@ -31,7 +31,7 @@
 }
 
 .tabs ul li#tab-current-user a {
-  background-color: yellow !important;
+  background-color: var(--yellow) !important;
 }
 
 .tabs ul li.is-active a {
@@ -40,13 +40,13 @@
 }
 
 .tabs ul li#tab-current-user {
-  background-color: yellow;
+  background-color: var(--yellow);
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
 
 .tabs li #tab-current-user {
-  background-color: yellow;
+  background-color: var(--yellow);
 }
 
 .card {
@@ -56,8 +56,9 @@
   align-items: stretch;
   width: 400px !important;
   height: 400px;
-  padding: 0;
+  padding: 10px;
   overflow: hidden;
+  background-color: var(--black);
 }
 
 .card-wrapper {
@@ -81,16 +82,16 @@
 
 .card-header p {
   padding: 5px;
-  color: darkorange !important;
+  color: var(--orange) !important;
 }
 
 .card-content a {
-  color: darkcyan !important;
+  color: var(--cyan) !important;
 }
 
 .card-image {
   width: 100%;
-  max-height: 200px;
+  max-height: calc(200px - 2*10px);
   display: flex;
   justify-content: center;
   align-items: center;

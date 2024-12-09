@@ -20,7 +20,7 @@
 
 <div id="current-user" class="tab-content">
   <div class="card-add">
-    <a href="{{ url_for('wish.wish_add') }}" class="button is-link">Add Wish</a>
+    <a href="{{ url_for('wish.wish_add') }}" class="button is-green">Add Wish</a>
   </div>
 
   {% if current_user.wishes and current_user.wishes|length > 0 %}

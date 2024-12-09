@@ -4,24 +4,39 @@
   --light-black: #111;
   --dark-grey: #222;
   --grey: #333;
-  --off-grey: #444;
   --light-grey: #444;
-  --dark-cyan: darkcyan;
-  --dark-magenta: darkmagenta;
-  --dark-orange: darkorange;
+  --blue: #003;
+  --cyan: darkcyan;
+  --green: #030;
+  --magenta: #darkmagenta;
+  --orange: darkorange;
+  --red: #300;
+  --yellow: yellow;
+}
+
+.is-green {
+  background-color: var(--green);
+}
+
+.is-blue {
+  background-color: var(--blue);
+}
+
+.is-red {
+  background-color: var(--red);
+}
+
+.is-orange {
+  background-color: var(-orange);
 }
 
 html, body {
   background-color: var(--grey);
-  color: var(--dark-orange);
-}
-
-.card {
-  background-color: var(--black);
+  color: var(--orange);
 }
 
 * {
-  color: var(--dark-orange) !important;
+  color: var(--orange) !important;
 }
 
 html,
@@ -129,8 +144,8 @@ body {
 }
 
 .navbar-item-link:hover {
-  background-color: #333;
-  color: black;
+  background-color: var(--grey);
+  color: var(--black);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
   font-weight: 600;
 }
@@ -183,11 +198,11 @@ h2.subtitle {
 }
 
 .has-text-darkmagenta {
-  color: var(--dark-magenta) !important;
+  color: var(--magenta) !important;
 }
 
 .has-text-darkcyan {
-  color: var(--dark-cyan) !important;
+  color: var(--cyan) !important;
 }
 
 .has-background-black {
