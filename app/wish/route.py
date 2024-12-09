@@ -42,8 +42,8 @@ def wish_edit(wish_id):
   flash_errors(form)
   return render_template('wish/form.htm', form=form, wish=wish, is_edit=True)
 
-@wish.route('/delete/<int:wish_id>', methods =['GET', 'POST'])
-@login_required # Admin-only
+@wish.route('/delete/<int:wish_id>', methods =['GET', 'DELETE'])
+@login_required
 def wish_delete(wish_id):
   wish = Wish.query.get_or_404(wish_id)
 
@@ -60,16 +60,8 @@ def wish_toggle(wish_id):
 
   return redirect(url_for('wish.wishes'))
 
-# ADMIN ONLY
-
-# ToDo : Complete
-@wish.route('/all/delete', methods=['GET', 'POST'])
-@login_required # Admin-only
-def wishes_delete():
-  return 'wishes_delete'
-
 @wish.route('/all/json', methods=['GET'])
-# @login_required
+@login_required
 def wishes_json():
   wishes = Wish.query.all()
   wish_list = [wish.to_dict() for wish in wishes]

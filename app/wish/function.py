@@ -6,7 +6,6 @@ from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.utils import secure_filename
 from .model import Wish
 from ..util.logger import log
-from ..util.route import remove_unused_files
 from .. import db
 
 DIMENSION_MAX = 400
@@ -73,7 +72,6 @@ def save_wish(wish=None):
       db.session.add(wish)
     db.session.commit()
     flash('Wish saved', 'info')
-    remove_unused_files()
     return True
   except SQLAlchemyError as e:
     db.session.rollback()
@@ -85,7 +83,6 @@ def delete_wish(wish):
     db.session.delete(wish)
     db.session.commit()
     flash('Wish deleted', 'info')
-    remove_unused_files()
 
     return None
   except Exception as e:
@@ -96,15 +93,19 @@ def delete_wish(wish):
 def process_wish(form, wish=None):
   if form.validate_on_submit():
     data = form.image.data
-    filename = data.filename if data else None
+    file_name = data.filename if data else None
     img_name = wish.image if wish else None
 
-    if filename:
-      if not allowed_file(filename):
+    if img_name and img_name != file_name:
+      delete_file(img_name)
+      img_name = file_name
+
+    if file_name:
+      if not allowed_file(file_name):
         flash('Invalid file type', 'warning')
         return False
 
-      if file_exists(filename):
+      if file_exists(file_name):
         flash('File exists', 'warning')
         return False
 

@@ -32,8 +32,15 @@
 
       <div class="field">
         {{ form.image.label(class="label") }}
-        <div class="control">
-          {{ form.image(class="input", id="image-input", type="file") }}
+        <div class="control has-addons is-flex">
+          <button type="button" class="button is-blue" id="add-image-btn" style="width: 25%">
+            Add
+          </button>
+          {{ form.image(class="input", id="image-input", type="file", style="display: none;") }}
+          <input class="input is-flex-grow-1" type="text" id="file-name" readonly value="{% if wish and wish.image %}{{ wish.image }}{% else %}No file{% endif %}">
+          <button type="button" class="button is-red is-flex-grow-0" id="delete-image-btn" style="width: 25%" {% if not wish or not wish.image %}disabled{% endif %}>
+            Delete
+          </button>
         </div>
       </div>
 
@@ -71,5 +78,6 @@
 {% endblock %}
 
 {% block js %}
+<script>const wishId = "{{ wish.id }}"</script>
 <script src="{{ url_for('wish.static', filename='form.js') }}"></script>
 {% endblock %}
