@@ -17,6 +17,7 @@ __pycache__/
 
 # Virtual Environment
 .venv/
+venv/
 
 # Upload
 app/upload/
