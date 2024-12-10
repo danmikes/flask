@@ -1,0 +1,14 @@
+name: Trigger Curl on Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  curl_webhook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Curl Command
+        run: |
+          curl -X POST https://dmikes.eu.pythonanywhere.com/update_server

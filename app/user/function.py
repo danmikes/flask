@@ -12,16 +12,16 @@ def handle_login(form, request):
       user = User.query.filter_by(username=form.username.data).first()
       if user and user.check_password(form.password.data):
         login_user(user)
-        flash('You logged-in', 'success')
-        next_page = request.args.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
-          next_page = url_for('wish.wishes')
-        return redirect(next_page)
+        flash('You logged-in', 'info')
+        next = request.args.get('next')
+        if not next or url_parse(next).netloc != '':
+          next = url_for('wish.wishes')
+        return redirect(next)
       else:
-        flash('Invalid credentials', 'danger')
+        flash('Invalid credentials', 'warning')
     except Exception as e:
       log.error(f'Error during login: {e}')
-      flash('Error during login; retry', 'danger')
+      flash('Login error; retry', 'warning')
 
   flash_errors(form)
   return None
@@ -35,12 +35,12 @@ def handle_register(form):
       try:
         db.session.add(new_user)
         db.session.commit()
-        flash('You registered', 'success')
+        flash('You registered', 'info')
         return redirect(url_for('user.user_login'))
       except Exception as e:
         db.session.rollback()
         log.error(f'Registration failed: {e}')
-        flash('Registration failed', 'danger')
+        flash('Registration failed', 'warning')
 
   flash_errors(form)
   return None
