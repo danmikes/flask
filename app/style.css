@@ -1,11 +1,11 @@
 
 :root {
-  --black: black;
-  --light-black: #111;
+  --black: #111;
   --dark-grey: #222;
   --grey: #333;
   --light-grey: #444;
   --blue: #003;
+  --brown: #630;
   --cyan: darkcyan;
   --green: #030;
   --magenta: #darkmagenta;
@@ -14,25 +14,34 @@
   --yellow: yellow;
 }
 
-.is-green {
-  background-color: var(--green);
-}
-
 .is-blue {
   background-color: var(--blue);
+  color: var(--blue);
+}
+
+.is-brown {
+  background: var(--brown);
+  color: var(--brown);
+}
+
+.is-green {
+  background-color: var(--green);
+  color: var(--green);
+}
+
+.is-orange {
+  background-color: var(--orange);
+  color: var(--orange);
 }
 
 .is-red {
   background-color: var(--red);
-}
-
-.is-orange {
-  background-color: var(-orange);
+  color: var(--red);
 }
 
 html, body {
   background-color: var(--grey);
-  color: var(--orange);
+  color: var(--grey);
 }
 
 * {
