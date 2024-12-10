@@ -1,3 +1,9 @@
+# apparmor
+cmdline.txt
+
+# Assets
+app/.webassets-cache
+
 # DataBase
 *.db
 *.sqlite
@@ -5,14 +11,33 @@
 # Flask
 instance/
 
+# GitHub
+.github/workflows/webhook.yml
+
 # Logger
 *.log
+
+# gUnicorn
+gunicorn.service
+gunicorn.socket
+gunicorn.sock
+
+# Nginx
+flask.conf
 
 # Mac
 *.DS_Store
 
 # Python
 __pycache__/
+*.py
+
+# Shell
+*.sh
 
 # Virtual Environment
 .venv/
+venv/
+
+# Upload
+app/upload/

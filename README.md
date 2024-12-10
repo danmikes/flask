@@ -1,23 +1,34 @@
+# Wish-App
+This app manages wishes for family.
+
+Written with Flask Python Jinja Bulma.
+
+Virtual Environment created with `pythonV -m venv .venv`
+- PythonV
+  - python (unversioned)
+  - python3.13
+  - python3.10
+
+Libraries installed with `pythonV -m pip install -r pack.txt`
+- pythonV / pack
+  - python (unversioned) : pack.txt
+  - python3.13 : pack3.13.txt
+  - python3.10 : pack3.10.txt (PythonAnyWhere)
+
+Deployed with GitHub PythonAnyWhere GitHub-action WebHook-listener.
+
 # python
 ## install
 ```
-brew install python pip pyenv
-```
-or
-```
-. python.sh
+brew install python pip
 ```
 
 # virtual environment
 ## create
 ```
-CMD-SHT-P > Create Environment > PythonX > .venv
+python -m venv .venv
 ```
 ## activate
-```
-CMD-SHT-P > Select Environment > PythonX
-```
-or
 ```
 source .venv/bin/activate
 ```
@@ -29,11 +40,7 @@ deactivate
 # flask
 ## install
 ```
-python -m pip install flask flask-login flask-sqlalchemy sas Werkzeug==2.2.2
-```
-or
-```
-python -m pip install -r pack.cfg
+python -m pip install -r pack.txt
 ```
 ## run
 ```
@@ -41,60 +48,32 @@ flask run --debug
 ```
 ## map
 ```
-$ python
->>> from app import app
->>> app.url_map
+python map.py
 ```
 
 # database
-## create
+## reset
 ```
-python
->>> from app import app, db
->>> app.app_context().push()
->>> app.create_all()
-```
-or
-```
-python create_table.py
-```
-## drop
-```
-python
->>> from app import app, db
->>> app.app_context().push()
->>> app.drop_all()
-```
-or
-```
-python drop_table.py
-```
-
-# test
-## create
-```
-python test.py
+python reset_db.py
 ```
 
 # port
 ## kill
 ```
-sudo kill -9 $(lsof -t -i:5000 -sTCP:LISTEN)
+source kill_port.sh
 ```
 
+# cache
+## clear
 ```
-python drop_all.py
-python create_all.py
-python fill_all.sh
-source clean_cache.sh or ./clean_cache
-source kill_port.sh or ./kill_port.sh
-bash run or . run
+source clear_cache.sh
 ```
 
 # git
 ## fresh start
 ```
 git branch new_branch_name $(echo "commit message" | git commit-tree HEAD^{tree})
+git reset --hard origin/main
 ```
 
 # deploy-local
@@ -107,7 +86,7 @@ flask run --host=0.0.0.0
 http://<MY_IP_ADDRESS>:5000
 ```
 
-# deploy-regional
+# deploy-regional - pyngrok
 ## self
 ```
 pip install pyngrok
@@ -120,9 +99,124 @@ ngrok http 5000
 e.g. http://abcd1234.ngrok.io
 ```
 
-# deploy-global
+# deploy-global - python-anywhere
+## site
 ```
-python-anywhere
-heroku
-github
+https://eu.pythonanywhere.com/user/dmikes/<flask>
+<flask> is project folder
+/home/dmikes/flask/venv
+```
+## git
+```
+git clone github.com/dmikes/flask
+```
+## venv
+```
+deactivate
+rm -rf .venv
+python3.10 -m venv .venv
+source .venv/bin/activate
+pip install flask
+pip install -r pack<3.1x>.txt
+```
+## github-action
+```
+Add webhook.yml as GitHub-action
+```
+## webhook-listener
+```
+Add webhook-listener.py to PythonAnyWhere <flask>
+```
+## wsgi.py
+```
+Upload wsgi.py to PythonAnyWhere <flask>
+```
+## url
+```
+Enjoy the app : https://dmikes.eu.pythonanywhere.com
+```
+
+# deploy-global - raspi
+## site
+```
+https://dmikes.hopto.org/flask
+<flask> is project folder
+/home/raspi/flask/.venv
+```
+## git
+```
+git clone github.com/dmikes/flask
+```
+## venv
+```
+deactivate
+rm -rf .venv
+python3.10 -m venv .venv
+source .venv/bin/activate
+pip install flask
+pip install -r pack<3.1x>.txt
+```
+## github-action
+```
+Add webhook.yml as GitHub-action
+```
+## webhook-listener
+```
+Add webhook-listener.py to /home/raspi/<flask>
+```
+## gunicorn
+```
+pip install gunicorn
+```
+## nginx
+```
+sudo apt install nginx
+gunicorn --bind unix:/home/raspi/flask/flask.sock -w 3 run:app --user=raspi --group=www-data
+```
+## site
+```
+flask.conf -> /etc/nginx/sites-available/flask.conf
+sudo ln -s /etc/nginx/sites-available/flask.conf /etc/nginx/sites-enabled/
+```
+## router
+```
+port 80 -> raspi
+port 443 -> raspi
+```
+## system
+```
+flask.service -> /etc/systemd/system/uwsgi.service
+```
+## cert
+```
+sudo apt install certbot python3-certbot-nginx
+sudo certbot --nginx -d dmikes.hopto.org
+max8@post.cz
+http -> https
+renewal automatic
+```
+## update
+```
+sudo nginx -t
+sudo systemctl reload nginx
+```
+## curl
+```
+curl -svo /dev/null https://dmikes.hopto.org
+```
+## url
+```
+Enjoy the app : https://dmikes.hopto.org
+```
+## apparmor
+```
+sudo aa-complain /usr/sbin/nginx
+sudo aa-enforce /usr/sbin/nginx
+```
+## refresh
+```
+sudo systemctl daemon-reload
+sudo systemctl gunicorn.socket
+sudo systemctl gunicorn.service
+sudo systemctl nginx
 ```

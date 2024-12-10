@@ -3,8 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const tabContents = document.querySelectorAll('.tab-content');
 
   function setActiveTab(tabId) {
-    console.log(`Setting active tab: ${tabId}`);
-
     tabs.forEach(tab => tab.classList.remove('is-active'));
     tabContents.forEach(content => content.classList.remove('is-active'));
 
@@ -28,43 +26,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Set initial active tab
   const savedTab = localStorage.getItem('activeTab');
   if (savedTab && document.getElementById(savedTab)) {
     setActiveTab(savedTab);
   } else {
     setActiveTab('current-user');
   }
+
+  document.addEventListener('click', function(event) {
+    if (!event.target.closest('.card-image')) {
+    }
+  });
+
+  document.addEventListener('keydown', function(event) {
+    if (event.key == 'Escape') {
+    }
+  });
 });
-
-
-function updatePreview() {
-  const description = document.getElementById('wishForm').description.value;
-  const url = document.getElementById('wishForm').url.value;
-
-  document.getElementById('previewDescription').innerText = description || 'Wish Description';
-
-  const previewURL = document.getElementById('previewURL');
-  if (url) {
-    previewURL.innerHTML = `<a href="${url}" target="_blank">${url}</a>`;
-  } else {
-    previewURL.innerHTML = 'Your URL Here';
-  }
-}
-
-function updateImagePreview(input) {
-  const file = input.files[0];
-  const previewImage = document.getElementById('previewImage');
-  const previewImageContainer = document.getElementById('previewImageContainer');
-
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      previewImage.src = e.target.result;
-      previewImageContainer.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-  } else {
-    previewImageContainer.style.display = 'none';
-  }
-}
