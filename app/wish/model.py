@@ -35,7 +35,10 @@ class Wish(db.Model):
 
   @property
   def domain(self):
-    return urlparse(self.url).hostname if self.url else None
+    if self.url:
+      hostname = urlparse(self.url).hostname.replace('www.', '')
+      return hostname.rsplit('.', 1)[0] if '.' in hostname else hostname
+    return None
 
   def __repr__(self):
     return f'<Wish {self.id}: {self.description[:20]}... - {self.image} - {self.is_bought}>'

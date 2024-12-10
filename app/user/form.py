@@ -1,29 +1,23 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Length, EqualTo
+from wtforms import PasswordField, StringField, SubmitField
+from wtforms.validators import DataRequired, EqualTo, Length
+from ..util.field_length import FieldLength, length_max
 
-LENGTH_MAX = 20
-def length_max(max=LENGTH_MAX):
-  return f'Maximum length is {max} characters'
+common_validators = [
+  DataRequired(),
+  Length(min=FieldLength.MINI.value, max=FieldLength.SMALL.value, message=length_max(FieldLength.SMALL.value))
+]
 
 class LoginForm(FlaskForm):
-  username = StringField('Username', validators=[
-    DataRequired(),
-    Length(min=3, max=20, message=length_max(LENGTH_MAX))])
-  password = PasswordField('Password', validators=[
-    DataRequired(),
-    Length(min=3, max=20, message=length_max(LENGTH_MAX))])
+  username = StringField('Username', validators=common_validators)
+  password = PasswordField('Password', validators=common_validators)
   submit = SubmitField('Log-In')
 
 class RegistrationForm(FlaskForm):
-  username = StringField('Username', validators=[
-    DataRequired(),
-    Length(min=3, max=20, message=length_max(LENGTH_MAX))])
-  password = PasswordField('Password', validators=[
-    DataRequired(),
-    Length(min=3, max=20, message=length_max(LENGTH_MAX))])
+  username = StringField('Username', validators=common_validators)
+  password = PasswordField('Password', validators=common_validators)
   confirm_password = PasswordField('Confirm Password', validators=[
-    DataRequired(),
+    *common_validators,
     EqualTo('password'),
-    Length(min=3, max=20, message=length_max(LENGTH_MAX))])
+  ])
   submit = SubmitField('Register')

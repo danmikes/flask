@@ -1,10 +1,41 @@
+{% set _menu=content.menu %}
+
 <header class="header">
   <div class="header-container">
-    <div class="navbar-language">
-      <span class="icon">
-        <i class="">en</i>
-      </span>
+    <div class="navbar-theme navbar-item has-dropdown is-hoverable">
+      <a class="navbar-link" id="ThemeMenuToggle">
+        🎨
+      </a>
+      <div class="navbar-dropdown" id="themeMenu">
+        <a class="navbar-item" href="{{ url_for('base.toggle_theme', theme='color') }}">
+          <span class="emoji">🌈</span>
+        </a>
+        <a class="navbar-item" href="{{ url_for('base.toggle_theme', theme='dark') }}">
+          <span class="emoji">⚫</span>
+        </a>
+        <a class="navbar-item" href="{{ url_for('base.toggle_theme', theme='light') }}">
+          <span class="emoji">⚪</span>
+        </a>
+      </div>
     </div>
+
+    <div class="navbar-font navbar-item has-dropdown is-hoverable">
+      <a class="navbar-link" id="fontMenuToggle">
+        A
+      </a>
+      <div class="navbar-dropdown" id="fontMenu">
+        <a class="navbar-item" href="{{ url_for('base.toggle_font', font='large') }}">
+          <span class="large">A</span>
+        </a>
+        <a class="navbar-item" href="{{ url_for('base.toggle_font', font='medium') }}">
+          <span class="medium">A</span>
+        </a>
+        <a class="navbar-item" href="{{ url_for('base.toggle_font', font='small') }}">
+          <span class="small">A</span>
+        </a>
+      </div>
+    </div>
+
     <div id="flash-messages" class="notifications">
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -17,37 +48,53 @@
       {% endwith %}
     </div>
 
-    <!-- ToDo : Close menu on escape -->
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
+    <div class="navbar-language navbar-item has-dropdown is-hoverable">
+      <a class="navbar-link" id="LanguageMenuToggle">
+        🌐
+      </a>
+      <div class="navbar-dropdown" id="LanguageMenu">
+        <a class="navbar-item" href="{{ url_for('base.toggle_lang', lang='en') }}">
+          <span class="emoji">🇬🇧</span>
+        </a>
+        <a class="navbar-item" href="{{ url_for('base.toggle_lang', lang='cz') }}">
+          <span class="emoji">🇨🇿</span>
+        </a>
+        <a class="navbar-item" href="{{ url_for('base.toggle_lang', lang='nl') }}">
+          <span class="emoji">🇳🇱</span>
+        </a>
       </div>
-      <div id="navbarMenu" class="navbar-menu">
-        <div class="navbar-item">
-          <a href="#" class="navbar-item-link" onclick="openModal()">Info</a>
-        </div>
-        <div class="navbar-item">
-          {% if current_user.is_authenticated %}
-            <a href="{{ url_for('user.user_logout') }}" class="navbar-item-link">Log-Out</a>
-          {% else %}
-            <a href="{{ url_for('user.user_login') }}" class="navbar-item-link">Log-In'</a>
-          {% endif %}
-        </div>
-        <div class="navbar-item">
-          {% if current_user.is_authenticated and current_user.username == ADMIN_USERNAME %}
-            <a href="{{ url_for('user.user_register') }}" class="navbar-item-link">Register</a>
-          {% endif %}
-        </div>
+    </div>
+
+    <div class="navbar-main navbar-item has-dropdown is-hoverable">
+      <div class="navbar-link" id="mainMenuToggle">
+        ☰
       </div>
-    </nav>
+      <div class="navbar-dropdown" id="mainMenu">
+        <a class="navbar-item" href="#" class="navbar-item-link" onclick="openModal()">
+          {{ _menu.info }}
+        </a>
+        {% if current_user.is_authenticated %}
+          <a class="navbar-item" href="{{ url_for('user.user_logout') }}">
+            {{ _menu.logout }}
+          </a>
+        {% else %}
+          <a class="navbar-item" href="{{ url_for('user.user_login') }}">
+            {{ _menu.login }}
+          </a>
+        {% endif %}
+        {% if current_user.is_authenticated and current_user.username == ADMIN_USERNAME and page != 'register' %}
+          <a class="navbar-item" href="{{ url_for('user.user_register') }}">
+            {{ _menu.register }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
 
     <div class="modal" id="infoModal">
       <div class="modal-background"></div>
-      <div class="modal-content box">
+      <div class="modal-content box back-2">
         {% include 'base/info.htm' %}
-        <button class="button is-light" id="closeModal">Close</button>
+        <button class="button is-light" id="closeModal">{{ _menu.close }}</button>
       </div>
       <button class="modal-close is-large" aria-label="close"></button>
     </div>

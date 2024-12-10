@@ -1,0 +1,56 @@
+{
+  "theme": {
+    "theme": "Téma",
+    "color": "Barevný",
+    "dark": "Tmavý",
+    "light": "Světlý"
+  },
+  "font": {
+    "font": "Text",
+    "large": "Velký",
+    "medium": "Střední",
+    "small": "Malý"
+  },
+  "lang": {
+    "lang": "Jazyk",
+    "czech": "Česky",
+    "english": "Anglicky",
+    "dutch": "Holandsky"
+  },
+  "menu": {
+    "menu": "Menu",
+    "info": "Info",
+    "exit": "Východ",
+    "close": "Uzavřít",
+    "esc": "Ůtek",
+    "zoom": "Zvětšit",
+    "login": "Přihlásit",
+    "logout": "Odhlásit",
+    "register": "Zaregistrovat",
+    "cancel": "Stornovat"
+  },
+  "user": {
+    "user": "Uživatel",
+    "username": "Jméno",
+    "password": "Heslo",
+    "password_confirm": "Potvrdit Heslo"
+  },
+  "wish": {
+    "wish": "Přání",
+    "wishes": "Přání",
+    "new": "Nový",
+    "edit": "Upravit",
+    "save": "Uschovat",
+    "delete": "Smazat",
+    "image": "Obrázek",
+    "add": "Přidat",
+    "remove": "Odstranit",
+    "prtscr": "PrtScr",
+    "description": "Popis",
+    "link": "Link",
+    "buy": "Koupit",
+    "cancel": "Stornovat",
+    "input": "Vstup",
+    "preview": "Náhled"
+  }
+}

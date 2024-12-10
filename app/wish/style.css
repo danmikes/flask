@@ -1,7 +1,9 @@
 .tabs ul {
   display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 1;
   justify-content: center;
-  margin: 10px;
+  list-style-type: none;
 }
 
 .tab-content {
@@ -12,78 +14,146 @@
   display: block;
 }
 
+.tabs {
+  overflow-x: hidden;
+}
+
+.tabs ul {
+  border-bottom-color: var(--brown);
+}
+
 .tabs ul li a {
   border-top-left-radius: 8px !important;
   border-top-right-radius: 8px !important;
+  border: 2px solid var(--back-3);
   border-bottom-color: transparent;
-  background-color: lightgrey;
+  background-color: var(--back-2) !important;
 }
 
-.tabs ul li#tab-current-user {
-  margin-right: 15px;
+#tab-current-user + li {
+  margin-left: 10px;
 }
 
-.tabs ul li#tab-current-user a {
-  background-color: yellow !important;
+.tab-link + li {
+  margin-left: 5px;
 }
 
-.tabs ul li.is-active a {
-  border: 2px solid yellow;
+.tabs li.is-active a {
+  border: 2px solid darkorange;
+  background-color: var(--back-3) !important;
 }
 
-.tabs ul li#tab-current-user {
-  background-color: yellow;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
-.tabs li #tab-current-user {
-  background-color: yellow;
-}
-
-.tabs ul li:not(:last-child) {
-  margin-right: 5px;
+.column,
+.columns {
+  max-width: 100%;
 }
 
 .card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: stretch;
-  width: 400px !important;
-  height: 400px;
-  padding: 0;
+  width: var(--size);
+  max-width: 100%;
+  height: var(--size);
+  padding: 10px;
+  background-color: var(--back-1);
+  border-radius: 20px;
   overflow: hidden;
+}
+
+@media (max-width: 468px) {
+  .card {
+    width: 100%;
+    height: auto;
+    min-height: var(--size);
+  }
+}
+
+@media screen and (max-width: 360px) and (min-height: 740px) {
+  .card {
+    width: 95%;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 359px) and (max-height: 739px) {
+  .card {
+    width: 85%;
+    margin: 0 auto;
+  }
 }
 
 .card-header,
 .card-content,
-.card-image,
 .card-footer {
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch;
-  padding: 0;
-  margin: 0;
-}
-
-.card-image {
-  width: 100%;
-  max-height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.card-footer a {
+  flex: 1;
+}
+
+.card-header,
+.card-content,
+.card-footer {
+  flex: 0;
+}
+
+.card-header {
+  align-items: flex-start;
+  border-bottom: 1px solid var(--bord-2)
+}
+
+.card-header p {
+  display: flex;
+  color: var(--text-1) !important;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.card-header,
+.card-header p {
+  margin-bottom: 10px;
+}
+
+.card-content {
+  padding: 5px;
+}
+
+.card-content a {
+  color: var(--magenta) !important;
+  margin-bottom: auto;
+}
+
+.card-image {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .card-image img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.card-footer,
+.card-footer a {
+  margin-top: 10px;
+}
+
+.card-footer a:not(:last-child) {
+  margin-right: 10px;
 }
 
 .card.is-bought {
   position: relative;
   opacity: 0.5;
+  z-index: 10;
 }
 
 .card.is-bought::after {
@@ -91,11 +161,11 @@
   position: absolute;
   top: 40%;
   left: 50%;
-  font-size: 2.5em;
+  font-size: var(--huge);
   font-weight: bold;
   font-family: 'Lino Stamp';
-  color: darkcyan;
-  transform: translate(-50%, -35%) rotate(-45deg);
+  color: var(--red);
+  transform: translate(-50%, 0%) rotate(-45deg);
   z-index: 2;
 }
 
@@ -103,10 +173,69 @@
   opacity: 0.1;
 }
 
-.card-footer .button {
-  width: 100%;
-}
-
 .card-add {
   position: relative;
+}
+
+.card-header .description,
+.textarea {
+  min-height: 6em;
+  max-height: 7em;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 5px;
+}
+
+.textarea,
+.input {
+  font-size: var(--large);
+}
+
+.card-form {
+  padding: 10px !important;
+}
+
+.columns.is-centered {
+  margin: 0 !important;
+  padding: 0 !important;
+  justify-content: center;
+}
+
+.column.is-narrow {
+  flex: 0 0 auto;
+  width: auto;
+  max-width: 400px;
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  .column.is-narrow {
+    width: 100%;
+  }
+}
+
+.display .button {
+  background-color: var(--green) !important;
+}
+
+.control.has-addons .button {
+  flex-grow: 1;
+}
+
+.box .topic:not(:first-of-type) {
+  margin-top: 20px;
+}
+
+.button {
+  z-index: 0;
+}
+
+.modal .button {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.columns {
+  background-color: var(--back-2);
+  border-radius: 20px;
 }

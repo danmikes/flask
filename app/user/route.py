@@ -30,10 +30,8 @@ def user_register():
 @login_required
 def user_logout():
   logout_user()
-  flash('You logged-out', 'success')
+  flash('You logged-out', 'info')
   return redirect(url_for('user.user_login'))
-
-# ADMIN ONLY
 
 @user.route('/all/json', methods=['GET'])
 @login_required
@@ -41,27 +39,3 @@ def users_json():
   users = User.query.all()
   user_list = [user.to_dict() for user in users]
   return jsonify(user_list)
-
-# ToDo : Complete
-@login_required # Admin-only
-@user.route('/add', methods=['GET', 'POST'])
-def user_add():
-  return 'user_add'
-
-# ToDo : Complete
-@login_required # Admin-only
-@user.route('/edit/<int:user_id>', methods=['GET', 'POST'])
-def user_edit(user_id):
-  return 'user_edit'
-
-# ToDo : Complete
-@login_required # Admin-only
-@user.route('/delete/<int:user_id>', methods=['GET', 'POST'])
-def user_delete(user_id):
-  return 'user_delete'
-
-# ToDo : Complete
-@login_required # Admin-only
-@user.route('/all/delete', methods=['GET', 'POST'])
-def users_delete():
-  return 'users_delete'
