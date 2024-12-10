@@ -33,5 +33,4 @@ class User(UserMixin, db.Model):
       'username': self.username,
       'wishes': [wish.description for wish in self.wishes],
       'wishes_bought': [wish.description for wish in self.wishes_bought],
-      'is_match': self.check_password(self.username)
     }

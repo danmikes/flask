@@ -1,0 +1,56 @@
+{
+  "theme": {
+    "theme": "Thema",
+    "color": "Kleur",
+    "dark": "Donker",
+    "light": "licht"
+  },
+  "font": {
+    "font": "Tekst",
+    "large": "Groot",
+    "medium": "Middel",
+    "small": "Klein"
+  },
+  "lang": {
+    "lang": "Taal",
+    "czech": "Tsjechisch",
+    "english": "Engels",
+    "dutch": "Nederlands"
+  },
+  "menu": {
+    "menu": "Menu",
+    "info": "Info",
+    "exit": "Uit",
+    "close": "Sluit",
+    "esc": "Escape",
+    "zoom": "Zoom",
+    "login": "Log-In",
+    "logout": "Log-Uit",
+    "register": "Registreer",
+    "cancel": "Annuleer"
+  },
+  "user": {
+    "user": "Gebruiker",
+    "username": "Naam",
+    "password": "Wachtwoord",
+    "password_confirm": "Bevestig Wachtwoord"
+  },
+  "wish": {
+    "wish": "Wens",
+    "wishes": "Wensen",
+    "new": "Nieuw",
+    "edit": "Bewerk",
+    "save": "Bewaar",
+    "delete": "Verwijder",
+    "image": "Plaatje",
+    "add": "Voeg toe",
+    "remove": "Verwijder",
+    "prtscr": "PrtScr",
+    "description": "Beschrijving",
+    "link": "Link",
+    "buy": "Koop",
+    "cancel": "Annuleer",
+    "input": "Invoer",
+    "preview": "Voorbeeld"
+  }
+}

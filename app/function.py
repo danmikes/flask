@@ -1,4 +1,7 @@
+import json
 import os
+from flask import redirect, url_for
+from flask_assets import Environment, Bundle
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
@@ -15,7 +18,7 @@ def config_app(app):
   os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
   app.config.from_mapping(
-    SQLALCHEMY_DATABASE_URI='sqlite:///test.db',
+    SQLALCHEMY_DATABASE_URI='sqlite:///data.db',
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
     SECRET_KEY='top_secret',
   )
@@ -41,6 +44,27 @@ def register_blueprints(app):
   except ImportError as e:
     log.error(f'Error importing blueprint: {e}')
 
+def build_assets(app):
+  assets = Environment(app)
+
+  scss = Bundle('style.css',
+                'color.scss',
+                filters='libsass',
+                output='all.css',
+                depends='*.scss')
+  assets.register("asset_css", scss)
+  scss.build()
+
+def load_content(lang):
+  file_path = os.path.join('app/content', f'{lang}.json')
+
+  try:
+    with open(file_path, 'r', encoding='utf-8') as f:
+      return json.load(f)
+  except FileNotFoundError:
+    log.error(f'Content file not found: {file_path}')
+    return {}
+
 @login_manager.user_loader
 def load_user(user_id):
   from .user.model import User
@@ -52,4 +76,4 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-  return 'Log-In to access this page', 403
+  return redirect(url_for('user.user_login'))
