@@ -1,36 +1,83 @@
 {% extends 'base/base.htm' %}
 
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('wish.static', filename='style.css') }}">
+{% endblock %}
+
+{% block title %}Edit Wish{% endblock %}
+
 {% block content %}
 <h1 class="title">{% if is_edit %}Edit{% else %}Add{% endif %} Wish</h1>
 
-<form method="POST" enctype="multipart/form-data">
-  {{ form.hidden_tag() }}
+<div class="columns is-multiline is-centered is-variable is-3">
+  <div class="column is-narrow" style="background-color: var(--dark-grey);">
+    <h2 class="subtitle" style="margin-bottom: 10px !important; color: darkmagenta !important">Input</h2>
 
-  <div class="field">
-    {{ form.description.label(class="label") }}
-    <div class="control">
-      {{ form.description(class="input") }}
-    </div>
+    <form method="POST" enctype="multipart/form-data" class="card" style="padding: 20px;">
+      {{ form.hidden_tag() }}
+
+      <div class="field" style="max-height: 160px;">
+        {{ form.description.label(class="label") }}
+        <div class="control">
+          {{ form.description(class="textarea", id="description-input") }}
+        </div>
+      </div>
+
+      <div class="field">
+        {{ form.url.label(class="label") }}
+        <div class="control">
+          {{ form.url(class="input", id="url-input") }}
+        </div>
+      </div>
+
+      <div class="field">
+        {{ form.image.label(class="label") }}
+        <div class="control has-addons is-flex">
+          <button type="button" class="button is-blue" id="add-image-btn" style="width: 25%; margin-right: 5px;">
+            Add
+          </button>
+          {{ form.image(class="input", id="image-input", type="file", style="display: none;") }}
+          <input class="input is-flex-grow-1" type="text" id="file-name" readonly value="{% if wish and wish.image %}{{ wish.image }}{% else %}No file{% endif %}">
+          <button type="button" class="button is-red" id="delete-image-btn" style="width: 25%; margin-left: 5px;" {% if not wish or not wish.image %}disabled{% endif %}>
+            Delete
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div style="display: flex; justify-content: space-between;">
+          <div class="button" style="flex: 1;">
+              {{ form.submit(class="button is-green is-fullwidth") }}
+          </div>
+          <div class="button" style="flex: 1;">
+            <button type="button" class="button is-brown is-fullwidth" onclick="window.location=`{{ url_for('wish.wishes') }}`">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 
-  <div class="field">
-    {{ form.url.label(class="label") }}
-    <div class="control">
-      {{ form.url(class="input") }}
-    </div>
-  </div>
+  <div class="column is-narrow" style="background: var(--dark-grey);">
+    <h2 class="subtitle" style="margin-bottom: 10px !important; color: darkmagenta !important">Preview</h2>
 
-  <div class="field">
-    {{ form.image.label(class="label") }}
-    <div class="control">
-      {{ form.image(class="input") }}
-    </div>
-  </div>
+    <div class="card" id="preview-card">
+      <div class="card-header">
+        <p id="description-preview">{{ form.description.data }}</p>
+      </div>
 
-  <div class="field">
-    <div class="control">
-      {{ form.submit(class="button is-primary") }}
+      <div class="card-content">
+        <a id="url-preview" href="{{ form.url.data }}" target="_blank">{{ form.url.data }}</a>
+      </div>
+
+      <div class="card-image" style="margin-bottom: 10px;">
+        <img id="image-preview" src="{% if wish and wish.image %}{{ url_for('util.upload_file', filename=wish.image) }}{% endif %}" alt="image preview">
+      </div>
     </div>
   </div>
-</form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>const wishId = "{{ wish.id if wish else None }}"</script>
+<script src="{{ url_for('wish.static', filename='form.js') }}"></script>
 {% endblock %}

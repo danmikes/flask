@@ -1,6 +1,7 @@
 # DataBase
 *.db
 *.sqlite
+fill_all.py
 
 # Flask
 instance/
@@ -16,3 +17,15 @@ __pycache__/
 
 # Virtual Environment
 .venv/
+venv/
+
+# Upload
+app/upload/
+
+# Test
+app/test/
+
+# Script
+*.sh
+*.py
+run

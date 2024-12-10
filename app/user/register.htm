@@ -9,51 +9,54 @@
       <div class="column mobile-width mt-2">
         <h1 class="title">Register</h1>
 
-        <form method="POST" action="{{ url_for('user.user_register') }}">
-          {{ form.hidden_tag() }}
+        <div style="background-color: var(--black); padding: 20px;">
+          <form method="POST" action="{{ url_for('user.user_register') }}">
+            {{ form.hidden_tag() }}
 
-          <div class="field">
-            <label class="label">{{ form.username.label }}</label>
-            <div class="control">{{ form.username(class="input") }}</div>
-            {% if form.username.errors %}
-              <ul class="errors">
-                {% for error in form.username.errors %}
-                  <li>{{ error }}</li>
-                {% endfor %}
-              </ul>
-            {% endif %}
-          </div>
-
-          <div class="field">
-            <label class="label">{{ form.password.label }}</label>
-            <div class="control">{{ form.password(class="input") }}</div>
-            {% if form.password.errors %}
-              <ul class="errors">
-                {% for error in form.password.errors %}
-                  <li>{{ error }}</li>
-                {% endfor %}
-              </ul>
-            {% endif %}
-          </div>
-
-          <div class="field">
-            <label class="label">{{ form.confirm_password.label }}</label>
-            <div class="control">{{ form.confirm_password(class="input") }}</div>
-            {% if form.confirm_password.errors %}
-              <ul class="errors">
-                {% for error in form.confirm_password.errors %}
-                  <li>{{ error }}</li>
-                {% endfor %}
-              </ul>
-            {% endif %}
-          </div>
-
-          <div class="field">
-            <div class="control">
-              {{ form.submit(class="button is-warning") }}
+            <div class="field">
+              <label class="label">{{ form.username.label }}</label>
+              <div class="control">{{ form.username(class="input") }}</div>
+              {% if form.username.errors %}
+                <ul class="errors">
+                  {% for error in form.username.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </div>
-          </div>
-        </form>
+
+            <div class="field">
+              <label class="label">{{ form.password.label }}</label>
+              <div class="control">{{ form.password(class="input") }}</div>
+              {% if form.password.errors %}
+                <ul class="errors">
+                  {% for error in form.password.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+
+            <div class="field">
+              <label class="label">{{ form.confirm_password.label }}</label>
+              <div class="control">{{ form.confirm_password(class="input") }}</div>
+              {% if form.confirm_password.errors %}
+                <ul class="errors">
+                  {% for error in form.confirm_password.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+
+            <div class="field">
+              <div class="control is-flex">
+                {{ form.submit(class="button is-green", style="width: 50%; margin-right: 5px;") }}
+                <a href="{{ url_for('base.index')}}" class="button is-brown" style="width: 50%; margin-left: 5px;">Cancel</a>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>

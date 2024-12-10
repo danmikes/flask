@@ -4,29 +4,30 @@
 
 {% block content %}
 <section class="section">
-  <div class="container">
+  <div class="container"">
     <div class="columns">
       <div class="column mobile-width mt-2">
         <h1 class="title">Log-In</h1>
 
-        <form method="POST" action="{{ url_for('user.user_login') }}">
-          {{ form.hidden_tag() }}
+        <div style="background-color: var(--black); padding: 20px;">
+          <form method="POST" action="{{ url_for('user.user_login') }}">
+            {{ form.hidden_tag() }}
 
-          <div class="field">
-            <label class="label">{{ form.username.label }}</label>
-            <div class="control">{{ form.username(class="input") }}</div>
-          </div>
+            <div class="field">
+              <label class="label">{{ form.username.label }}</label>
+              <div class="control">{{ form.username(class="input") }}</div>
+            </div>
 
-          <div class="field">
-            <label class="label">{{ form.password.label }}</label>
-            <div class="control">{{ form.password(class="input") }}</div>
-          </div>
+            <div class="field">
+              <label class="label">{{ form.password.label }}</label>
+              <div class="control">{{ form.password(class="input") }}</div>
+            </div>
 
-          <div class="field">
-            <div class="control">{{ form.submit(class="button is-link") }}</div>
-          </div>
-        </form>
-
+            <div class="field">
+              <div class="control">{{ form.submit(class="button is-green is-fullwidth") }}</div>
+            </div>
+          </form>
+        </div>
       </div>
   </div>
 </section>
