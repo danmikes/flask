@@ -19,7 +19,7 @@
     {% if prop.is_owner %}
     <div style="display: flex; justify-content: space-between;">
       <a href="{{ url_for('wish.wish_edit', wish_id=prop.id) }}" class="button is-blue" style="flex: 1; margin-right: 5px;">Edit</a>
-      <a href="{{ url_for('wish.wish_delete', wish_id=prop.id) }}" class="button is-red" style="flex: 1; margin-right: 5px;">Delete</a>
+      <a href="{{ url_for('wish.wish_delete', wish_id=prop.id) }}" class="button is-red" style="flex: 1; margin-right: 5px;" onclick="return confirm('Delete this wish?');">Delete</a>
     </div>
     {% else %}
       <a href="{{ url_for('wish.wish_toggle', wish_id=prop.id) }}" class="button {% if prop.is_bought %}is-red{% else %}is-green{% endif %} {% if prop.is_bought and not prop.is_buyer %}is-static{% endif %}">{% if prop.is_bought %}Cancel{%else %}Buy{% endif %}</a>

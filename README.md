@@ -2,9 +2,7 @@
 ## install
 ```
 brew install python pip pyenv
-```
 or
-```
 . python.sh
 ```
 
@@ -12,17 +10,17 @@ or
 ## create
 ```
 CMD-SHT-P > Create Environment > PythonX > .venv
-```
 or
-```
 python -m venv .venv
+or
+python3.10 -m venv .venv
+or
+python3.13 -m venv .venv
 ```
 ## activate
 ```
 CMD-SHT-P > Select Environment > PythonX
-```
 or
-```
 source .venv/bin/activate
 ```
 ## deactivate
@@ -34,17 +32,13 @@ deactivate
 ## install
 ```
 python -m pip install flask flask-login flask-sqlalchemy sas Werkzeug==2.2.2
-```
 or
-```
 python -m pip install -r pack3.1x.cfg
 ```
 ## run
 ```
 flask run --debug
-```
 or
-```
 . run
 ```
 ## map
@@ -61,9 +55,7 @@ python
 >>> from app import app, db
 >>> app.app_context().push()
 >>> app.create_all()
-```
 or
-```
 python create_table.py
 ```
 ## drop
@@ -72,9 +64,7 @@ python
 >>> from app import app, db
 >>> app.app_context().push()
 >>> app.drop_all()
-```
 or
-```
 python drop_table.py
 ```
 
@@ -88,31 +78,21 @@ python test.py
 ## kill
 ```
 sudo kill -9 $(lsof -t -i:5000 -sTCP:LISTEN)
-```
 or
-```
 source kill_port.sh
 ```
 
 # cache
 ## clean
 ```
-source clean_cache.sh
-```
-
-```
-python drop_all.py
-python create_all.py
-python fill_all.sh
-source clean_cache.sh or ./clean_cache
-source kill_port.sh or ./kill_port.sh
-bash run or . run
+source clear_cache.sh
 ```
 
 # git
 ## fresh start
 ```
 git branch new_branch_name $(echo "commit message" | git commit-tree HEAD^{tree})
+git reset --hard origin/main
 ```
 
 # deploy-local
@@ -154,24 +134,19 @@ source .venv/bin/activate
 ```
 upload app
 python3 -m venv /home/dmikes/mysite/venv
-source /home/dmikes/mysite/venv
+source /home/dmikes/mysite/venv/bib/activate
 pip install flask
-pip install -r pack.cfg
+pip install -r pack<3.1x>.txt
 ```
 ## wsgi.py
 ```
-import sys
-import os
-
-path = '/home/dmikes/mysite'
-if path not in sys.path:
-  sys.path.append(path)
-
-from app import create_app
-
-application = create_app()
+upload
 ```
 ## url
 ```
 https://dmikes.eu.pythonanywhere.com
+```
+## webhook
+```
+upload
 ```
