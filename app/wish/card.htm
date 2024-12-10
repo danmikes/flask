@@ -1,4 +1,6 @@
-<div class="card {% if prop.is_bought and not prop.is_owner%}is-bought{% endif %} {% if prop.is_bought and not prop.is_buyer %}is-not-buyer{% endif %}">
+{% set _wish=content.wish %}
+
+<div class="card {% if prop.is_bought and not prop.is_owner%}is-bought{% endif %} {% if prop.is_bought and not prop.is_buyer %}is-not-buyer{% endif %}" data-id="{{ prop.id }}" style="transition: transform 0.3s;">
   <div class="card-header">
     <p>{{ prop.description }}</p>
   </div>
@@ -17,12 +19,10 @@
 
   <div class="card-footer">
     {% if prop.is_owner %}
-    <div class="buttons has-addons">
-      <a href="{{ url_for('wish.wish_edit', wish_id=prop.id) }}" class="button is-warning is-flex-grow-1">Edit</a>
-      <a href="{{ url_for('wish.wish_delete', wish_id=prop.id) }}" class="button is-danger is-flex-grow-1" onclick="return confirm('Are you sure you want to delete this wish?');">Delete</a>
-    </div>
+      <a href="{{ url_for('wish.wish_edit', wish_id=prop.id) }}" class="button blue">{{ _wish.edit }}</a>
+      <a href="{{ url_for('wish.wish_delete', wish_id=prop.id) }}" class="button red" onclick="return confirm('Delete this wish?');">{{ _wish.delete }}</a>
     {% else %}
-      <a href="{{ url_for('wish.wish_toggle', wish_id=prop.id) }}" class="button is-warning {% if prop.is_bought and not prop.is_buyer %}is-static{% endif %}">{% if prop.is_bought %}Cancel{%else %}Buy{% endif %}</a>
+      <a href="{{ url_for('wish.wish_toggle', wish_id=prop.id) }}" class="button {% if prop.is_bought %}red{% else %}green{% endif %} {% if prop.is_bought and not prop.is_buyer %}is-static{% endif %}">{% if prop.is_bought %}{{ _wish.cancel }}{%else %}{{ _wish.buy }}{% endif %}</a>
     {% endif %}
   </div>
 </div>
