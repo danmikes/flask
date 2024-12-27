@@ -70,21 +70,23 @@
         ☰
       </div>
       <div class="navbar-dropdown" id="mainMenu">
-        <a class="navbar-item" href="#" class="navbar-item-link" onclick="openModal()">
-          {{ _menu.info }}
+        <a class="navbar-item" onclick="openModal()">
+          <span class="emoji" style="font-size: 1.5rem; font-weight: 600;">?</span>
         </a>
+        {% if current_user.is_authenticated and current_user.username == ADMIN_USERNAME and page != 'register' %}
+          {% if page == 'view' %}
+            <a class="navbar-item" href="{{ url_for('wish.wishes') }}">
+              <span class="emoji">🏠</span>
+            </a>
+          {% else %}
+            <a class="navbar-item" href="{{ url_for('user.users') }}">
+              <span class="emoji">👤</span>
+            </a>
+          {% endif %}
+        {% endif %}
         {% if current_user.is_authenticated %}
           <a class="navbar-item" href="{{ url_for('user.user_logout') }}">
-            {{ _menu.logout }}
-          </a>
-        {% else %}
-          <a class="navbar-item" href="{{ url_for('user.user_login') }}">
-            {{ _menu.login }}
-          </a>
-        {% endif %}
-        {% if current_user.is_authenticated and current_user.username == ADMIN_USERNAME and page != 'register' %}
-          <a class="navbar-item" href="{{ url_for('user.user_register') }}">
-            {{ _menu.register }}
+            <span class="emoji">❌</span>
           </a>
         {% endif %}
       </div>

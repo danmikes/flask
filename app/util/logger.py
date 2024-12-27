@@ -32,15 +32,14 @@ class Formatter(logging.Formatter):
 log = logging.getLogger('app')
 log.setLevel(logging.DEBUG)
 
-console_handler = logging.StreamHandler()
-file_handler = logging.FileHandler('app.log')
-
-console_handler.setLevel(logging.DEBUG)
-file_handler.setLevel(logging.INFO)
-
 formatter = Formatter('[%(levelname)s] : %(name)s/%(pathname)s:%(lineno)d - %(message)s')
-console_handler.setFormatter(formatter)
-file_handler.setFormatter(formatter)
 
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.DEBUG)
+console_handler.setFormatter(formatter)
 log.addHandler(console_handler)
-log.addHandler(file_handler)
+
+# file_handler = logging.FileHandler('app.log')
+# file_handler.setLevel(logging.INFO)
+# file_handler.setFormatter(formatter)
+# log.addHandler(file_handler)

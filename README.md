@@ -76,6 +76,11 @@ git branch new_branch_name $(echo "commit message" | git commit-tree HEAD^{tree}
 git reset --hard origin/main
 ```
 
+# test
+```
+flask run --debug
+```
+
 # deploy-local
 ## self
 ```
@@ -104,7 +109,7 @@ e.g. http://abcd1234.ngrok.io
 ```
 https://eu.pythonanywhere.com/user/dmikes/<flask>
 <flask> is project folder
-/home/dmikes/flask/venv
+/home/dmikes/flask/
 ```
 ## git
 ```
@@ -118,14 +123,6 @@ python3.10 -m venv .venv
 source .venv/bin/activate
 pip install flask
 pip install -r pack<3.1x>.txt
-```
-## github-action
-```
-Add webhook.yml as GitHub-action
-```
-## webhook-listener
-```
-Add webhook-listener.py to PythonAnyWhere <flask>
 ```
 ## wsgi.py
 ```
@@ -136,12 +133,11 @@ Upload wsgi.py to PythonAnyWhere <flask>
 Enjoy the app : https://dmikes.eu.pythonanywhere.com
 ```
 
-# deploy-global - raspi
+# deploy-global - pi
 ## site
 ```
-https://dmikes.hopto.org/flask
-<flask> is project folder
-/home/raspi/flask/.venv
+https://dmikes.hopto.org
+/home/pi/flask/
 ```
 ## git
 ```
@@ -156,14 +152,6 @@ source .venv/bin/activate
 pip install flask
 pip install -r pack<3.1x>.txt
 ```
-## github-action
-```
-Add webhook.yml as GitHub-action
-```
-## webhook-listener
-```
-Add webhook-listener.py to /home/raspi/<flask>
-```
 ## gunicorn
 ```
 pip install gunicorn
@@ -171,21 +159,21 @@ pip install gunicorn
 ## nginx
 ```
 sudo apt install nginx
-gunicorn --bind unix:/home/raspi/flask/flask.sock -w 3 run:app --user=raspi --group=www-data
 ```
 ## site
 ```
 flask.conf -> /etc/nginx/sites-available/flask.conf
 sudo ln -s /etc/nginx/sites-available/flask.conf /etc/nginx/sites-enabled/
 ```
-## router
-```
-port 80 -> raspi
-port 443 -> raspi
-```
 ## system
 ```
+flask.socket -> /etc/systemd/system/flask.socket
 flask.service -> /etc/systemd/system/uwsgi.service
+```
+## router
+```
+port 80 -> pi
+port 443 -> pi
 ```
 ## cert
 ```
@@ -198,7 +186,6 @@ renewal automatic
 ## update
 ```
 sudo nginx -t
-sudo systemctl reload nginx
 ```
 ## curl
 ```
@@ -213,10 +200,10 @@ Enjoy the app : https://dmikes.hopto.org
 sudo aa-complain /usr/sbin/nginx
 sudo aa-enforce /usr/sbin/nginx
 ```
-## refresh
+## flask
 ```
-sudo systemctl daemon-reload
-sudo systemctl gunicorn.socket
-sudo systemctl gunicorn.service
-sudo systemctl nginx
+./enable.sh
+./start.sh
+./restart.sh
+./status.sh
 ```

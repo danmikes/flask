@@ -4,6 +4,7 @@ from .route import base
 from .user.route import user
 from .util.route import util
 from .wish.route import wish
+from .util.logger import log
 
 def register_route(app):
   blueprints = [
@@ -17,4 +18,4 @@ def register_route(app):
     try:
       app.register_blueprint(blueprint)
     except Exception as e:
-      app.logger.error(f'Error registering blueprint {blueprint.name}: {e}')
+      log.error(f'Error registering blueprint {blueprint.name}: {e}')
