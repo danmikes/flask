@@ -86,11 +86,9 @@ def delete_wish(wish):
       delete_file(wish.image)
     db.session.delete(wish)
     db.session.commit()
-    flash('Wish deleted', 'info')
     return None
   except Exception as e:
     db.session.rollback()
-    flash('Wish not deleted', 'warning')
     return wish
 
 def process_wish(form, wish=None):

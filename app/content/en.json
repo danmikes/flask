@@ -27,13 +27,19 @@
     "login": "Log-In",
     "logout": "Log-Out",
     "register": "Register",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "users": "Users"
   },
   "user": {
     "user": "User",
     "username": "Username",
     "password": "Password",
-    "password_confirm": "Confirm Password"
+    "password_confirm": "Confirm Password",
+    "users": "Users",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel"
   },
   "wish": {
     "wish": "Wish",

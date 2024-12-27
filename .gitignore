@@ -4,6 +4,9 @@ cmdline.txt
 # Assets
 app/.webassets-cache
 
+# Conf
+conf/
+
 # DataBase
 *.db
 *.sqlite
@@ -11,33 +14,28 @@ app/.webassets-cache
 # Flask
 instance/
 
-# GitHub
-.github/workflows/webhook.yml
-
 # Logger
 *.log
-
-# gUnicorn
-gunicorn.service
-gunicorn.socket
-gunicorn.sock
-
-# Nginx
-flask.conf
 
 # Mac
 *.DS_Store
 
 # Python
 __pycache__/
-*.py
+/*.py
+!run.py
 
-# Shell
+# Script
+script/
 *.sh
+!enable.sh
+!start.sh
+!restart.sh
+!status.sh
+
+# Upload
+app/upload
 
 # Virtual Environment
 .venv/
 venv/
-
-# Upload
-app/upload/

@@ -27,13 +27,19 @@
     "login": "Přihlásit",
     "logout": "Odhlásit",
     "register": "Zaregistrovat",
-    "cancel": "Stornovat"
+    "cancel": "Stornovat",
+    "users": "Uživatelé"
   },
   "user": {
     "user": "Uživatel",
     "username": "Jméno",
     "password": "Heslo",
-    "password_confirm": "Potvrdit Heslo"
+    "password_confirm": "Potvrdit Heslo",
+    "users": "Uživatelé",
+    "add": "Nový",
+    "edit": "Upravit",
+    "delete": "Smazat",
+    "cancel": "Stornovat"
   },
   "wish": {
     "wish": "Přání",

@@ -2,8 +2,8 @@ from flask import flash, redirect, url_for
 from flask_login import login_user
 from werkzeug.urls import url_parse
 from ..util.flash import flash_errors
-from ..util.logger import log
 from .. import db
+from ..wish.model import Wish
 from .model import User
 
 def handle_login(form, request):
@@ -20,7 +20,6 @@ def handle_login(form, request):
       else:
         flash('Invalid credentials', 'warning')
     except Exception as e:
-      log.error(f'Error during login: {e}')
       flash('Login error; retry', 'warning')
 
   flash_errors(form)
@@ -36,11 +35,23 @@ def handle_register(form):
         db.session.add(new_user)
         db.session.commit()
         flash('You registered', 'info')
-        return redirect(url_for('user.user_login'))
+        return redirect(url_for('user.users'))
       except Exception as e:
         db.session.rollback()
-        log.error(f'Registration failed: {e}')
         flash('Registration failed', 'warning')
 
   flash_errors(form)
   return None
+
+def handle_remove(user):
+  wishes_bought = Wish.query.filter_by(buyer_id=user.id).all()
+  for wish in wishes_bought:
+    wish.buyer_id = None
+
+  db.session.delete(user)
+
+  try:
+    db.session.commit()
+  except Exception as e:
+    db.session.rollback()
+    raise e

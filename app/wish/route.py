@@ -1,10 +1,10 @@
-from flask import Blueprint, jsonify, redirect, render_template, request, url_for
+from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
+from ..util.flash import flash_errors
 from ..user.model import User
 from .form import WishForm
 from .model import Wish
 from .function import add_wish, delete_wish, edit_wish, toggle_wish
-from ..util.flash import flash_errors
 
 wish = Blueprint('wish', __name__, url_prefix='/wish', static_folder='.', template_folder='.')
 
@@ -47,9 +47,11 @@ def wish_edit(wish_id):
 def wish_delete(wish_id):
   wish = Wish.query.get_or_404(wish_id)
 
-  if delete_wish(wish):
-    return redirect(url_for('wish.wishes'))
-
+  try:
+    delete_wish(wish)
+    flash('Wish deleted', 'success')
+  except Exception as e:
+    flash('Wish not deleted', 'error')
   return redirect(url_for('wish.wishes'))
 
 @wish.route('/toggle/<int:wish_id>', methods=['GET'])

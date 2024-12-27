@@ -27,13 +27,19 @@
     "login": "Log-In",
     "logout": "Log-Uit",
     "register": "Registreer",
-    "cancel": "Annuleer"
+    "cancel": "Annuleer",
+    "users": "Gebruikers"
   },
   "user": {
     "user": "Gebruiker",
     "username": "Naam",
     "password": "Wachtwoord",
-    "password_confirm": "Bevestig Wachtwoord"
+    "password_confirm": "Bevestig Wachtwoord",
+    "users": "Gebruikers",
+    "add": "Nieuw",
+    "edit": "Bewerk",
+    "delete": "Verwijder",
+    "cancel": "Annuleer"
   },
   "wish": {
     "wish": "Wens",

@@ -12,7 +12,7 @@ class User(UserMixin, db.Model):
   password_hash = db.Column(db.String(128), nullable=False)
   timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
-  wishes = db.relationship('Wish', back_populates='owner', foreign_keys=[Wish.owner_id])
+  wishes = db.relationship('Wish', back_populates='owner', cascade="all, delete-orphan", foreign_keys=[Wish.owner_id])
   wishes_bought = db.relationship('Wish', back_populates='buyer', foreign_keys=[Wish.buyer_id])
 
   def __init__(self, username, password):
