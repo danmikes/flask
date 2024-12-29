@@ -1,6 +1,7 @@
 import os
-from flask import Blueprint, current_app, jsonify, send_from_directory
+from flask import Blueprint, current_app, jsonify, request, send_from_directory
 from flask_login import login_required
+from git import Repo
 from ..util.logger import log
 from ..wish.model import Wish
 from .function import delete_image, format_date
@@ -43,3 +44,16 @@ def files_json():
         'created': format_date(file_stats.st_ctime),
       })
   return jsonify(files=files_data)
+
+@util.route('/update', methods=['POST'])
+def update():
+  if request.method == 'POST':
+    repo = Repo(current_app.config['WORKING_DIRECTORY'])
+    origin = repo.remotes.origin
+    origin.fetch()
+    repo.git.reset('--hard', 'origin/main')
+
+    os.system(f"touch {current_app.config['WSGI_PATH']}")
+    return 'PythonAnywhere updated', 200
+  else:
+    return 'Invalid request', 405

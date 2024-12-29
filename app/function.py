@@ -5,26 +5,35 @@ from flask_assets import Environment, Bundle
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
+from pathlib import Path
 from .util.logger import log
+from .util.enum import AllowedExtension
 
 csrf = CSRFProtect()
 db = SQLAlchemy()
 login_manager = LoginManager()
 
 def config_app(app):
-  app.config['ADMIN_USERNAME'] = 'daniel'
-  app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'upload')
-  app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
-  os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+  app.config.update({
+    'ADMIN_USERNAME': 'daniel',
+    'ALLOWED_EXTENSIONS': AllowedExtension.as_set(),
+    'SECRET_KEY': 'top_secret',
+    'SESSION_COOKIE_HTTPONLY': True,
+    'SESSION_COOKIE_SAMESITE': 'Lax',
+    'SESSION_COOKIE_SECURE': True,
+    'SQLALCHEMY_DATABASE_URI': 'sqlite:///data.db',
+    'SQLALCHEMY_TRACK_MODIFICATIONS': False,
+    'UPLOAD_FOLDER': Path(app.root_path) / 'upload',
+    'WORKING_DIRECTORY': '/home/dmikes/flask',
+    'WSGI_PATH': '/var/www/dmikes_eu_pythonanywhere_com_wsgi.py',
+  })
 
-  app.config.from_mapping(
-    SQLALCHEMY_DATABASE_URI='sqlite:///data.db',
-    SQLALCHEMY_TRACK_MODIFICATIONS=False,
-    SECRET_KEY='top_secret',
-  )
+  Path(app.config['UPLOAD_FOLDER']).mkdir(parents=True, exist_ok=True)
 
 def initialise_extensions(app):
   csrf.init_app(app)
+  from .util.route import update
+  csrf.exempt(update)
   db.init_app(app)
   login_manager.init_app(app)
 

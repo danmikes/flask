@@ -1,0 +1,3 @@
+https://dmikes.eu.pythonanywhere.com/util/update
+application/json
+Just the push event
