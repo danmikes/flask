@@ -1,3 +1,4 @@
+import os
 from flask import Flask, current_app, g, session
 from .function import (
   build_assets,

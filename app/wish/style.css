@@ -52,6 +52,7 @@
   display: flex;
   flex-direction: column;
   width: var(--size);
+  min-width: 
   max-width: 100%;
   height: var(--size);
   padding: 10px;
@@ -211,6 +212,12 @@
 @media (max-width: 768px) and (orientation: portrait) {
   .column.is-narrow {
     width: 100%;
+  }
+}
+
+@media (max-width: 468px) and (orientation: portrait) {
+  .column.is-narrow {
+    min-width: 400px;
   }
 }
 
