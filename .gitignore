@@ -1,11 +1,5 @@
-# apparmor
-cmdline.txt
-
 # Assets
 app/.webassets-cache
-
-# Conf
-conf/
 
 # DataBase
 *.db
@@ -22,20 +16,12 @@ instance/
 
 # Python
 __pycache__/
-/*.py
-!run.py
 
 # Script
-script/
-*.sh
-!enable.sh
-!start.sh
-!restart.sh
-!status.sh
+script/db_fill.py
 
 # Upload
 app/upload
 
 # Virtual Environment
-.venv/
 venv/
