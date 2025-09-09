@@ -1,62 +1,63 @@
 {
   "theme": {
-    "theme": "Téma",
-    "color": "Barevný",
-    "dark": "Tmavý",
-    "light": "Světlý"
+    "theme": "téma",
+    "color": "barevný",
+    "dark": "tmavý",
+    "light": "světlý"
   },
   "font": {
-    "font": "Text",
-    "large": "Velký",
-    "medium": "Střední",
-    "small": "Malý"
+    "font": "text",
+    "large": "velký",
+    "medium": "střední",
+    "small": "malý"
   },
   "lang": {
-    "lang": "Jazyk",
-    "czech": "Česky",
-    "english": "Anglicky",
-    "dutch": "Holandsky"
+    "lang": "jazyk",
+    "czech": "čeština",
+    "english": "angličtina",
+    "dutch": "holandština",
+    "russian": "ruština"
   },
   "menu": {
-    "menu": "Menu",
-    "info": "Info",
-    "exit": "Východ",
-    "close": "Uzavřít",
-    "esc": "Ůtek",
-    "zoom": "Zvětšit",
-    "login": "Přihlásit",
-    "logout": "Odhlásit",
-    "register": "Zaregistrovat",
-    "cancel": "Stornovat",
-    "users": "Uživatelé"
+    "menu": "menu",
+    "info": "info",
+    "exit": "konec",
+    "close": "uzavřít",
+    "esc": "esc",
+    "zoom": "yvětšit",
+    "login": "přihlásit",
+    "logout": "odhlásit",
+    "register": "registrovat",
+    "cancel": "zrušit",
+    "users": "uživatelé"
   },
   "user": {
-    "user": "Uživatel",
-    "username": "Jméno",
-    "password": "Heslo",
-    "password_confirm": "Potvrdit Heslo",
-    "users": "Uživatelé",
-    "add": "Nový",
-    "edit": "Upravit",
-    "delete": "Smazat",
-    "cancel": "Stornovat"
+    "user": "uživatel",
+    "username": "uživatelské jméno",
+    "password": "heslo",
+    "password_confirm": "potvrďte heslo",
+    "users": "uživatelé",
+    "add": "přidat",
+    "edit": "upravit",
+    "delete": "smazat",
+    "cancel": "zrušit"
   },
   "wish": {
-    "wish": "Přání",
-    "wishes": "Přání",
-    "new": "Nový",
-    "edit": "Upravit",
-    "save": "Uschovat",
-    "delete": "Smazat",
-    "image": "Obrázek",
-    "add": "Přidat",
-    "remove": "Odstranit",
-    "prtscr": "PrtScr",
-    "description": "Popis",
-    "link": "Link",
-    "buy": "Koupit",
-    "cancel": "Stornovat",
-    "input": "Vstup",
-    "preview": "Náhled"
+    "wish": "přání",
+    "wishes": "přání",
+    "new": "Nové",
+    "edit": "upravit",
+    "save": "uložit",
+    "delete": "smazat",
+    "image": "obrázek",
+    "add": "přidat",
+    "remove": "odstranit",
+    "prtscr": "prtscr",
+    "description": "popis",
+    "link": "odkaz",
+    "buy": "koupit",
+    "cancel": "zrušit",
+    "input": "vstup",
+    "preview": "náhled"
   }
 }
