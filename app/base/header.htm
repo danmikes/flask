@@ -2,7 +2,13 @@
 
 <header class="header">
   <div class="header-container">
-    <div class="navbar-theme navbar-item has-dropdown is-hoverable">
+    <div class="navbar-theme navbar-item has-dropdown is-hoverable"
+      hx-on:click="event.stopPropagation(); 
+        this.querySelector('.navbar-dropdown').classList.toggle('is-active');
+        document.querySelectorAll('.navbar-dropdown').forEach(d => {
+          if (d !== this.querySelector('.navbar-dropdown')) d.classList.remove('is-active');
+        })"
+      >
       <a class="navbar-link" id="ThemeMenuToggle">
         🎨
       </a>
@@ -71,12 +77,17 @@
       </div>
     </div>
 
-    <div class="navbar-main navbar-item has-dropdown is-hoverable">
+    <div class="navbar-main navbar-item has-dropdown is-hoverable"
+      hx-on:click="event.stopPropagation(); 
+        this.querySelector('.navbar-dropdown').classList.toggle('is-active');
+        document.querySelectorAll('.navbar-dropdown').forEach(d => {
+          if (d !== this.querySelector('.navbar-dropdown')) d.classList.remove('is-active');
+        })">
       <div class="navbar-link" id="mainMenuToggle">
         ☰
       </div>
       <div class="navbar-dropdown" id="mainMenu">
-        <a class="navbar-item" onclick="document.getElementById('infoModal').classList.add('is-active')">
+        <a class="navbar-item" hx-on:click="document.getElementById('infoModal').classList.add('is-active')">
           <span class="emoji">🤔</span>
         </a>
         {% if current_user.is_authenticated and current_user.username == ADMIN_USERNAME and page != 'register' %}
@@ -99,8 +110,7 @@
     </div>
 
     <div class="modal" id="infoModal">
-      <div class="modal-background" 
-        hx-on:click="this.closest('.modal').classList.remove('is-active')"></div>
+      <div class="modal-background" hx-on:click="this.closest('.modal').classList.remove('is-active')"></div>
       
       <div class="modal-content box back-2">
         {% include 'base/info.htm' %}
@@ -117,6 +127,8 @@
 
   </div>
 </header>
+
+<div hx-on:click="document.querySelectorAll('.navbar-dropdown').forEach(d => d.classList.remove('is-active'))" style="display: none;"></div>
 
 <script>
   document.addEventListener('keydown', (event) => {
