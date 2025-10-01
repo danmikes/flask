@@ -25,3 +25,6 @@ app/upload
 
 # Virtual Environment
 venv/
+
+# VsCode
+.vscode
