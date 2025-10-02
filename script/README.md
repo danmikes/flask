@@ -1,35 +1,21 @@
 # cache
 
+## db clear
+```
+source script/db_clear.sh
+```
+
+## db fill
+```
+source script/db_fill.sh
+```
+
+## db reset
+```
+source script/db_reset.sh
+```
+
 ## clear
 ```
 source script/cache_clear.sh
-```
-
-# port
-
-## kill
-```
-source script/port_kill.sh
-```
-
-# pi
-
-## enable
-```
-python -m script.flask_enable
-```
-
-## start
-```
-python -m script.flask_start
-```
-
-## restart
-```
-python -m script.flask_restart
-```
-
-## status
-```
-python -m script.flask_status
 ```
