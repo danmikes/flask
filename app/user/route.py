@@ -11,7 +11,8 @@ user = Blueprint('user', __name__, url_prefix='/user', static_folder='.', templa
 @login_required
 def users():
   users_they = User.query.all()
-  return render_template('view.htm', users_they=users_they, page='view')
+  users_sorted = sorted(users_they, key=lambda user: user.username)
+  return render_template('view.htm', users_they=users_sorted, page='view')
 
 @user.route('/login', methods=['GET', 'POST'])
 def user_login():
