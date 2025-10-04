@@ -98,7 +98,17 @@ body {
 }
 
 #flash-messages {
-  transition: opacity 0.5s ease-out;
+  animation: flashFadeOut 0.5s ease-in forwards;
+}
+
+@keyframes flashFadeOut {
+  0%, 70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 .navbar-dropdown {

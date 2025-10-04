@@ -42,10 +42,7 @@
       </div>
     </div>
 
-    <div id="flash-messages" class="notifications"
-      hx-swap-oob="true"
-      hx-trigger="load delay:2s" 
-      hx-on:load="this.style.opacity = '0'; setTimeout(() => { this.style.visibility = 'hidden' }, 500)">
+    <div id="flash-messages" class="notifications" hx-swap-oob="true">
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           {% for category, message in messages %}
