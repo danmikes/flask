@@ -1,16 +1,26 @@
 # Wish-App
 
-- Manages wishes for family
-- Uses Flask Python Jinja Bulma
+- Family wishes
+- Flask Python Jinja Bulma
 
 ## GitHub
-- Repository : https://github.com/danmikes/flask.git
+- [github.com/danmikes/flask.git](https://github.com/danmikes/flask.git)
 
 ## Configuration
+- `python3.10 -m venv venv`
+- `python3.10 -m pip install -r conf/pack3.10.txt`
+- `uWSGI`
+- `wsgi.py`
+- `deploy.yml`
 
-### PythonAnyWhere
-  - Virtual Environment : `python3.10 -m venv .venv`
-  - Library : `python3.10 -m pip install -r conf/pack3.10.txt`
-  - Proxy-Server : `uWSGI`
-  - URL : `https://dmikes.eu.pythonanywhere.com`
-  - Configuration : `wsgi.py`
+## Develop
+- `flask run --debug`
+
+## View
+- [localhost:5000](http://localhost:5000)
+
+## Deploy
+- `git push`
+
+## Website
+- [dmikes.eu.pythonanywhere.com](https://dmikes.eu.pythonanywhere.com)
