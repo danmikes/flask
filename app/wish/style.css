@@ -53,7 +53,7 @@
   flex-direction: column;
   width: var(--size);
   max-width: 100%;
-  height: var(--size);
+  height: calc(var(--size)*1.25);
   padding: 10px;
   background-color: var(--back-1);
   border-radius: 20px;
@@ -114,11 +114,11 @@
 
 .card-header,
 .card-header p {
-  margin-bottom: 10px;
+  margin-bottom: 1px;
 }
 
 .card-content {
-  padding: 5px;
+  padding: 2px;
 }
 
 .card-content a {
@@ -143,11 +143,11 @@
 
 .card-footer,
 .card-footer a {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .card-footer a:not(:last-child) {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .card.is-bought {
