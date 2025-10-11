@@ -20,3 +20,4 @@
 ## View
 - [local](http://localhost:5000)
 - [remote](https://dmikes.eu.pythonanywhere.com)
+- [health](https://dmikes.eu.pythonanywhere.com/health)

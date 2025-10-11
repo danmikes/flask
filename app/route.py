@@ -24,3 +24,7 @@ def toggle_font(font):
 def toggle_lang(lang):
   session['lang'] = lang
   return redirect(url_for('base.index'))
+
+@base.route('/health')
+def health():
+  return {'status': 'healthy', 'service': 'dmikes.eu.pythonanywhere.com'}, 200
