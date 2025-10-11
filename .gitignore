@@ -1,18 +1,9 @@
-# Ide
+.venv/
 .vscode/
-
-# Flask
-instance/
-.webassets-cache/
-
-# Python
 __pycache__/
-venv/
-
-# Project
+.webassets-cache/
 app/upload/
+instance/
 script/db_fill.py
-
-# System
 *.DS_Store
 *.log

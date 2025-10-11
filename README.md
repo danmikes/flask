@@ -1,9 +1,9 @@
-# Wish-App
+# Flask-App
 - Family wishes
 - Flask Python Jinja Bulma
 
 ## Code
-- [github](https://github.com/danmikes/flask.git)
+- [github](https://github.com/danmikes/flask)
 
 ## Copy
 - `wsgi.py -> pythonanywhere`
@@ -15,9 +15,9 @@
 
 ## Develop
 - `flask run --debug`
-- `git push`
+- [view](http://localhost:5000)
 
-## View
-- [local](http://localhost:5000)
-- [remote](https://dmikes.eu.pythonanywhere.com)
+## Deploy
+- `git push`
 - [health](https://dmikes.eu.pythonanywhere.com/health)
+- [view](https://dmikes.eu.pythonanywhere.com)
